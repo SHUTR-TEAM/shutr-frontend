@@ -1,0 +1,76 @@
+.hero {
+  position: relative;
+  margin: 25px;
+  height: 680px;
+  background: url("../../../../public/bg.png") no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: cover;
+  border-radius: 25px;
+  overflow: hidden;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+.heroContent {
+  color: var(--Lbg);
+  text-align: left;
+  max-width: 700px;
+  border-radius: 10px;
+}
+.heroContent h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  margin-left: 60px;
+  color: #fff;
+}
+.heroContent p {
+  color: rgb(217, 215, 215);
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  margin-left: 60px;
+}
+.heroButtons {
+  display: flex;
+  justify-content: left;
+  gap: 15px;
+  margin-left: 60px;
+}
+.btnPrimary,
+.btnSecondary {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+.btnPrimary {
+  background-color: var(--Lbg);
+  background-color: #fff;
+  color: #000;
+}
+.btnPrimary:hover {
+  background-color: #f1f1f1;
+  transform: scale(1.05);
+}
+.btnSecondary {
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+}
+.btnSecondary:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
