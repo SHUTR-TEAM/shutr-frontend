@@ -1,0 +1,69 @@
+.gallery {
+    padding: 20px 30px;
+  }
+  
+  .gallery h2 {
+    margin-top: 10px;
+    margin-left: 69px;
+  }
+  
+  .gallery_grid {
+    margin-top: 25px;
+    margin-left: 75px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 240px));
+    gap: 230px;
+    row-gap: 10px;
+    
+
+    
+  }
+
+  .gallery_images{
+    border-radius: 9%;
+  }
+
+  .gallery_images a:hover {
+    color: #ff6347; 
+  }
+
+.button{
+  padding-left: 2000px;;
+}
+
+
+
+
+
+.button_container {
+  margin-top: 15px;
+margin-left: 50px;
+}
+
+.button {
+  margin-left: 20px;
+  padding: 10px 20px; 
+  font-size: 0.9rem; 
+  background-color: #f0f0f0; /* Default button background color */
+  color: black; 
+  border: none; 
+  border-radius: 15px; /* Rounded corners */
+  transition: all 0.3s ease; /* Smooth transition for all changes */
+}
+
+.button:hover {
+  background-color: #ff6347; /* Change background color on hover */
+  color: white; 
+  transform: scale(1.1); /* Increase size on hover */
+}
+
+
+.image {
+   
+  transition: filter 0.3s ease; /* Smooth transition for brightness change */
+}
+
+.image:hover {
+  transform: scale(0.9);
+  filter: brightness(1.2); /* Reduce brightness to 70% on hover */
+}

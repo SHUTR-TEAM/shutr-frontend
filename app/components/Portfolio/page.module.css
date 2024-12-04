@@ -1,5 +1,3 @@
-
-  
   .portfolio {
     font-family: Arial, sans-serif;
     color: #333;
@@ -31,10 +29,7 @@
     width: 90%;
     max-width: 1200px;
   }
-  
-  
-  
-  
+
   .profileDetails {
     min-width: 300px;
     margin-left: 100px;
@@ -51,15 +46,25 @@
     font-size: 1.5rem;
     margin: 10px 0;
   }
+
+  .social_icon {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+    
   
+  }
   
-  
+  .social_icon a:hover {
+    color: #ff6347; 
+    transform: scale(1.2);
+  }
+   
   .description { 
     margin-right: 490px; 
     font-size: 0.95rem;
     color: #555;
   }
-  
   
   .tags {
     padding-top: 20px;
@@ -75,9 +80,6 @@
     border-radius: 15px;
     font-size: 0.9rem;
   }
-  
-  
-  
   
   .connect {
     margin-top: 25px;

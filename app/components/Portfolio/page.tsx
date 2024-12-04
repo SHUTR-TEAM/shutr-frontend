@@ -1,11 +1,9 @@
 import React from 'react'
 import Image from 'next/image'
 import styles from './page.module.css'
-
-
-
-
-
+import Link from 'next/link'
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import GallerySection from './GallerySection';
 
 
 
@@ -66,12 +64,35 @@ function page() {
           
         <section className={styles.connect}>
           <h2>Connect with me</h2>
-          
+  
+          <div className={styles.social_icon}>
+              <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-facebook-f"></i>
+              </Link>
+              <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-instagram"></i>
+              </Link>
+              <Link href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-twitter"></i>
+              </Link>
+              <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-linkedin-in"></i>
+              </Link>
+            </div>
         </section>
+           
+        < GallerySection/>
+
+        
+         
+
 
      
     </main>
+    
     </>
+
+   
   )
 }
 
