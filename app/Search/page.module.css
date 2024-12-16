@@ -1,0 +1,16 @@
+.parentContainer {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px; 
+    padding: 20px;
+}
+.parentContainer > div:first-child {
+    flex: 0 0 300px; 
+}  
+.rightContent {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start; 
+    flex-wrap: wrap; 
+}
+  
