@@ -1,51 +1,53 @@
+.mainDivWrapper {
+  background-color: #e9e8e8;
+  display: flex;
+  justify-content: center;
+}
+
 .mainDiv {
   text-align: center;
-  padding: 50px 20px;
-  background-color: #e9e8e8;
+  padding: 40px;
+  padding: 40px;
+  max-width: 1600px;
+  width: 100%;
 }
 
 .mainDiv .text {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
 }
 .title {
   text-align: left;
-  margin-left: 15px;
   font-size: 0.9rem;
   font-weight: bold;
-  margin-bottom: 10px;
   color: #333;
 }
 .subtitle {
   text-align: left;
-  margin-left: 15px;
   font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 30px;
   color: #444;
 }
+
 .sectionDesc {
-  position: absolute;
-  right: 15px;
-  text-align: justify;
-  margin-right: 15px;
+  text-align: right;
 }
 
 .steps {
   margin-top: 60px;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   justify-content: center;
   gap: 40px;
   flex-wrap: wrap;
-  margin-bottom: 30px;
 }
 .step {
   background-color: #fff;
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  max-width: 300px;
-  text-align: justify;
+  /* max-width: 300px; */
+  text-align: left;
   transition: transform 0.3s ease;
 }
 .step:hover {
