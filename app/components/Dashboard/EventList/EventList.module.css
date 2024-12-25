@@ -1,0 +1,91 @@
+.eventsList {
+    background-color: #f8f9fa; 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .eventsList h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .eventsList ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .eventsList ul li {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+  }
+  
+  .eventsList ul li:hover {
+    transform: scale(1.02); 
+  }
+  
+  .eventDetails {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .eventInfo {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .eventInfo h3 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+  }
+  
+  .eventInfo p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+  }
+  
+  .eventMeta {
+    text-align: right;
+  }
+  
+  .eventMeta p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .eventMeta p:first-child {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .viewAllButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #000;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .viewAllButton:hover {
+    background-color: #333;
+  }

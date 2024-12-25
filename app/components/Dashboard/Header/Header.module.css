@@ -1,0 +1,20 @@
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .header h1 {
+    font-size: 24px;
+  }
+  
+  .header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  

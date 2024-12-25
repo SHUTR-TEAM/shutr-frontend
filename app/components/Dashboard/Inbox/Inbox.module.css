@@ -1,0 +1,84 @@
+.inbox {
+    background-color: #ffffff; 
+    border: 1px solid #ddd; 
+    border-radius: 10px; 
+    padding: 20px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    width: 300px; 
+    font-family: Arial, sans-serif;
+  }
+  
+  .inbox h2 {
+    font-size: 1.2rem; 
+    margin-bottom: 15px; 
+    color: #333; 
+  }
+  
+  .inbox ul {
+    list-style-type: none; 
+    padding: 0; 
+    margin: 0; 
+  }
+  
+  .inbox ul li {
+    padding: 10px 0; 
+    border-bottom: 1px solid #eee; 
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+  }
+  
+  .inbox ul li:last-child {
+    border-bottom: none; 
+  }
+  
+  
+  .message {
+    display: flex;
+    align-items: center;
+    width: 100%; 
+    position: relative;
+  }
+  
+  
+  .avatar {
+    border-radius: 50%; 
+  }
+  
+  
+  .text {
+    flex: 1; 
+  }
+  
+  .name {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #333;
+    display: block;
+  }
+  
+  .messagePreview {
+    font-size: 0.8rem;
+    color: #777;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+ 
+  .badge {
+    background-color: #007bff; 
+    color: #fff; 
+    border-radius: 50%; 
+    font-size: 0.8rem;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0; 
+    top: 50%; 
+    transform: translateY(-50%);
+  }
+  
