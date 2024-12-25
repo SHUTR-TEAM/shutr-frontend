@@ -24,7 +24,7 @@ function Portfolio() {
 
       <div className= {styles.profilePic}>
         <Image
-                src="/photographer.png"
+                src="/pro.png"
                 alt="Pabodha M. Pathirana"
                 layout="intrinsic" 
                 height={250}
