@@ -1,0 +1,35 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: white;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .links {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .links a {
+    color: #333;
+    font-size: 16px;
+  }
+  
+  .links a:hover {
+    color: #0070f3;
+  }
+  
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .avatar {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
+  
