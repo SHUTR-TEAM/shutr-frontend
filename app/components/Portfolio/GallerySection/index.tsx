@@ -20,7 +20,7 @@ const GallerySection = () => {
               <Image
                 src="/gi.png"
                 alt={`Gallery item ${index + 1}`}
-                width={460}
+                width={390}
                 height={300}
                 className={styles.image}
               />
