@@ -1,13 +1,37 @@
-import React from 'react'
+"use client";
+import React from "react";
 import Image from 'next/image'
 import styles from './index.module.css'
 import Link from 'next/link'
 //import '@fontawesome/fontawesome-free/css/all.min.css';
 import GallerySection from './GallerySection';
+import CustomerReviews from "./CustomerReviews/customerReviews";
+
+import Calendar from './Calendar/calendar';
 
 
+const Portfolio= () => {
+  // Directly manage the current month and year using variables
+  let currentMonth = 2; // March (0-based index)
+  let currentYear = 2024;
 
-function Portfolio() {
+  const handlePrevMonth = () => {
+    if (currentMonth === 0) {
+      currentMonth = 11;
+      currentYear -= 1;
+    } else {
+      currentMonth -= 1;
+    }
+  };
+
+  const handleNextMonth = () => {
+    if (currentMonth === 11) {
+      currentMonth = 0;
+      currentYear += 1;
+    } else {
+      currentMonth += 1;
+    }
+  };
   return (
     <>
     
@@ -40,11 +64,7 @@ function Portfolio() {
         
         </div>
       
-
-        
-      
-      
-          <div className= {styles.profileDetails}>
+          {/* <div className= {styles.profileDetails}>
             <h2>Description</h2>
             <p className= {styles.description}>
             Find professional photographers for every occasion—from weddings to corporate events, all in one place.
@@ -53,7 +73,7 @@ function Portfolio() {
             Find professional photographers for every occasion—from weddings to corporate events, all in one place.
             </p>
           </div>
-
+          
           
           <div className= {styles.tags}>
             <span>Wedding Photography</span>
@@ -61,7 +81,48 @@ function Portfolio() {
             <span>Corporate Photography</span>
           </div>
 
-          
+          <div style={{ display: "flex", justifyContent: "right", marginTop: "50px" }}>
+            <Calendar
+              currentMonth={currentMonth}
+              currentYear={currentYear}
+              onPrevMonth={handlePrevMonth}
+              onNextMonth={handleNextMonth}
+            />
+          </div> */}
+
+          <div className={styles.descriptionAndCalendar}>
+            <div>
+            <h2>Description</h2>
+              <div className={styles.description}>
+                
+                <p>
+                  Find professional photographers for every occasion—from weddings to
+                  corporate events, all in one place. Find professional photographers for
+                  every occasion—from weddings to corporate events, all in one place.
+                  Find professional photographers for every occasion—from weddings to
+                  corporate events, all in one place. Find professional photographers for
+                  every occasion—from weddings to corporate events, all in one place.
+                </p>
+              </div>
+              <div className={styles.tags}>
+                <span>Wedding Photography</span>
+                <span>Portrait Photography</span>
+                <span>Corporate Photography</span>
+              </div>
+            </div>
+            <div className={styles.calendar}>
+              <Calendar
+                currentMonth={currentMonth}
+                currentYear={currentYear}
+                onPrevMonth={handlePrevMonth}
+                onNextMonth={handleNextMonth}
+              />
+            </div>
+          </div>
+
+
+
+
         <section className={styles.connect}>
           <h2>Connect with me</h2>
   
@@ -84,7 +145,10 @@ function Portfolio() {
         < GallerySection/>
 
         
-         
+        <div>
+          <CustomerReviews />
+
+        </div>
 
 
      
@@ -96,4 +160,4 @@ function Portfolio() {
   )
 }
 
-export default Portfolio
+export default Portfolio;
