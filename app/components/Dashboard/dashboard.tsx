@@ -27,6 +27,7 @@ const Dashboard: React.FC = () => {
             <Inbox />
           </div>
         </div>
+        
       </div>
     </div>
   );
