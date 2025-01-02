@@ -1,12 +1,14 @@
+import Card from "../components/Search/Card";
 import CategorySection from "../components/Search/CategorySection";
+import SearchBox from "../components/Search/SeacrhBox";
 // import SearchBox from "../components/Search/SeacrhBox";
-import SmallPortfolio from "../components/Search/SmallPortfolio";
+// import SmallPortfolio from "../components/Search/SmallPortfolio";
 import styles from "./page.module.css";
 
 const data = [
   {
     id: 1,
-    image: "/pic.png",
+    images: ["/pic.png", "/pic.png", "/pic.png"],
     name: "John Doe",
     price: 8000,
     tags: ["Wedding", "Portrait"],
@@ -16,7 +18,7 @@ const data = [
   },
   {
     id: 2,
-    image: "/pic.png",
+    images: ["/pic.png", "/pic.png", "/pic.png"],
     name: "John Doe",
     price: 8000,
     tags: ["Wedding", "Portrait"],
@@ -26,7 +28,7 @@ const data = [
   },
   {
     id: 3,
-    image: "/pic.png",
+    images: ["/pic.png", "/pic.png", "/pic.png"],
     name: "John Doe",
     price: 8000,
     tags: ["Wedding", "Portrait"],
@@ -36,7 +38,7 @@ const data = [
   },
   {
     id: 4,
-    image: "/pic.png",
+    images: ["/pic.png", "/pic.png", "/pic.png"],
     name: "John Doe",
     price: 8000,
     tags: ["Wedding", "Portrait"],
@@ -46,7 +48,7 @@ const data = [
   },
   {
     id: 5,
-    image: "/pic.png",
+    images: ["/pic.png", "/pic.png", "/pic.png"],
     name: "John Doe",
     price: 8000,
     tags: ["Wedding", "Portrait"],
@@ -56,7 +58,7 @@ const data = [
   },
   {
     id: 6,
-    image: "/pic.png",
+    images: ["/pic.png", "/pic.png", "/pic.png"],
     name: "John Doe",
     price: 8000,
     tags: ["Wedding", "Portrait"],
@@ -68,11 +70,17 @@ const data = [
 
 export default function Search() {
   return (
-    <div>
-      <div className={styles.parentContainer}>
+    <div className={styles.Container}>
+      <div>
         <CategorySection />
-        <div className={styles.rightContent}>
-          <SmallPortfolio data={data} /> {/* Fixed data prop */}
+      </div>
+      <div>
+        <div>
+          <SearchBox />
+        </div>
+        <div>
+          {" "}
+          <Card data={data} />
         </div>
       </div>
     </div>
