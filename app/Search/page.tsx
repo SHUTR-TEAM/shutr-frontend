@@ -67,14 +67,14 @@ const data = [
   ];
   
   export default function Search() {
-    return (
-      <div>
-        <div className={styles.parentContainer}>
-            <CategorySection />
-            <div className={styles.rightContent}>
-                <SmallPortfolio data={data} /> {/* Fixed data prop */}
-            </div>
-        </div>        
-      </div>
+    return (   
+      <div className={styles.Container}>
+        <div><CategorySection /></div>
+        <div>
+          <div><SearchBox /></div>   
+          <div>  <SmallPortfolio data={data} /></div>
+        </div>
+      </div>    
     );
+
   }
