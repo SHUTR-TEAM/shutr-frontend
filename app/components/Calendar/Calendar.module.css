@@ -1,0 +1,54 @@
+
+.dashboard {
+    display: flex;
+    height: 120vh;
+    background-color: #f9f9f9;
+  }
+  
+  
+  .mainContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #ffffff;
+    position: relative;
+    height: 125vh;
+  }
+  
+  
+  
+  
+  .grid {
+    
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  
+  .leftColumn {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  
+  .rightColumn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .inboxSection {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: 400px; 
+    z-index: 10; 
+  }
+
+  

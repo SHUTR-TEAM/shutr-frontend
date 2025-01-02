@@ -1,0 +1,108 @@
+/* Main calendar container */
+.calendarContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: #f7f8fc; /* Light gray background */
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+  
+  /* Header styling */
+  .calendarHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .calendarHeader h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .calendarHeader div {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  /* Week view grid styling */
+  .weekView {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 columns for each day */
+    gap: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Individual day column styling */
+  .dayColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .dayColumn span {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #6a1b9a; /* Purple highlight for the date */
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Grid container for events */
+  .eventsGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .eventItem {
+    background-color: #e8eaf6; /* Light purple background */
+    border-left: 4px solid #6a1b9a; /* Purple indicator */
+    border-radius: 8px;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    color: #333;
+  }
+  
+  /* Add hover effect for better interactivity */
+  .eventItem:hover {
+    background-color: #d1c4e9; /* Slightly darker purple on hover */
+    transform: scale(1.02);
+    transition: all 0.2s ease-in-out;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .weekView {
+      grid-template-columns: repeat(2, 1fr); /* Adjust grid for smaller screens */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .calendarHeader {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  
+    .weekView {
+      grid-template-columns: 1fr; /* Single column for mobile */
+    }
+  }
+  
