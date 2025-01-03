@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+//import React from "react";
 import Image from 'next/image'
 import styles from './index.module.css'
 import Link from 'next/link'
@@ -8,30 +8,53 @@ import GallerySection from './GallerySection';
 import CustomerReviews from "./CustomerReviews/customerReviews";
 
 import Calendar from './Calendar/calendar';
-
+import { useState } from "react";
 
 const Portfolio= () => {
   // Directly manage the current month and year using variables
-  let currentMonth = 2; // March (0-based index)
-  let currentYear = 2024;
+  // let currentMonth = 2; // March (0-based index)
+  // let currentYear = 2024;
+
+  // const handlePrevMonth = () => {
+  //   if (currentMonth === 0) {
+  //     currentMonth = 11;
+  //     currentYear -= 1;
+  //   } else {
+  //     currentMonth -= 1;
+  //   }
+  // };
+
+  // const handleNextMonth = () => {
+  //   if (currentMonth === 11) {
+  //     currentMonth = 0;
+  //     currentYear += 1;
+  //   } else {
+  //     currentMonth += 1;
+  //   }
+  // };
+
+
+  const [currentMonth, setCurrentMonth] = useState(2); // March (0-based index)
+  const [currentYear, setCurrentYear] = useState(2024);
 
   const handlePrevMonth = () => {
     if (currentMonth === 0) {
-      currentMonth = 11;
-      currentYear -= 1;
+      setCurrentMonth(11);
+      setCurrentYear(currentYear - 1);
     } else {
-      currentMonth -= 1;
+      setCurrentMonth(currentMonth - 1);
     }
   };
 
   const handleNextMonth = () => {
     if (currentMonth === 11) {
-      currentMonth = 0;
-      currentYear += 1;
+      setCurrentMonth(0);
+      setCurrentYear(currentYear + 1);
     } else {
-      currentMonth += 1;
+      setCurrentMonth(currentMonth + 1);
     }
   };
+
   return (
     <>
     
