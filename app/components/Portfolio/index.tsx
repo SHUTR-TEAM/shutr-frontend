@@ -1,9 +1,9 @@
 "use client";
-//import React from "react";
+
 import Image from 'next/image'
 import styles from './index.module.css'
 import Link from 'next/link'
-//import '@fontawesome/fontawesome-free/css/all.min.css';
+
 import GallerySection from './GallerySection';
 import CustomerReviews from "./CustomerReviews/customerReviews";
 
@@ -11,31 +11,10 @@ import Calendar from './Calendar/calendar';
 import { useState } from "react";
 
 const Portfolio= () => {
-  // Directly manage the current month and year using variables
-  // let currentMonth = 2; // March (0-based index)
-  // let currentYear = 2024;
+ 
 
-  // const handlePrevMonth = () => {
-  //   if (currentMonth === 0) {
-  //     currentMonth = 11;
-  //     currentYear -= 1;
-  //   } else {
-  //     currentMonth -= 1;
-  //   }
-  // };
-
-  // const handleNextMonth = () => {
-  //   if (currentMonth === 11) {
-  //     currentMonth = 0;
-  //     currentYear += 1;
-  //   } else {
-  //     currentMonth += 1;
-  //   }
-  // };
-
-
-  const [currentMonth, setCurrentMonth] = useState(2); // March (0-based index)
-  const [currentYear, setCurrentYear] = useState(2024);
+  const [currentMonth, setCurrentMonth] = useState(0); 
+  const [currentYear, setCurrentYear] = useState(2025);
 
   const handlePrevMonth = () => {
     if (currentMonth === 0) {
@@ -87,31 +66,7 @@ const Portfolio= () => {
         
         </div>
       
-          {/* <div className= {styles.profileDetails}>
-            <h2>Description</h2>
-            <p className= {styles.description}>
-            Find professional photographers for every occasion—from weddings to corporate events, all in one place.
-            Find professional photographers for every occasion—from weddings to corporate events, all in one place. 
-            Find professional photographers for every occasion—from weddings to corporate events, all in one place.
-            Find professional photographers for every occasion—from weddings to corporate events, all in one place.
-            </p>
-          </div>
           
-          
-          <div className= {styles.tags}>
-            <span>Wedding Photography</span>
-            <span>Portrait Photography</span>
-            <span>Corporate Photography</span>
-          </div>
-
-          <div style={{ display: "flex", justifyContent: "right", marginTop: "50px" }}>
-            <Calendar
-              currentMonth={currentMonth}
-              currentYear={currentYear}
-              onPrevMonth={handlePrevMonth}
-              onNextMonth={handleNextMonth}
-            />
-          </div> */}
 
           <div className={styles.descriptionAndCalendar}>
             <div>
