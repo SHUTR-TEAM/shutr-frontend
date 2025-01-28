@@ -5,6 +5,7 @@ import styles from "./CalendarWidgetContainer.module.css";
 import Sidebar from "./Sidebar/Sidebar";
 import Header from "./Header/Header";
 import CalendarWidget from "./CalendarWidget/CalendarWidget";
+import CalendarWorklist from "./CalendarWidget/CalendarWorklist";
 // import EventList from "../../components/Dashboard/EventList/EventList";
 // import ProfileOverview from "../../components/Dashboard/ProfileOverview/ProfileOverview";
 // import Inbox from "../../components/Dashboard/Inbox/Inbox";
@@ -29,6 +30,7 @@ const CalendarWidgetContainer: React.FC = () => {
 
   return (
     <div className={styles.CalendarWidgetContainer}>
+      
       <Sidebar />
       <div className={styles.mainContent}>
        
@@ -38,20 +40,25 @@ const CalendarWidgetContainer: React.FC = () => {
           onPrevMonth={handlePrevMonth}
           onNextMonth={handleNextMonth}
         />
+        
         {/* <Header /> */}
         
-        {/* <div className={styles.grid}>
+        <div className={styles.grid}>
           <div className={styles.leftColumn}>
-            <EventList />
+            {/* <EventList /> */}
+            
           </div>
 
-          <div className={styles.rightColumn}>
+          {/* <div className={styles.rightColumn}>
             <ProfileOverview />
             <Inbox />
-          </div>
-        </div> */}
+            <CalendarWorklist />
+          </div> */}
+        </div>
         
       </div>
+      <CalendarWorklist/>
+      
     </div>
   );
 };

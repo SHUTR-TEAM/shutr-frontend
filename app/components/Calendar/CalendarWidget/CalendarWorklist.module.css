@@ -1,0 +1,83 @@
+.container {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    max-width: 1200px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-left: 30px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #e0e0e0;
+    color: black;
+  }
+  
+  .button.active {
+    background-color: black;
+    color: white;
+  }
+  
+  .calendar {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+  }
+  
+  .cell {
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .timeHeader {
+    font-weight: bold;
+  }
+  
+  .dayHeader {
+    font-weight: bold;
+  }
+  
+  .timeSlot {
+    border-right: 1px solid #ccc;
+    color: #666;
+  }
+  
+  .event {
+    position: relative;
+    height: 60px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .eventTitle {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .eventTime {
+    font-size: 12px;
+  }
+  
