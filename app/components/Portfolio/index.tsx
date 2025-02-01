@@ -1,13 +1,39 @@
-import React from 'react'
+"use client";
+
 import Image from 'next/image'
 import styles from './index.module.css'
 import Link from 'next/link'
-//import '@fontawesome/fontawesome-free/css/all.min.css';
+
 import GallerySection from './GallerySection';
+import CustomerReviews from "./CustomerReviews/customerReviews";
 
+import Calendar from './Calendar/calendar';
+import { useState } from "react";
 
+const Portfolio= () => {
+ 
 
-function Portfolio() {
+  const [currentMonth, setCurrentMonth] = useState(0); 
+  const [currentYear, setCurrentYear] = useState(2025);
+
+  const handlePrevMonth = () => {
+    if (currentMonth === 0) {
+      setCurrentMonth(11);
+      setCurrentYear(currentYear - 1);
+    } else {
+      setCurrentMonth(currentMonth - 1);
+    }
+  };
+
+  const handleNextMonth = () => {
+    if (currentMonth === 11) {
+      setCurrentMonth(0);
+      setCurrentYear(currentYear + 1);
+    } else {
+      setCurrentMonth(currentMonth + 1);
+    }
+  };
+
   return (
     <>
     
@@ -24,7 +50,7 @@ function Portfolio() {
 
       <div className= {styles.profilePic}>
         <Image
-                src="/photographer.png"
+                src="/pro.png"
                 alt="Pabodha M. Pathirana"
                 layout="intrinsic" 
                 height={250}
@@ -40,28 +66,41 @@ function Portfolio() {
         
         </div>
       
+          
 
-        
-      
-      
-          <div className= {styles.profileDetails}>
+          <div className={styles.descriptionAndCalendar}>
+            <div>
             <h2>Description</h2>
-            <p className= {styles.description}>
-            Find professional photographers for every occasion—from weddings to corporate events, all in one place.
-            Find professional photographers for every occasion—from weddings to corporate events, all in one place. 
-            Find professional photographers for every occasion—from weddings to corporate events, all in one place.
-            Find professional photographers for every occasion—from weddings to corporate events, all in one place.
-            </p>
+              <div className={styles.description}>
+                
+                <p>
+                  Find professional photographers for every occasion—from weddings to
+                  corporate events, all in one place. Find professional photographers for
+                  every occasion—from weddings to corporate events, all in one place.
+                  Find professional photographers for every occasion—from weddings to
+                  corporate events, all in one place. Find professional photographers for
+                  every occasion—from weddings to corporate events, all in one place.
+                </p>
+              </div>
+              <div className={styles.tags}>
+                <span>Wedding Photography</span>
+                <span>Portrait Photography</span>
+                <span>Corporate Photography</span>
+              </div>
+            </div>
+            <div className={styles.calendar}>
+              <Calendar
+                currentMonth={currentMonth}
+                currentYear={currentYear}
+                onPrevMonth={handlePrevMonth}
+                onNextMonth={handleNextMonth}
+              />
+            </div>
           </div>
 
-          
-          <div className= {styles.tags}>
-            <span>Wedding Photography</span>
-            <span>Portrait Photography</span>
-            <span>Corporate Photography</span>
-          </div>
 
-          
+
+
         <section className={styles.connect}>
           <h2>Connect with me</h2>
   
@@ -84,7 +123,10 @@ function Portfolio() {
         < GallerySection/>
 
         
-         
+        <div>
+          <CustomerReviews />
+
+        </div>
 
 
      
@@ -96,4 +138,4 @@ function Portfolio() {
   )
 }
 
-export default Portfolio
+export default Portfolio;

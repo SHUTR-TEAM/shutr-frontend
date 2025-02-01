@@ -1,0 +1,149 @@
+.container {
+  display: flex;
+  justify-content: flex-start; 
+  align-items: flex-start;
+  padding: 15px;
+  gap: 20px;
+  margin: 0 auto;
+} 
+.filters {
+  width: 100%;
+  max-width: 300px; 
+  padding: 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+.filters h3 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+.filters h4 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #555;
+}
+.filterGroup {
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.filterButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.filterButtons button {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}  
+.filterButtons button:hover {
+  background-color: #585d63;
+  color: #fff;
+  border-color: #000000;
+  transform: translateY(-2px);
+}
+.priceRange {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.priceRange input {
+  width: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.priceRange input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+.rangeSeparator {
+  font-size: 16px;
+  color: #555;
+  font-weight: bold;
+}
+.filters input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.filters input[type="date"]:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      align-items: flex-start; /* Align items left */
+      padding: 15px;
+    }
+  
+    .filters {
+      max-width: 100%;
+      padding: 15px;
+      box-shadow: none;
+    }
+  
+    .filterButtons button {
+      font-size: 12px;
+      padding: 8px 10px;
+    }
+  
+    .priceRange input {
+      font-size: 12px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .filters {
+      padding: 10px;
+    }
+  
+    .filterButtons {
+      flex-direction: column;
+    }
+  
+    .filterButtons button {
+      width: 100%;
+      padding: 10px;
+    }
+  
+    .priceRange {
+      flex-direction: column; /* Stack inputs vertically */
+      gap: 8px;
+    }
+  
+    .priceRange input {
+      width: 100%; /* Full width on mobile */
+    }
+  
+    .rangeSeparator {
+      display: none; /* Hide separator for stacked inputs */
+    }
+  }
+  

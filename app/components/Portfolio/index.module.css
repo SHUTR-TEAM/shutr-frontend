@@ -66,10 +66,35 @@
     color: #555;
   }
   
+  
+  
+  .connect {
+    margin-top: 25px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-left: 100px; 
+    width: 90%;
+    max-width: 1200px;
+  }
+  
+  .descriptionAndCalendar {
+    display: flex; /* Horizontal alignment for description and calendar */
+    justify-content: space-between; /* Space between the two main sections */
+    align-items: flex-start; /* Align at the top */
+    gap: 20px; /* Add spacing between columns */
+    margin: 50px auto; /* Vertical spacing and center alignment */
+    max-width: 1200px; /* Optional: Limit maximum width for consistent layout */
+  }
+  
+  .description {
+    flex: 1; /* Allow the description to take up remaining space */
+    margin-right: 0; /* Add spacing to the right of the description */
+    font-size: 1rem;
+    color: #555;
+  }
+  
   .tags {
-    padding-top: 20px;
-    flex: 20;
-    margin-left: 95px;
+    padding-top: 15px; /* Adjust spacing between description and tags */
   }
   
   .tags span {
@@ -81,13 +106,24 @@
     font-size: 0.9rem;
   }
   
-  .connect {
-    margin-top: 25px;
-    background-color: #fff;
-    border-radius: 10px;
-    margin-left: 100px; 
-    width: 90%;
-    max-width: 1200px;
+  .calendar {
+    flex: 0 0 300px; /* Fix the width of the calendar */
   }
   
+  
+  @media (max-width: 768px) {
+    .descriptionAndCalendar {
+      flex-direction: column; /* Stack items vertically */
+      align-items: center; /* Center align items for small screens */
+    }
+  
+    .calendar {
+      width: 100%; /* Full width calendar on small screens */
+    }
+  
+    .tags {
+      text-align: center; /* Center tags on smaller screens */
+      padding-top: 10px;
+    }
+  }
   

@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/Layout/Navbar";
 import styles from "./layout.module.css";
+import Footer from "./components/Layout/Footer";
 
 const geologicaSans = localFont({
   src: "./fonts/Geologica.ttf",
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className={geologicaSans.variable}>
         <Navbar />
         <div className={styles.children}>{children}</div>
+        <Footer />
       </body>
     </html>
   );

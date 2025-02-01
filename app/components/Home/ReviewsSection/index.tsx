@@ -10,7 +10,7 @@ const ReviewsSection = () => {
         <div className={styles.testimonial}>
           <div className={styles.testimonialHeader}>
             <Image
-              src="/paboda.jpg"
+              src="/pic.png"
               alt="Pabodha M. Pathirana"
               className={styles.testimonialImage}
               width={50}
