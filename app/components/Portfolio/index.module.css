@@ -14,10 +14,7 @@
     margin-bottom: 60PX;
   }
   
-  .photographer_info {
-    margin-left: 350px;
-    margin-top: 20px;
-  }
+  
   
   
   .profile {
@@ -61,9 +58,17 @@
   }
    
   .description { 
+    margin-top: 100px;
     margin-right: 490px; 
     font-size: 0.95rem;
-    color: #555;
+    
+  }
+
+  .description {
+    flex: 1; /* Allow the description to take up remaining space */
+    margin-right: 0; /* Add spacing to the right of the description */
+    font-size: 1rem;
+    
   }
   
   
@@ -84,14 +89,10 @@
     gap: 20px; /* Add spacing between columns */
     margin: 50px auto; /* Vertical spacing and center alignment */
     max-width: 1200px; /* Optional: Limit maximum width for consistent layout */
+    margin-top: -80px;
   }
   
-  .description {
-    flex: 1; /* Allow the description to take up remaining space */
-    margin-right: 0; /* Add spacing to the right of the description */
-    font-size: 1rem;
-    color: #555;
-  }
+  
   
   .tags {
     padding-top: 15px; /* Adjust spacing between description and tags */
@@ -107,7 +108,8 @@
   }
   
   .calendar {
-    flex: 0 0 300px; /* Fix the width of the calendar */
+    flex: 0 0 300px;  /* Fix the width of the calendar */
+  
   }
   
   

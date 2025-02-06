@@ -9,6 +9,8 @@ import CustomerReviews from "./CustomerReviews/customerReviews";
 
 import Calendar from './Calendar/calendar';
 import { useState } from "react";
+import ProfileHeader from './ProfileHeader';
+
 
 const Portfolio= () => {
  
@@ -38,40 +40,25 @@ const Portfolio= () => {
     <>
     
     <main className={styles.portfolio}>
-        
-        <div className= {styles.banner}>
-        <Image 
-                src="/pbg.png" 
-                alt="Banner" 
-                height={350}
-                width={1540} 
-               
-       />  
 
-      <div className= {styles.profilePic}>
-        <Image
-                src="/pro.png"
-                alt="Pabodha M. Pathirana"
-                layout="intrinsic" 
-                height={250}
-                width={240} 
-                 
-        />
-      </div>
+
+      <div className= {styles.banner}>
+
+        <ProfileHeader/>
        
-        <div className= {styles.photographer_info} >
-            <h1>Pabodha M. Pathirana</h1>
-            <p>⭐⭐⭐⭐⭐ (234)</p>   
-        </div>
         
-        </div>
+        
+      </div>
       
           
 
           <div className={styles.descriptionAndCalendar}>
             <div>
-            <h2>Description</h2>
+
+            
               <div className={styles.description}>
+              <h2>Description</h2>
+              <br></br>
                 
                 <p>
                   Find professional photographers for every occasion—from weddings to
@@ -82,6 +69,7 @@ const Portfolio= () => {
                   every occasion—from weddings to corporate events, all in one place.
                 </p>
               </div>
+              
               <div className={styles.tags}>
                 <span>Wedding Photography</span>
                 <span>Portrait Photography</span>
@@ -127,7 +115,7 @@ const Portfolio= () => {
           <CustomerReviews />
 
         </div>
-
+      
 
      
     </main>
