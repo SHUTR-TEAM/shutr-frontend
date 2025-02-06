@@ -1,0 +1,52 @@
+.background_pencil {
+    position: absolute;
+    bottom: 26.5rem; /* top-2 in Tailwind */
+    
+    right: 1.5rem; /* right-2 in Tailwind */
+    background-color: lightgrey ; /* bg-white */
+    padding: 10px; /* p-2 */
+    border-radius: 55px; /* rounded-full */
+    border-color: wheat;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* shadow */
+  }
+
+  .profile_editor {
+    position: absolute;
+    bottom: 1.5rem; /* top-2 in Tailwind */
+    right: 5rem; /* right-2 in Tailwind */
+    background-color: lightgrey ; /* bg-white */
+    padding: 10px; /* p-2 */
+    border-radius: 55px; /* rounded-full */
+    border-color: wheat;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* shadow */
+  }
+
+  .background_image{
+    margin-top: 19px;
+  }
+
+  .photographer_profilePic_info {
+    margin-top: -30px;
+    position: absolute;
+    border-radius: 50%;
+    transform: translate(35%, -35%)
+  }
+
+  .photographer_info {
+    margin-left: 350px;
+    margin-top: 20px;
+  }
+
+  .rate{
+    margin-left: 350px;
+    margin-top: 20px;
+  }
+
+  .review{
+    margin-left: 40px;
+  }
+
+  
+
+
+ 
