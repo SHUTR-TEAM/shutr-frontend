@@ -1,7 +1,8 @@
+
 import Image from "next/image";
 import styles from "./index.module.css";
-import { useState } from "react";
-import { Pencil,Plus, Star } from "lucide-react";
+import { useEffect,useState } from "react";
+import { Heading, Pencil,Plus, Star } from "lucide-react";
 
 
 export default function ProfileHeader() {
@@ -9,8 +10,25 @@ export default function ProfileHeader() {
   const [coverImage, setCoverImage] = useState("/pbg.png");
   const [userName,setUserName] = useState("Photographer name");
   const [totalReviews,setTotalReviews] = useState(1); 
+
   
-  
+ useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/headers");
+      const result = await response.json();
+
+      if (result.results.length > 0) {
+        const UserData = result.results[0];
+        setUserName(UserData.name || "Photographer")
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  fetchData();
+},[]);
+
     const rating = 4,
     fullStarColor = 'yellow', // Customizable full star color
     emptyStarColor = 'gray',  // Customizable empty star color
@@ -20,10 +38,6 @@ export default function ProfileHeader() {
     const fullStars = /*Math.floor(rating) */3;
     const hasHalfStar = /*rating % 1 >= 0.5 */ true;
     
-
-  
- 
-  
 
   return (
 
@@ -48,7 +62,6 @@ export default function ProfileHeader() {
         <Image
           src={profileImage}
           alt="profile image"
-          layout="intrinsic" 
           height={250}
           width={240}   
           className="rounded-full object-cover w-full h-full"
@@ -59,14 +72,14 @@ export default function ProfileHeader() {
       </div>
        
       <div className= {styles.photographer_info} >
-            <h1> {userName} </h1>
+            <h1>{userName} </h1>
            
       </div>
 
     <div className= {styles.rate} >
       
-      <tr>
-        <td>{[...Array(5)].map((_, index) => (
+        <ul className={styles.list}>
+        <li>{[...Array(5)].map((_, index) => (
           <span 
             key={index}
             className={` ${
@@ -86,17 +99,10 @@ export default function ProfileHeader() {
         </span>
 
     )}
-        </td>
-      </tr>
-        
-
-        
-      
-      
+        </li>
+      </ul>
       
     </div>
-    
-    
     
    </div>
 
