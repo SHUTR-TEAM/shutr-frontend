@@ -1,44 +1,59 @@
 "use client";
 
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import styles from "./index.module.css";
 import { ImAttachment } from "react-icons/im";
 import { LuSend } from "react-icons/lu";
+// import { usePathname } from "next/navigation";
+import { AppDispatch, RootState } from "@/app/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { webSocketManager } from "@/app/services/webSocketManager";
+import { getAllMessages, sendChatMessage } from "@/app/redux/features/chat";
 
 const SingleChat = () => {
-  const userId = 1;
-  const [chatMessages, setChatMessages] = useState([
-    {
-      userId: 1,
-      message:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus facere officia asperiores possimus? Voluptatem sequi soluta labore ad non.",
-      time: "10:00 AM",
-    },
-    {
-      userId: 2,
-      message:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate doloribus facere officia asperiores possimus? Voluptatem sequi soluta labore ad non.",
-      time: "11:00 AM",
-    },
-  ]);
+  // const pathname = usePathname();
+  const dispatch = useDispatch<AppDispatch>();
+  const activeChat = useSelector((state: RootState) => state.chat.activeChat);
 
   const [messageInput, setMessageInput] = useState("");
+  // const [userId, setUserId] = useState<string>("");
+  const userId = "67486d75ae68256f9138068c";
+
+  useEffect(() => {
+    webSocketManager.connect(
+      "chat",
+      "ws://localhost:8000/ws/chat/67a4fa3243112c57452c6392"
+    );
+
+    webSocketManager.subscribe("chat", (incomingMessage) => {
+      console.log("New message received:", incomingMessage);
+      // You can dispatch an action to update Redux state here if needed
+    });
+
+    return () => {
+      webSocketManager.disconnect("chat");
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   const id = pathname.split("/").pop();
+  //   if (id) setUserId(id);
+  // }, [pathname]);
+
+  useEffect(() => {
+    dispatch(getAllMessages({ chatId: "67a4fa3243112c57452c6392" }));
+  }, [dispatch]);
 
   const handleSendMessage = (e: FormEvent) => {
-    console.log("Message sent");
     e.preventDefault();
 
-    setChatMessages((prev) => [
-      ...prev,
-      {
-        userId: userId,
-        message: messageInput,
-        time: new Date().toLocaleTimeString(),
-      },
-    ]);
+    // setMessageInput("");
 
+    dispatch(sendChatMessage({ text: messageInput, senderId: userId }));
     setMessageInput("");
+    console.log("Message sent");
   };
+
   return (
     <div className={styles.mainDiv}>
       <div>
@@ -47,18 +62,18 @@ const SingleChat = () => {
       </div>
 
       <div className={styles.messageList}>
-        {chatMessages.map((message, index) =>
-          message.userId === userId ? (
+        {activeChat.data.messages.map((message, index) =>
+          message.sender === userId ? (
             <OutgoingMessage
               key={index}
-              message={message.message}
-              time={message.time}
+              message={message.text}
+              time={message.timestamp}
             />
           ) : (
             <IncomingMessage
               key={index}
-              message={message.message}
-              time={message.time}
+              message={message.text}
+              time={message.timestamp}
             />
           )
         )}

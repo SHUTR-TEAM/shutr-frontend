@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/Layout/Navbar";
 import styles from "./layout.module.css";
 import Footer from "./components/Layout/Footer";
+import StoreProvider from "./redux/StoreProvider";
 
 const geologicaSans = localFont({
   src: "./fonts/Geologica.ttf",
@@ -24,9 +25,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={geologicaSans.variable}>
-        <Navbar />
-        <div className={styles.children}>{children}</div>
-        <Footer />
+        <StoreProvider>
+          <Navbar />
+          <div className={styles.children}>{children}</div>
+          <Footer />
+        </StoreProvider>
       </body>
     </html>
   );
