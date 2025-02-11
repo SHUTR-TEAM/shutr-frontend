@@ -1,11 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import styles from "../ProfileOverview/ProfileOverview.module.css";
+import styles from "./index.module.css";
 
 const ProfileOverview: React.FC = () => {
   return (
     <div className={styles.container}>
-    
       <div className={styles.profileCard}>
         <div className={styles.profileImage}>
           <Image
@@ -21,7 +20,6 @@ const ProfileOverview: React.FC = () => {
         <button className={styles.viewProfileButton}>View Profile</button>
       </div>
 
-      
       <div className={styles.overviewCard}>
         <h3>Profile Overview</h3>
         <div className={styles.overviewDetails}>

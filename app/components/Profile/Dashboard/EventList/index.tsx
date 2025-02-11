@@ -1,11 +1,26 @@
 import React from "react";
-import styles from "../EventList/EventList.module.css";
+import styles from "./index.module.css";
 
 const EventList: React.FC = () => {
   const events = [
-    { title: "Covering GDG DevFest Event", organizer: "Jane Morrison", date: "2024 / 12 / 12", daysLeft: "12 days left" },
-    { title: "Covering GDG DevFest Event", organizer: "Jane Morrison", date: "2024 / 12 / 12", daysLeft: "12 days left" },
-    { title: "Covering GDG DevFest Event", organizer: "Jane Morrison", date: "2024 / 12 / 12", daysLeft: "12 days left" },
+    {
+      title: "Covering GDG DevFest Event",
+      organizer: "Jane Morrison",
+      date: "2024 / 12 / 12",
+      daysLeft: "12 days left",
+    },
+    {
+      title: "Covering GDG DevFest Event",
+      organizer: "Jane Morrison",
+      date: "2024 / 12 / 12",
+      daysLeft: "12 days left",
+    },
+    {
+      title: "Covering GDG DevFest Event",
+      organizer: "Jane Morrison",
+      date: "2024 / 12 / 12",
+      daysLeft: "12 days left",
+    },
   ];
 
   return (
