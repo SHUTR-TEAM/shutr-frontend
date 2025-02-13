@@ -5,13 +5,38 @@ import { useEffect,useState } from "react";
 import { Heading, Pencil,Plus, Star } from "lucide-react";
 
 
-export default function ProfileHeader() {
-  const [profileImage, setProfileImage] = useState("/pro.png");
-  const [coverImage, setCoverImage] = useState("/pbg.png");
-  const [userName,setUserName] = useState("Photographer name");
-  const [totalReviews,setTotalReviews] = useState(1); 
+interface ProfileHeaderProps {
+  id: string;
+  name: string;
+  coverImageUrl : string ;
+  profileImageUrl : String ;
+  //time: string;
+  //imgUrl: string;
+  
+}
+
+
+export default function ProfileHeader({
+  id,
+  name,
+  coverImageUrl ,
+  profileImageUrl ,
+  //time,
+  //imgUrl,
+}: ProfileHeaderProps)   {
 
   
+
+  //const data = useSelector((state:RootState) => state.portfolio.);
+  //const status = useSelector((state: RootState) => state.portfolio.status);
+
+
+  //const [profileImage, setProfileImage] = useState("/pro.png");
+  //const [coverImage, setCoverImage] = useState("/pbg.png");
+  //const [userName,setUserName] = useState("Photographer name");
+  const [totalReviews,setTotalReviews] = useState(1); 
+
+  /*
  useEffect(() => {
   const fetchData = async () => {
     try {
@@ -28,6 +53,7 @@ export default function ProfileHeader() {
   };
   fetchData();
 },[]);
+*/
 
     const rating = 4,
     fullStarColor = 'yellow', // Customizable full star color
@@ -37,16 +63,23 @@ export default function ProfileHeader() {
 
     const fullStars = /*Math.floor(rating) */3;
     const hasHalfStar = /*rating % 1 >= 0.5 */ true;
+
+
+
+
+    
+    
+    
     
 
   return (
 
    <div>
-
       {/* Cover Photo */}
       <div className={styles.background_image}>
         <Image
-          src={coverImage}
+          //src={coverImage}
+          src={coverImageUrl}
           alt="Cover image"
           width={1540}
           height={350}
@@ -60,7 +93,8 @@ export default function ProfileHeader() {
       {/* Profile Image */}
       <div className={styles.photographer_profilePic_info}>
         <Image
-          src={profileImage}
+          //src={profileImage}
+          src={profileImageUrl}
           alt="profile image"
           height={250}
           width={240}   
@@ -72,7 +106,7 @@ export default function ProfileHeader() {
       </div>
        
       <div className= {styles.photographer_info} >
-            <h1>{userName} </h1>
+            <h1>{name} </h1>
            
       </div>
 

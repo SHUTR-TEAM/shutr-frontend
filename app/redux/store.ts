@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import chatReducer from "./features/chat";
+import portfolioReducer from "./features/portfolio"
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       chat: chatReducer,
+      portfolio : portfolioReducer,
     },
   });
 };

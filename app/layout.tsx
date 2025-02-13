@@ -25,8 +25,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={geologicaSans.variable}>
+        <StoreProvider>
         <Navbar />
         <div className={styles.children}>{children}</div>
+        </StoreProvider>
+        
       </body>
     </html>
   );
