@@ -19,10 +19,18 @@ const initialState: PortfolioState = {
       isLoading: false,
       isSuccessful: false,
       serverPortfolio: "",
-      data: {
-        portfolio: null,
-      },
+      data:  null,
+      
     },
+    
+    activeGallery: {
+      isLoading: false,
+      isSuccessful: false,
+      serverPortfolio: "",
+      data: null,
+    },
+
+
     createPortfolio: {
       isLoading: false,
       isSuccessful: false,
@@ -30,13 +38,9 @@ const initialState: PortfolioState = {
       data: null,
     },
   };
-  
 
 
-
-
-
-export const getAllportfolio = createAsyncThunk(
+  export const getAllportfolio = createAsyncThunk(
     "portfolio/get-all",
     async ({ participantId }: { participantId: string }, { rejectWithValue }) => {
       const config = {
@@ -49,13 +53,95 @@ export const getAllportfolio = createAsyncThunk(
       };
   
       try {
-        return await axios.get("http://127.0.0.1:8000/api/headers").then((res) => res.data);
+       // return await axios.get("http://127.0.0.1:8000/api/headers").then((res) => res.data);
+       return await axios.get("http://127.0.0.1:8000/api/headers").then((res) => res.data);
       } catch (error) {
         const e = error as AxiosError;
         return rejectWithValue(e.message);
       }
     }
   );
+
+  export const getByIdportfolio = createAsyncThunk(
+  "portfolio/get-by-id",
+    async ({ participantId }: { participantId: string }, { rejectWithValue }) => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        params: {
+          participantId,
+        },
+      };
+  
+      try {
+
+       return await axios.get("http://127.0.0.1:8000/api/headers/67ab65b24cb48a7c886d0dfa").then((res) => res.data);
+
+      //  const [portfolioResponse, galleryResponse] = await Promise.all([
+      //   axios.get("http://127.0.0.1:8000/api/headers/67ab65b24cb48a7c886d0dfa"),
+      //   axios.get("http://127.0.0.1:8000/api/galleries/67aecc532071993d23e91175"),
+      //  ])
+
+
+      
+      } catch (error) {
+        const e = error as AxiosError;
+        return rejectWithValue(e.message);
+      }
+    }
+  );
+
+
+
+
+
+  export const getByIdgallery = createAsyncThunk(
+    "gallery/get-by-id",
+      async ({ participantId }: { participantId: string }, { rejectWithValue }) => {
+        const config = {
+          galleries: {
+            "Content-Type": "application/json",
+          },
+          params: {
+            participantId,
+          },
+        };
+    
+        try {
+  
+         return await axios.get("http://127.0.0.1:8000/api/galleries/67aecc532071993d23e91175").then((res) => res.data);
+  
+        //  const [portfolioResponse, galleryResponse] = await Promise.all([
+        //   axios.get("http://127.0.0.1:8000/api/headers/67ab65b24cb48a7c886d0dfa"),
+        //   axios.get("http://127.0.0.1:8000/api/galleries/67aecc532071993d23e91175"),
+        //  ])
+  
+  
+        
+        } catch (error) {
+          const e = error as AxiosError;
+          return rejectWithValue(e.message);
+        }
+      }
+    );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   const portfolioSlice = createSlice({
@@ -65,7 +151,7 @@ export const getAllportfolio = createAsyncThunk(
 
     },
     extraReducers: (builder) => {
-        // Get all chats
+        // Get all portfolio
         // Pending
         builder.addCase(getAllportfolio.pending, (state) => {
         state.allPortfolio = {
@@ -76,6 +162,36 @@ export const getAllportfolio = createAsyncThunk(
         };
         });
 
+        // Get by id  portfolio
+        // Pending
+        builder.addCase(getByIdportfolio.pending, (state) => {
+          state.activePortfolio = {
+              isLoading: true,
+              isSuccessful: false,
+              serverPortfolio: "",
+              //data : null;
+              data: null,
+          };
+          });
+
+          
+        
+        // Get by id  gallery
+        // Pending
+        builder.addCase(getByIdgallery.pending, (state) => {
+          state.activeGallery = {
+              isLoading: true,
+              isSuccessful: false,
+              serverPortfolio: "",
+              //data : null;
+              data: null,
+          };
+          });  
+
+
+
+
+
         // Fulfilled
             builder.addCase(getAllportfolio.fulfilled, (state, action) => {
               state.allPortfolio = {
@@ -85,6 +201,31 @@ export const getAllportfolio = createAsyncThunk(
                 data: action.payload,
               };
             });
+
+
+            // Fulfilled
+            builder.addCase(getByIdportfolio.fulfilled, (state, action) => {
+              state.activePortfolio = {
+                isLoading: false,
+                isSuccessful: true,
+                serverPortfolio: "",
+                data: action.payload,
+              };
+            });
+
+
+            // Fulfilled
+            builder.addCase(getByIdgallery.fulfilled, (state, action) => {
+              state.activeGallery = {
+                isLoading: false,
+                isSuccessful: true,
+                serverPortfolio: "",
+                data: action.payload,
+              };
+            });
+
+
+
         
             // Rejected
             builder.addCase(getAllportfolio.rejected, (state, action) => {
@@ -95,6 +236,29 @@ export const getAllportfolio = createAsyncThunk(
                 data: null,
               };
             });
+
+            // Rejected
+            builder.addCase(getByIdportfolio.rejected, (state, action) => {
+              state.activePortfolio = {
+                isLoading: false,
+                isSuccessful: false,
+                serverPortfolio: action.payload as string,
+                data:  null,
+              };
+            });
+
+
+            // Rejected
+            builder.addCase(getByIdgallery.rejected, (state, action) => {
+              state.activeGallery = {
+                isLoading: false,
+                isSuccessful: false,
+                serverPortfolio: action.payload as string,
+                data:  null,
+              };
+            });
+
+
         
     },
   });

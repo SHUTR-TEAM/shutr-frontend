@@ -4,6 +4,7 @@ export interface PortfolioState {
   allPortfolio: AllPortfolio;
   activePortfolio: ActivePortfolio;
   createPortfolio: CreatePortfolio;
+  activeGallery : ActiveGallery;
 }
 
 export interface AllPortfolio {
@@ -17,7 +18,14 @@ export interface ActivePortfolio {
   isLoading: boolean;
   isSuccessful: boolean;
   serverPortfolio: string;
-  data: ChatDetails;
+  data: Portfolio | null;
+}
+
+export interface ActiveGallery {
+  isLoading: boolean;
+  isSuccessful: boolean;
+  serverPortfolio: string;
+  data: Gallery | null;
 }
 
 export interface CreatePortfolio {
@@ -27,15 +35,24 @@ export interface CreatePortfolio {
   data: Portfolio | null;
 }
 
-export interface ChatDetails {
-  portfolio: Portfolio | null;
-}
+
 
 export interface Portfolio {
   id: string;
   name: string;
-  participants: string[];
-  participant_details: User[];
+  Background_image_url : string;
+  profile_image_url :string;
+  //participants: string[];
+  //participant_details: User[];
   results:string[];
+  description : string;
+  
   
 }
+
+export interface Gallery {
+  id: string;
+  photo_collection : string[];
+  
+}
+

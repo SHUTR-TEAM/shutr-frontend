@@ -9,7 +9,7 @@ interface ProfileHeaderProps {
   id: string;
   name: string;
   coverImageUrl : string ;
-  profileImageUrl : String ;
+  profileImageUrl : string ;
   //time: string;
   //imgUrl: string;
   
@@ -79,7 +79,7 @@ export default function ProfileHeader({
       <div className={styles.background_image}>
         <Image
           //src={coverImage}
-          src={coverImageUrl}
+          src={coverImageUrl ||  "/pbg.png"}
           alt="Cover image"
           width={1540}
           height={350}
@@ -94,7 +94,7 @@ export default function ProfileHeader({
       <div className={styles.photographer_profilePic_info}>
         <Image
           //src={profileImage}
-          src={profileImageUrl}
+          src={profileImageUrl || "/pro.png"}
           alt="profile image"
           height={250}
           width={240}   

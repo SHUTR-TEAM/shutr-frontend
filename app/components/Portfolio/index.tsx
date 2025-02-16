@@ -12,7 +12,7 @@ import { FaFacebook, FaInstagram,   FaTwitter, FaLinkedin } from 'react-icons/fa
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/app/redux/store";
-import { getAllportfolio } from "@/app/redux/features/portfolio";
+import { getAllportfolio , getByIdportfolio, getByIdgallery} from "@/app/redux/features/portfolio";
 
 
 
@@ -55,15 +55,38 @@ const Portfolio= () => {
 
   const dispatch: AppDispatch = useDispatch();
     
-      useEffect(() => {
+      /*useEffect(() => {
         // fetch all portfolio
         dispatch(getAllportfolio({ participantId: "" }));
       }, [dispatch]);
+      */
+
+      useEffect(() => {
+        // fetch by id portfolio
+        dispatch(getByIdportfolio({ participantId: "" }));
+      }, [dispatch]);
+
+
+      useEffect(() => {
+        // fetch by id gallery
+        dispatch(getByIdgallery({ participantId: "" }));
+      }, [dispatch]);
+
+
+
     
       //const allPortfolio = useSelector((state: RootState) => state.portfolio.allPortfolio);
       //const allPortfolio = useSelector((state: RootState) => state.portfolio.allPortfolio) || { data: [] };
-      const allPortfolio = useSelector((state: RootState) => state.portfolio.allPortfolio) || { results: [] };
-      const Profile = allPortfolio?.data?.results?.find(profile => profile.id === "67acf4d1ce9e81d9345dc6ee");
+      
+      //const allPortfolio = useSelector((state: RootState) => state.portfolio.allPortfolio) || { results: [] };
+      const activePortfolio = useSelector((state: RootState) => state.portfolio.activePortfolio) || { results: [] };
+      const activeGallery = useSelector((state: RootState) => state.portfolio.activeGallery) || { results: [] };
+      
+
+
+      //const Profile = allPortfolio?.data?.results?.find(profile => profile.id === "67acf4d1ce9e81d9345dc6ee");
+      const Profile = activePortfolio?.data ;
+      const Gallery = activeGallery?.data;
 
 
 
@@ -75,8 +98,14 @@ const Portfolio= () => {
       //console.log("allPortfolio:", allPortfolio);
       //console.log("allPortfolio.data:", allPortfolio?.data);
       
-      console.log("allPortfolio.data.results:", allPortfolio?.data?.results);
-
+      //console.log("allPortfolio.data.results:", allPortfolio?.data?.results);
+      //console.log("allPortfolio.data:", allPortfolio?.data);
+      //console.log("allPortfolio.data.results:", activePortfolio?.data?.results);
+      console.log("allPortfolio.data:",activePortfolio?.data);
+      //console.log("allPortfolio.data.portfolio:",activePortfolio?.data);
+      console.log("allPortfolio.data.gallery", activeGallery.data);
+      //console.log("id :",activePortfolio?.data);
+      //console.log('name', Profile.portfolio?.name );
 
 
 
@@ -94,8 +123,9 @@ const Portfolio= () => {
         <ProfileHeader 
         id={Profile.id} 
         name={Profile.name } 
-        coverImageUrl={Profile.Background_image_url}
-        profileImageUrl={Profile.profile_image_url}
+        coverImageUrl={Profile.Background_image_url }
+
+        profileImageUrl={Profile.profile_image_url }
         
         />
 
@@ -119,15 +149,18 @@ const Portfolio= () => {
 
             
               <div className={styles.description}>
-                <h2>Description</h2>
-                <br></br>
+                
                 
 
                   <div>
                     {Profile ? (
+                      
                       <div key={Profile.id}>
+                        <h2>Description</h2>
+                        <br></br>
                         <p>
                            {Profile.description}
+        
                         </p>
                       
                       </div>
@@ -187,8 +220,24 @@ const Portfolio= () => {
         </section>
         
         
+
+        <div>
+        {Gallery ? (
+      <div key={Gallery.id}>
+        < GallerySection
+           photo_collection = {Gallery.photo_collection}
+        />
+      </div>
+    ) : (
+      <p>Loading...</p>
+    )}
+        </div>
+        
+      
            
-        < GallerySection/>
+        
+
+          
 
         
         <div>
