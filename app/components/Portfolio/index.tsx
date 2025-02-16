@@ -26,7 +26,7 @@ import CustomerReviews from "./CustomerReviews/customerReviews";
 import Calendar from './Calendar/calendar';
 import { useState,useEffect } from "react";
 import ProfileHeader from './ProfileHeader';
-
+import Packages from './Packages/packages';
 
 const Portfolio= () => {
  
@@ -156,6 +156,7 @@ const Portfolio= () => {
                 onPrevMonth={handlePrevMonth}
                 onNextMonth={handleNextMonth}
               />
+              <Packages/>
             </div>
           </div>
 
