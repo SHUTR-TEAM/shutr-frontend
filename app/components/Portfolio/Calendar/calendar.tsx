@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+//import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Calendar.module.css";
 
 interface CalendarProps {
@@ -15,10 +16,44 @@ const Calendar: React.FC<CalendarProps> = ({
   onPrevMonth,
   onNextMonth,
 }) => {
+  // const [selectedDay, setSelectedDay] = useState<number | null>(null);
+
+  // const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+  // const getMonthName = (month: number) =>
+  //   new Date(currentYear, month).toLocaleString("default", { month: "long" });
+
+  // const handleDayClick = (day: number) => {
+  //   setSelectedDay(day);
+  // };
+  
+  
+  const today = new Date();
+  const currentDay = today.getDate();
+  const isCurrentMonth =
+    today.getMonth() === currentMonth && today.getFullYear() === currentYear;
+
+  const [selectedDay, setSelectedDay] = useState<number | null>(
+    isCurrentMonth ? currentDay : null
+  );
+
+  useEffect(() => {
+    // Auto-select current day if in the current month, otherwise reset selection
+    if (isCurrentMonth) {
+      setSelectedDay(currentDay);
+    } else {
+      setSelectedDay(null);
+    }
+  }, [currentMonth, currentYear]);
+
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
   const getMonthName = (month: number) =>
     new Date(currentYear, month).toLocaleString("default", { month: "long" });
+
+  const handleDayClick = (day: number) => {
+    setSelectedDay(day);
+  };
 
   const renderDays = () => {
     const firstDay = new Date(currentYear, currentMonth, 1).getDay();
@@ -28,9 +63,20 @@ const Calendar: React.FC<CalendarProps> = ({
     });
 
     return calendarDays.map((day, index) => (
+      // <div
+      //   key={index}
+      //   className={`${styles.day} ${day ? styles.activeDay : ""}`}
+      //   aria-hidden={!day}
+      // >
+      //   {day}
+      // </div>
+
       <div
         key={index}
-        className={`${styles.day} ${day ? styles.activeDay : ""}`}
+        className={`${styles.day} ${day ? styles.activeDay : ""} ${
+          day === selectedDay ? styles.selectedDay : ""
+        }`}
+        onClick={() => day && handleDayClick(day)}
         aria-hidden={!day}
       >
         {day}
