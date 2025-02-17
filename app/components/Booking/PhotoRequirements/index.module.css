@@ -1,0 +1,45 @@
+.container {
+  padding: 1rem 0;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+}
+
+.formSection {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checkboxGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.checkboxItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.textarea {
+  min-height: 100px;
+  margin-top: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  outline: none;
+  padding: 10px;
+}
+
+@media (max-width: 640px) {
+  .checkboxGrid {
+    grid-template-columns: 1fr;
+  }
+}
