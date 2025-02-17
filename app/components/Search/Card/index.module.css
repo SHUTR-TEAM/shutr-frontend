@@ -1,0 +1,205 @@
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 35px;
+  padding: 10px 30px;
+  width: 100%;
+  margin: 0 auto;
+}
+.card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  padding: 10px;  
+}
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.cardImages {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 0;
+}
+.imageWrapper {
+  flex: 1;
+  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.cardContent {
+  padding: 15px;
+}
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+.description {
+  text-align: justify;
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 15px;
+  line-height: 1.8;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.tag {
+  background-color: #f0f0f0;
+  color: #555;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  margin:20px 0px;
+}
+
+.name {
+  font-weight: bold;
+  font-size: 16px;
+  color: rgb(64, 63, 63);
+
+}
+
+.location {
+  color: #666;
+  font-size: 14px;
+  margin:5px 0px;
+}
+.review{
+  display: flex;
+}
+
+.reviews {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 10px;
+}
+.starIcon{
+  margin-left: 8px;
+}
+
+.cardActions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.bookIcon{
+  color: rgb(255, 255, 255);
+  margin-right: 8px;
+  margin-top: 1.5px;
+}
+.btnPrimary {
+  display: flex;
+  background-color: #424242;
+  color: white;
+  border: none;
+  padding: 10px 95px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.btnSecondary {
+  display: flex;
+  color:black;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.msgIcon{
+  margin-right: 8px;
+  margin-top: 1.5px;
+}
+
+.btnPrimary:hover {
+  background-color: #000000;
+}
+
+.btnSecondary:hover {
+  color: white;
+  background-color:black;
+}
+@media(max-width:1865px){
+  .btnPrimary{
+    padding: 10px 65px;
+  }
+}@media(max-width:1670px){
+  .btnPrimary{
+    padding: 10px 45px;
+    font-size: 13px;
+  }
+  .btnSecondary {
+    font-size: 13px;
+  }
+}
+@media (max-width: 1520px) {
+  .cards {
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    padding: 15px;
+  }
+  .card {
+    margin-bottom: 15px;
+  }
+  .cardActions {
+    gap: 8px;
+  }
+}
+@media (max-width: 1066px) {
+  .cards {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+  .card {
+    margin-bottom: 20px;
+  }
+  .btnPrimary, .btnSecondary {
+    width: 100%;
+    text-align: center;
+  }
+  .cardActions {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+@media (max-width: 480px) {
+  .price {
+    font-size: 16px;
+  }
+
+  .description {
+    font-size: 12px;
+  }
+
+  .name {
+    font-size: 14px;
+  }
+
+  .location {
+    font-size: 12px;
+  }
+
+  .reviews {
+    font-size: 12px;
+  }
+}
