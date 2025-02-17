@@ -1,14 +1,15 @@
 import Image from 'next/image';
-import styles from "./index.module.css";
+import styles from "./index.module.css"
 import { MdLibraryBooks } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
 import { BsFillChatTextFill } from "react-icons/bs";
 
 interface Item {
-  id: number;
+  id?: number;
   images: string[];
   name: string;
   price: number;
+  description:string;
   tags: string[];
   location: string;
   reviews: number;
@@ -20,8 +21,8 @@ interface CardsProps {
 const Card = ({ data }: CardsProps) => {
   return (
     <div className={styles.cards}>
-      {data.map((item) => (
-        <div key={item.id} className={styles.card}>
+      {data.map((item,index) => (
+        <div key={item.id ?? index} className={styles.card}>
           <div className={styles.cardImages}>
             {Array.isArray(item.images) && item.images.slice(0, 3).map((image, index) => (
             <div key={index} className={styles.imageWrapper}>
@@ -40,7 +41,7 @@ const Card = ({ data }: CardsProps) => {
           <div className={styles.cardContent}>
             <h4 className={styles.price}>From {item.price} LKR</h4>
             <p className={styles.description}>
-              Find professional photographers for every occasion—from weddings to corporate events, all in one place.
+              {item.description}
             </p>
             <div className={styles.tags}>
               {item.tags.map((tag, index) => (
