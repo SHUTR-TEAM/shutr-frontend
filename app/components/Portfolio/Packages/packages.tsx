@@ -1,8 +1,11 @@
-import { useState } from 'react';
+"use client";
+
+import { useRouter } from "next/navigation";
+//import React from "react";
 //import { useNavigate } from 'react-router-dom';
 import styles from './Packages.module.css';
 
-const Packages = () => {
+// const Packages = () => {
   //const navigate = useNavigate();
   // const [selectedPackage, setSelectedPackage] = useState(null);
 
@@ -38,11 +41,53 @@ const Packages = () => {
   //     alert('Please select a package before booking.');
   //   }
   // };
+
+  interface Package {
+    id: number;
+    title: string;
+    price: string;
+    description: string;
+    details: string[];
+    packageType: string;
+  }
+  
+  const Packages = () => {
+    const router = useRouter();
+  
+    const packages: Package[] = [
+      {
+        id: 1,
+        title: "Basic Session",
+        price: "$150",
+        description: "1-hour photo session with 10 edited photos",
+        details: ["1 hour of coverage", "10 edited photos", "Digital delivery"],
+        packageType: "basic",
+      },
+      {
+        id: 2,
+        title: "Premium Package",
+        price: "$300",
+        description: "2-hour photo session with 25 edited photos",
+        details: [
+          "2 hours of coverage",
+          "25 edited photos",
+          "Digital delivery",
+          "Print release",
+        ],
+        packageType: "premium",
+      },
+    ];
+  
+    const handleBookNow = (pkg: Package) => {
+      // Use query params instead of React Router's 'state'
+      router.push(`/booking?package=${pkg.packageType}`);
+    };
+
   return (
     <div className={styles.container}>
       <h2 className={styles.heading}>Packages</h2>
       
-      <div className={styles.packageCard}>
+      {/* <div className={styles.packageCard}>
         <div className={styles.packageHeader}>
           <h3 className={styles.packageTitle}>Basic Session</h3>
           <span className={styles.packagePrice}>$150</span>
@@ -67,7 +112,29 @@ const Packages = () => {
           <li>Digital delivery</li>
           <li>Print release</li>
         </ul>
-      </div>
+      </div> */}
+
+
+      {packages.map((pkg) => (
+        <div key={pkg.id} className={styles.packageCard}>
+          <div className={styles.packageHeader}>
+            <h3 className={styles.packageTitle}>{pkg.title}</h3>
+            <span className={styles.packagePrice}>{pkg.price}</span>
+          </div>
+          <p className={styles.packageDescription}>{pkg.description}</p>
+          <ul className={styles.packageList}>
+            {pkg.details.map((detail, index) => (
+              <li key={index}>{detail}</li>
+            ))}
+          </ul>
+          <button
+            className={styles.bookButton}
+            onClick={() => handleBookNow(pkg)}
+          >
+            Book Now
+          </button>
+        </div>
+      ))}
 
         {/* <div className={styles.container}>
         <h2 className={styles.heading}>Packages</h2>
@@ -96,11 +163,11 @@ const Packages = () => {
       {/* <button className={styles.bookButton} onClick={() => navigate('/book')}>Book Now</button>
       <button className={styles.messageButton}onClick={() => navigate('/message')}> */}
       {/* <button className={styles.bookButton} onClick={handleBookNow}>Book Now</button> */}
-      <button className={styles.bookButton}>Book Now</button>
+      {/* <button className={styles.bookButton}>Book Now</button> */}
       <button className={styles.messageButton}>
         <span className={styles.icon}>&#128172;</span> Message Photographer
       </button>
     </div>
   );
-}
+};
 export default Packages;
