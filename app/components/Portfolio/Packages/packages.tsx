@@ -127,13 +127,9 @@ import styles from './Packages.module.css';
               <li key={index}>{detail}</li>
             ))}
           </ul>
-          <button
-            className={styles.bookButton}
-            onClick={() => handleBookNow(pkg)}
-          >
-            Book Now
-          </button>
+          
         </div>
+        
       ))}
 
         {/* <div className={styles.container}>
