@@ -33,29 +33,29 @@ const CalendarWidgetContainer: React.FC = () => {
       
       <Sidebar />
       <div className={styles.mainContent}>
-       <div className={styles.calendarWrapper}>
-        <CalendarWidget
-          currentMonth={currentMonth}
-          currentYear={currentYear}
-          onPrevMonth={handlePrevMonth}
-          onNextMonth={handleNextMonth}
-        />
-        
-        {/* <Header /> */}
-        
-        <div className={styles.grid}>
-          <div className={styles.leftColumn}>
-            {/* <EventList /> */}
-            
-          </div>
+        <div className={styles.calendarWrapper}>
+          <CalendarWidget
+            currentMonth={currentMonth}
+            currentYear={currentYear}
+            onPrevMonth={handlePrevMonth}
+            onNextMonth={handleNextMonth}
+          />
+          
+          {/* <Header /> */}
+          
+          <div className={styles.grid}>
+            <div className={styles.leftColumn}>
+              {/* <EventList /> */}
+              
+            </div>
 
-          {/* <div className={styles.rightColumn}>
-            <ProfileOverview />
-            <Inbox />
-            <CalendarWorklist />
-          </div> */}
+            {/* <div className={styles.rightColumn}>
+              <ProfileOverview />
+              <Inbox />
+              <CalendarWorklist />
+            </div> */}
+          </div>
         </div>
-      </div>
       </div>
       <CalendarWorklist/>
       
