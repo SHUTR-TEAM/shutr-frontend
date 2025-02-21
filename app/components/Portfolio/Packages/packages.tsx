@@ -76,6 +76,19 @@ import styles from './Packages.module.css';
         ],
         packageType: "premium",
       },
+      {
+        id: 3,
+        title: "Premium Package",
+        price: "$300",
+        description: "2-hour photo session with 25 edited photos",
+        details: [
+          "2 hours of coverage",
+          "25 edited photos",
+          "Digital delivery",
+          "Print release",
+        ],
+        packageType: "premium",
+      },
     ];
   
     const handleBookNow = (pkg: Package) => {

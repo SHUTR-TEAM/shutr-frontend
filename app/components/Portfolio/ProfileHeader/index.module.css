@@ -22,7 +22,9 @@
   }
 
   .background_image{
-    margin-top: 19px;
+    border-radius: 20px;
+    display:flex;
+    margin-top: 19px 20px;
   }
 
   .photographer_profilePic_info {

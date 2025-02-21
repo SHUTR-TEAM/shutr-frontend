@@ -45,7 +45,8 @@
   }
 
   .social_icon {
-    color: rgb(23, 145, 232);
+    color:#333;
+    /* color: rgb(23, 145, 232); */
     display: flex;
     height: auto;
     gap: 20px;
@@ -61,7 +62,7 @@
   }
 
   .description { 
-    margin-top: 100px;
+    margin-top: 60px;
     margin-right: 490px; 
     font-size: 0.95rem;
     
@@ -77,12 +78,12 @@
   
   
   .connect {
-    margin-top: 25px;
+    margin-top: 40px;
     background-color: #fff;
     border-radius: 10px;
-    margin-left: 100px; 
-    width: 90%;
-    max-width: 1200px;
+    margin-left: 0; 
+    width: 50%;
+    max-width: 800px;
   }
   
   .descriptionAndCalendar {
