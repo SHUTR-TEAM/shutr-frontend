@@ -2,13 +2,14 @@
 .calendarContainer {
   font-family: Arial, sans-serif;
   width: 100%;
-  max-width: 550px;
+  height: 50%;
+  max-width: 350px;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   padding: 16px;
   text-align: center;
-  margin-left: 30px;
+  margin-left: 5px;
 }
 
 .calendarHeader {

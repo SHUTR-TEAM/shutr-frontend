@@ -1,26 +1,39 @@
 
-.dashboard {
+/* .dashboard {
     display: flex;
     height: 120vh;
     background-color: #f9f9f9;
+  } */
+  .CalendarWidgetContainer {
+    display: flex;
+    /* height:130vh; */
+    background-color: #f9f9f9;
   }
-  
   
   .mainContent {
     flex: 1;
-    display: flex;
+    display:flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 20px 40px 20px 0;
     background-color: #000;
-    position: relative;
+    position:relative;
     height: 125vh;
-    width: 650px;
-    margin-left: 16rem;
+    width: 400px;
+    margin-left: 0;
+    
     
   }
   
   
   
+  
+  
+  .calendarWrapper {
+    display: flex;
+    justify-content: flex-start; /* Align calendar widget to the right */
+    flex: 1;
+    padding-left: 2rem; /* Adjust spacing */
+  }
   
 
   

@@ -33,7 +33,7 @@ const CalendarWidgetContainer: React.FC = () => {
       
       <Sidebar />
       <div className={styles.mainContent}>
-       
+       <div className={styles.calendarWrapper}>
         <CalendarWidget
           currentMonth={currentMonth}
           currentYear={currentYear}
@@ -55,7 +55,7 @@ const CalendarWidgetContainer: React.FC = () => {
             <CalendarWorklist />
           </div> */}
         </div>
-        
+      </div>
       </div>
       <CalendarWorklist/>
       
