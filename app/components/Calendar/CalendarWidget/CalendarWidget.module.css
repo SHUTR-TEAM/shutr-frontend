@@ -2,7 +2,7 @@
 .calendarContainer {
   font-family: Arial, sans-serif;
   width: 100%;
-  height: 50%;
+  height: 52%;
   max-width: 350px;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
@@ -11,6 +11,8 @@
   text-align: center;
   margin-left: 5px;
 }
+
+
 
 .calendarHeader {
   display: flex;
@@ -126,6 +128,11 @@
   margin-top: 1rem;
 }
 
+.selectedDay {
+  background-color: #000 !important;
+  color: #fff !important;
+  transform: scale(1.1);
+}
 @media (max-width: 400px) {
   .calendarContainer {
     max-width: 100%;

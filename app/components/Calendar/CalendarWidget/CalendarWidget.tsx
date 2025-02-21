@@ -1,6 +1,7 @@
 
 "use client";
-import React from "react";
+// import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./CalendarWidget.module.css";
 
 interface CalendarProps {
@@ -16,10 +17,44 @@ const CalendarWidget: React.FC<CalendarProps> = ({
   onPrevMonth,
   onNextMonth,
 }) => {
+  // const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+  // const getMonthName = (month: number) =>
+  //   new Date(currentYear, month).toLocaleString("default", { month: "long" });
+
+  // const renderDays = () => {
+  //   const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  //   const calendarDays = Array.from({ length: 42 }, (_, index) => {
+  //     const day = index - firstDay + 1;
+  //     return day > 0 && day <= daysInMonth ? day : "";
+  //   });
+
+  const today = new Date();
+  const currentDay = today.getDate();
+  const isCurrentMonth =
+    today.getMonth() === currentMonth && today.getFullYear() === currentYear;
+
+  const [selectedDay, setSelectedDay] = useState<number | null>(
+    isCurrentMonth ? currentDay : null
+  );
+
+  useEffect(() => {
+    // Auto-select current day if in the current month, otherwise reset selection
+    if (isCurrentMonth) {
+      setSelectedDay(currentDay);
+    } else {
+      setSelectedDay(null);
+    }
+  }, [currentMonth, currentYear]);
+
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
   const getMonthName = (month: number) =>
     new Date(currentYear, month).toLocaleString("default", { month: "long" });
+
+  const handleDayClick = (day: number) => {
+    setSelectedDay(day);
+  };
 
   const renderDays = () => {
     const firstDay = new Date(currentYear, currentMonth, 1).getDay();
@@ -29,15 +64,26 @@ const CalendarWidget: React.FC<CalendarProps> = ({
     });
 
     return calendarDays.map((day, index) => (
-      <div
-        key={index}
-        className={`${styles.day} ${day ? styles.activeDay : ""}`}
-        aria-hidden={!day}
-      >
-        {day}
-      </div>
-    ));
-  };
+        // <div
+        //   key={index}
+        //   className={`${styles.day} ${day ? styles.activeDay : ""}`}
+        //   aria-hidden={!day}
+        // >
+        //   {day}
+        // </div>
+
+        <div
+          key={index}
+          className={`${styles.day} ${day ? styles.activeDay : ""} ${
+            day === selectedDay ? styles.selectedDay : ""
+          }`}
+          onClick={() => day && handleDayClick(day)}
+          aria-hidden={!day}
+        >
+          {day}
+        </div>
+      ));
+    };
 
   return (
     <div className={styles.calendarContainer}>
