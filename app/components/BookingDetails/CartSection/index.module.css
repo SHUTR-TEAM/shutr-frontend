@@ -6,7 +6,8 @@
     justify-content: flex-start;
     align-items: flex-start;
     max-width: 2000px; /* Adjust as per design */
-    margin-top: 155px;
+    margin-top: 141px;
+    background-color: #F8F8FF;
    
 }
 .cardContainer {
