@@ -16,6 +16,12 @@
   gap: 20px;
 }
 
+@media screen and (max-width: 600px) {
+  .teamMembers {
+    grid-template-columns: 1fr;
+  }
+}
+
 .teamMember {
   max-height: fit-content;
   display: grid;
