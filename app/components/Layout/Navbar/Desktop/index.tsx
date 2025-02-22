@@ -6,32 +6,38 @@ import styles from "./index.module.css";
 const DesktopNavbar = () => {
   return (
     <nav className={styles.navbar}>
-      <Image
-        src={"/logo-black.png"}
-        className={styles.navbarLogo}
-        width={135}
-        height={50}
-        alt="SHUTR Logo"
-      />
+      <Link href="/">
+        <Image
+          src={"/logo-black.png"}
+          className={styles.navbarLogo}
+          width={135}
+          height={50}
+          alt="SHUTR Logo"
+        />
+      </Link>
 
       <div className={styles.navLinks}>
         <Link href="/" className={styles.navLink}>
           Home
         </Link>
-        <Link href="/about" className={styles.navLink}>
+        <Link href="/maintenance" className={styles.navLink}>
           Find a Photographer
         </Link>
-        <Link href="/about" className={styles.navLink}>
+        <Link href="/#about" className={styles.navLink}>
           About Us
         </Link>
-        <Link href="/about" className={styles.navLink}>
+        {/* <Link href="/about" className={styles.navLink}>
           Contact
-        </Link>
+        </Link> */}
       </div>
 
       <div className={styles.navLinks}>
-        <button className="secondary-btn">Sign In</button>
-        <button className="primary-btn">Register</button>
+        <Link href={"/maintenance"} className="secondary-btn">
+          Sign In
+        </Link>
+        <Link href={"/maintenance"} className="primary-btn">
+          Register
+        </Link>
       </div>
     </nav>
   );

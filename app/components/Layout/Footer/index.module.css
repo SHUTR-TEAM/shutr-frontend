@@ -88,3 +88,21 @@
   max-width: 1600px;
   width: 100%;
 }
+
+@media screen and (max-width: 1200px) {
+  .photographerSignup {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .footerContent {
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+
+  .footerLinksWrapper:last-of-type {
+    width: 100%;
+    flex-grow: 1;
+  }
+}

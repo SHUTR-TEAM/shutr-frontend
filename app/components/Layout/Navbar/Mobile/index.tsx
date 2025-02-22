@@ -13,13 +13,15 @@ const MobileNavbar = () => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.navbarTop}>
-        <Image
-          src={"/logo-black.png"}
-          className={styles.navbarLogo}
-          width={135}
-          height={50}
-          alt="SHUTR Logo"
-        />
+        <Link href="/">
+          <Image
+            src={"/logo-black.png"}
+            className={styles.navbarLogo}
+            width={135}
+            height={50}
+            alt="SHUTR Logo"
+          />
+        </Link>
 
         <HiMenuAlt3
           className={styles.menuIcon}
@@ -41,15 +43,15 @@ const MobileNavbar = () => {
           <Link href="/" className={styles.navLink}>
             Home
           </Link>
-          <Link href="/about" className={styles.navLink}>
+          <Link href="/maintenance" className={styles.navLink}>
             Find a Photographer
           </Link>
-          <Link href="/about" className={styles.navLink}>
+          <Link href="/#about" className={styles.navLink}>
             About Us
           </Link>
-          <Link href="/about" className={styles.navLink}>
+          {/* <Link href="/about" className={styles.navLink}>
             Contact
-          </Link>
+          </Link> */}
         </div>
       </div>
     </nav>
