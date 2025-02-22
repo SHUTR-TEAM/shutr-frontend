@@ -38,9 +38,7 @@ const FeatureSection = () => {
           {`At SHUTR, we are redefining the way clients and photographers connect.
           Our platform offers cutting-edge tools to simplify the booking
           process, enhance collaboration, and provide seamless event planning.
-          Whether you're a client looking for the perfect photographer or a
-          professional looking to showcase your portfolio, our features are
-          designed to make your experience effortless and enjoyable.`}
+          `}
         </p>
         <div className={styles.steps}>
           {features.map((feature, index) => (

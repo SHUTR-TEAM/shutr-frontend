@@ -15,8 +15,9 @@ const Footer = () => {
             <div className={styles.photographerSignupContent}>
               <h3>Are you a photographer?</h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-                architecto vitae nemo
+                Join SHUTR and connect with clients looking for professional
+                photography services. Build your portfolio, showcase your
+                talent, and start receiving bookings today!
               </p>
             </div>
             <Link className={styles.signupBtn} href="/maintenance">

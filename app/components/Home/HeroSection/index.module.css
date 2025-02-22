@@ -41,7 +41,6 @@
 }
 .heroContent p {
   color: rgb(217, 215, 215);
-  font-size: 1.2rem;
   line-height: 1.6;
   margin-bottom: 30px;
   margin-left: 60px;
@@ -52,6 +51,23 @@
   gap: 15px;
   margin-left: 60px;
 }
+
+@media screen and (max-width: 500px) {
+  .mainDiv {
+    padding: 0px;
+  }
+
+  .hero {
+    border-radius: 0px;
+  }
+
+  .heroContent h1,
+  .heroContent p,
+  .heroButtons {
+    margin-left: 20px;
+  }
+}
+
 .btnPrimary,
 .btnSecondary {
   padding: 10px 20px;
