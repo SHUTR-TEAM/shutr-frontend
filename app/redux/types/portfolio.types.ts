@@ -5,6 +5,7 @@ export interface PortfolioState {
   activePortfolio: ActivePortfolio;
   createPortfolio: CreatePortfolio;
   activeGallery : ActiveGallery;
+  activeReview : ActiveReview ;
 }
 
 export interface AllPortfolio {
@@ -26,6 +27,13 @@ export interface ActiveGallery {
   isSuccessful: boolean;
   serverPortfolio: string;
   data: Gallery | null;
+}
+
+export interface ActiveReview{
+  isLoading : boolean ;
+  isSuccessful : boolean ;
+  serverPortfolio : string;
+  data : Review | null ;
 }
 
 export interface CreatePortfolio {
@@ -55,4 +63,26 @@ export interface Gallery {
   photo_collection : string[];
   
 }
+
+// export interface Review {
+//   id: string;
+//   name: string;
+//   rating: number;
+//   reviewtext: string;
+//   profile_image_url :string;
+// }
+
+
+export interface ReviewFormat {
+  name: string;
+  rating: number;
+  reviewText: string;
+  profile_image_url: string;
+}
+
+export interface Review {
+  id: string;
+  reviews: ReviewFormat[];
+}
+
 

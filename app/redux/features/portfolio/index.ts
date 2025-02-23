@@ -30,6 +30,15 @@ const initialState: PortfolioState = {
       data: null,
     },
 
+    activeReview: {
+      isLoading: false,
+      isSuccessful: false,
+      serverPortfolio: "",
+      data: null,
+    },
+
+
+
 
     createPortfolio: {
       isLoading: false,
@@ -124,9 +133,31 @@ const initialState: PortfolioState = {
           return rejectWithValue(e.message);
         }
       }
-    );
+  );
 
+  
+  export const getByIdreview = createAsyncThunk(
+   "review/get-by-id",
+     async ({ participantId }: { participantId: string }, { rejectWithValue }) => {       
+      const config = {
+        reviews: {
+          "Content-Type": "application/json",
+        },
+        params: {
+          participantId,
+        },
+      };
 
+      try {
+        return await axios.get("http://127.0.0.1:8000/api/reviews/67bb3b00d0d8e5f2985929ba").then((res) => res.data);
+
+      } catch (error) {
+        const e = error as AxiosError;
+        return rejectWithValue(e.message);
+      }
+    }
+
+  );
 
 
 
@@ -186,7 +217,19 @@ const initialState: PortfolioState = {
               //data : null;
               data: null,
           };
-          });  
+        });  
+
+
+        //Get by id review
+        //Pending
+        builder.addCase(getByIdreview.pending, (state) => {
+          state.activeReview = {
+            isLoading: true,
+            isSuccessful: false,
+            serverPortfolio:"",
+            data : null,
+          };
+        });
 
 
 
@@ -217,6 +260,17 @@ const initialState: PortfolioState = {
             // Fulfilled
             builder.addCase(getByIdgallery.fulfilled, (state, action) => {
               state.activeGallery = {
+                isLoading: false,
+                isSuccessful: true,
+                serverPortfolio: "",
+                data: action.payload,
+              };
+            });
+
+
+            // Fulfilled
+            builder.addCase(getByIdreview.fulfilled, (state, action) => {
+              state.activeReview = {
                 isLoading: false,
                 isSuccessful: true,
                 serverPortfolio: "",
@@ -257,6 +311,16 @@ const initialState: PortfolioState = {
                 data:  null,
               };
             });
+
+            // Rejected
+            builder.addCase(getByIdreview.rejected, (state, action) => {
+              state.activeReview = {
+                isLoading: false,
+                isSuccessful: false,
+                serverPortfolio: action.payload as string,
+                data:  null,
+              }
+            })
 
 
         

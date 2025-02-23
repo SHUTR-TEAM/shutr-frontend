@@ -12,7 +12,7 @@ import { FaFacebook, FaInstagram,   FaTwitter, FaLinkedin } from 'react-icons/fa
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/app/redux/store";
-import { getAllportfolio , getByIdportfolio, getByIdgallery} from "@/app/redux/features/portfolio";
+import { getAllportfolio , getByIdportfolio, getByIdgallery, getByIdreview } from "@/app/redux/features/portfolio";
 
 
 
@@ -72,6 +72,11 @@ const Portfolio= () => {
         dispatch(getByIdgallery({ participantId: "" }));
       }, [dispatch]);
 
+      useEffect(() => {
+        //fetch by id review
+        dispatch(getByIdreview({ participantId: ""}));
+      }, [dispatch]);
+
 
 
     
@@ -81,12 +86,14 @@ const Portfolio= () => {
       //const allPortfolio = useSelector((state: RootState) => state.portfolio.allPortfolio) || { results: [] };
       const activePortfolio = useSelector((state: RootState) => state.portfolio.activePortfolio) || { results: [] };
       const activeGallery = useSelector((state: RootState) => state.portfolio.activeGallery) || { results: [] };
+      const activeReview = useSelector((state: RootState) => state.portfolio.activeReview) || { results: [] };
       
 
 
       //const Profile = allPortfolio?.data?.results?.find(profile => profile.id === "67acf4d1ce9e81d9345dc6ee");
       const Profile = activePortfolio?.data ;
       const Gallery = activeGallery?.data;
+      const Review = activeReview?.data;
 
 
 
@@ -106,6 +113,8 @@ const Portfolio= () => {
       console.log("allPortfolio.data.gallery", activeGallery.data);
       //console.log("id :",activePortfolio?.data);
       //console.log('name', Profile.portfolio?.name );
+      
+      console.log("portfolio.data.review", activeReview.data);
 
 
 
@@ -242,9 +251,27 @@ const Portfolio= () => {
 
         
         <div>
-          <CustomerReviews />
+          {Review ? (
+            <div key={Review.id}>
+              <CustomerReviews 
 
+              reviews = {Review.reviews}
+
+
+              // name = {Review.name}
+              // rating = {Review.rating}
+              // reviewText = {Review.reviewtext}
+              // profile_image_url = {Review.profile_image_url}
+
+              />
+            </div>  
+          ) : (
+            <p>Loading...</p>
+          )}
         </div>
+
+
+        {/* <div><CustomerReviews /></div> */}
       
 
      
