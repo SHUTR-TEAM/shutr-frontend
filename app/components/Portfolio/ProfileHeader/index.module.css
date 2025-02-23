@@ -1,19 +1,20 @@
 .background_pencil {
     position: absolute;
-    bottom: 26.5rem; /* top-2 in Tailwind */
-    
-    right: 1.5rem; /* right-2 in Tailwind */
+    /* bottom: 26.5rem; top-2 in Tailwind */
+    bottom: 12rem;
+    right: 1rem; /* right-2 in Tailwind */
     background-color: lightgrey ; /* bg-white */
     padding: 10px; /* p-2 */
     border-radius: 55px; /* rounded-full */
     border-color: wheat;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* shadow */
+    
   }
 
   .profile_editor {
     position: absolute;
-    bottom: 1.5rem; /* top-2 in Tailwind */
-    right: 5rem; /* right-2 in Tailwind */
+    bottom: 0.8rem; /* top-2 in Tailwind */
+    right: 0.5rem; /* right-2 in Tailwind */
     background-color: lightgrey ; /* bg-white */
     padding: 10px; /* p-2 */
     border-radius: 55px; /* rounded-full */
@@ -22,7 +23,9 @@
   }
 
   .background_image{
-    margin-top: 19px;
+    border-radius: 20px;
+    display:flex;
+    margin-top: 19px 20px;
   }
 
   .photographer_profilePic_info {

@@ -127,16 +127,16 @@ const Portfolio= () => {
 
 
       <div>
-    {Profile ? (
-      <div key={Profile.id}>
-        <ProfileHeader 
-        id={Profile.id} 
-        name={Profile.name } 
-        coverImageUrl={Profile.Background_image_url }
+        {Profile ? (
+          <div key={Profile.id}>
+            <ProfileHeader 
+            id={Profile.id} 
+            name={Profile.name } 
+            coverImageUrl={Profile.Background_image_url }
 
-        profileImageUrl={Profile.profile_image_url }
-        
-        />
+            profileImageUrl={Profile.profile_image_url }
+            
+          />
 
 
        
@@ -183,6 +183,41 @@ const Portfolio= () => {
 
                 
               </div>
+              <section className={styles.connect}>
+                <h2>Connect with me</h2>
+        
+                <div className={styles.social_icon}>
+                  
+                    <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                      <FaFacebook />
+                    </Link>
+
+                    <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                      <FaInstagram />
+                    </Link>
+
+                    <Link href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                      <FaTwitter />
+                    </Link>
+
+                    <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                      <FaLinkedin />
+                    </Link>
+
+                  </div>
+              </section>
+
+              <div>
+                {Gallery ? (
+                  <div key={Gallery.id}>
+                    < GallerySection
+                      photo_collection = {Gallery.photo_collection}
+                    />
+                  </div>
+                    ) : (
+                      <p>Loading...</p>
+                    )}
+              </div>
               
               {/*<div className={styles.tags}>
                 <span>Wedding Photography</span>
@@ -202,52 +237,6 @@ const Portfolio= () => {
             </div>
           </div>
 
-
-
-
-        <section className={styles.connect}>
-          <h2>Connect with me</h2>
-  
-          <div className={styles.social_icon}>
-            
-              <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                <FaFacebook />
-              </Link>
-
-              <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                <FaInstagram />
-              </Link>
-
-              <Link href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                <FaTwitter />
-              </Link>
-
-              <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                <FaLinkedin />
-              </Link>
-
-            </div>
-        </section>
-        
-        
-
-        <div>
-        {Gallery ? (
-      <div key={Gallery.id}>
-        < GallerySection
-           photo_collection = {Gallery.photo_collection}
-        />
-      </div>
-    ) : (
-      <p>Loading...</p>
-    )}
-        </div>
-        
-      
-           
-        
-
-          
 
         
         <div>
