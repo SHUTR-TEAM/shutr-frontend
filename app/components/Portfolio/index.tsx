@@ -1,22 +1,16 @@
 "use client";
 
-//import {useDispatch, useSelector} from "react-redux";
-//import { fetchData } from "../redux/dataSlice";
-//import { getAllportfolio } from "../../redux/features/portfolio";
-//import { RootState } from "../redux/store";
-//import { RootState } from "../../redux/store";
-
 
 import { FaFacebook, FaInstagram,   FaTwitter, FaLinkedin } from 'react-icons/fa';
 
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/app/redux/store";
-import { getAllportfolio , getByIdportfolio, getByIdgallery, getByIdreview } from "@/app/redux/features/portfolio";
+import { /*getAllportfolio ,*/ getByIdportfolio, getByIdgallery, getByIdreview } from "@/app/redux/features/portfolio";
 
 
 
-import Image from 'next/image'
+//import Image from 'next/image'
 import styles from './index.module.css'
 import Link from 'next/link'
 
@@ -108,13 +102,15 @@ const Portfolio= () => {
       //console.log("allPortfolio.data.results:", allPortfolio?.data?.results);
       //console.log("allPortfolio.data:", allPortfolio?.data);
       //console.log("allPortfolio.data.results:", activePortfolio?.data?.results);
-      console.log("allPortfolio.data:",activePortfolio?.data);
+      //////////////////////////////console.log("allPortfolio.data:",activePortfolio?.data);
       //console.log("allPortfolio.data.portfolio:",activePortfolio?.data);
-      console.log("allPortfolio.data.gallery", activeGallery.data);
+      //////////////////////////////////console.log("allPortfolio.data.gallery", activeGallery?.data);
+      ///////////////////////////////////console.log("activeGallery object:", activeGallery);
+
       //console.log("id :",activePortfolio?.data);
       //console.log('name', Profile.portfolio?.name );
       
-      console.log("portfolio.data.review", activeReview.data);
+      ///////////////////////////////////console.log("portfolio.data.review", activeReview.data);
 
 
 
@@ -207,7 +203,23 @@ const Portfolio= () => {
                   </div>
               </section>
 
+
               <div>
+                {Gallery ? (
+                  //<div key={Gallery.id}>
+                    < GallerySection
+                      Gallery = {Gallery.Gallery}
+                    />
+                  //</div>
+                    ) : (
+                      <p>Loading...</p>
+                    )}
+               </div>
+
+
+
+
+              {/* <div>
                 {Gallery ? (
                   <div key={Gallery.id}>
                     < GallerySection
@@ -217,7 +229,7 @@ const Portfolio= () => {
                     ) : (
                       <p>Loading...</p>
                     )}
-              </div>
+              </div> */}
               
               {/*<div className={styles.tags}>
                 <span>Wedding Photography</span>
@@ -226,6 +238,8 @@ const Portfolio= () => {
               </div>
               */}
             </div>
+
+                         
             <div className={styles.calendar}>
               <Calendar
                 currentMonth={currentMonth}
@@ -247,10 +261,7 @@ const Portfolio= () => {
               reviews = {Review.reviews}
 
 
-              // name = {Review.name}
-              // rating = {Review.rating}
-              // reviewText = {Review.reviewtext}
-              // profile_image_url = {Review.profile_image_url}
+             
 
               />
             </div>  
@@ -260,7 +271,10 @@ const Portfolio= () => {
         </div>
 
 
-        {/* <div><CustomerReviews /></div> */}
+          
+
+
+        
       
 
      

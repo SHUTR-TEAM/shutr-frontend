@@ -1,4 +1,4 @@
-import { User } from "./user.types";
+//import { User } from "./user.types";
 
 export interface PortfolioState {
   allPortfolio: AllPortfolio;
@@ -58,9 +58,15 @@ export interface Portfolio {
   
 }
 
+
+export interface GalleryFormat{
+  url: string;
+  catagory: string ;
+}
+
 export interface Gallery {
   id: string;
-  photo_collection : string[];
+  Gallery: GalleryFormat[];
   
 }
 
@@ -78,6 +84,7 @@ export interface ReviewFormat {
   rating: number;
   reviewText: string;
   profile_image_url: string;
+  address: string;
 }
 
 export interface Review {

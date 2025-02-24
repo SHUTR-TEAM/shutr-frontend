@@ -1,7 +1,7 @@
 import { PortfolioState } from './../../types/portfolio.types';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
-import build from "next/dist/build";
+//import build from "next/dist/build";
 
 //const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL ;
 //const ROUTE_URL = `${BACKEND_BASE_URL}/portfolio/....`
@@ -60,6 +60,7 @@ const initialState: PortfolioState = {
           participantId,
         },
       };
+      console.log(config);  // should delete
   
       try {
        // return await axios.get("http://127.0.0.1:8000/api/headers").then((res) => res.data);
@@ -82,7 +83,7 @@ const initialState: PortfolioState = {
           participantId,
         },
       };
-  
+      console.log(config);  // should delete
       try {
 
        return await axios.get("http://127.0.0.1:8000/api/headers/67ab65b24cb48a7c886d0dfa").then((res) => res.data);
@@ -116,10 +117,11 @@ const initialState: PortfolioState = {
             participantId,
           },
         };
+        console.log(config);  // should delete
     
         try {
   
-         return await axios.get("http://127.0.0.1:8000/api/galleries/67aecc532071993d23e91175").then((res) => res.data);
+         return await axios.get("http://127.0.0.1:8000/api/galleries/67bb771b7ca1638d20e4023f").then((res) => res.data);
   
         //  const [portfolioResponse, galleryResponse] = await Promise.all([
         //   axios.get("http://127.0.0.1:8000/api/headers/67ab65b24cb48a7c886d0dfa"),
@@ -147,6 +149,7 @@ const initialState: PortfolioState = {
           participantId,
         },
       };
+      console.log(config);   // should delete
 
       try {
         return await axios.get("http://127.0.0.1:8000/api/reviews/67bb3b00d0d8e5f2985929ba").then((res) => res.data);
