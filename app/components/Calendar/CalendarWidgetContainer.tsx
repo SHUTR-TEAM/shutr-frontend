@@ -57,7 +57,10 @@ const CalendarWidgetContainer: React.FC = () => {
           </div>
         </div>
       </div>
-      <CalendarWorklist/>
+      {/* <div className="min-h-screen bg-gray-50 flex items-center justify-center"> */}
+          <CalendarWorklist/>
+      {/* </div> */}
+      
       
     </div>
   );

@@ -1,11 +1,11 @@
-.container {
+/* .container {
     font-family: Arial, sans-serif;
     width: 100%;
     max-width: 1200px;
     border-radius: 12px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-    /* padding: 10px; */
+    
     text-align: center;
     margin-left: 30px;
   }
@@ -80,4 +80,76 @@
   .eventTime {
     font-size: 12px;
   }
+   */
+
+
+  /* Container styles */
+.calendarContainer {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    max-width: 1200px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    
+    text-align: center;
+    margin-left: 30px;
+}
+
+/* Table styles */
+.calendarTable {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+/* Header styles */
+.calendarTable th {
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+/* Time column */
+.timeColumn {
+  width: 80px;
+  text-align: center;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  font-weight: bold;
+}
+
+/* Cell styles */
+.calendarTable td {
+  border: 1px solid #ccc;
+  height: 4rem; /* Adjust height for better spacing */
+  padding: 0.5rem;
+  position: relative;
+}
+
+/* Event block styles */
+.event {
+  position: absolute;
+  inset: 5px;
+  background-color: #e0e7ff;
+  padding: 0.5rem;
+  border-radius: 5px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Event title */
+.eventTitle {
+  font-weight: bold;
+  display: block;
+}
+
+/* Event time */
+.eventTime {
+  font-size: 0.75rem;
+  color: #555;
+}
+
   

@@ -1,3 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
 :root {
   /* --background: #ffffff;
   --foreground: #171717; */
@@ -37,4 +43,30 @@ a {
 
 h1 {
   font-size: 36px;
+}
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+.event {
+  background-color: #e2e8f0;
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+  font-size: 0.875rem;
+  position: absolute;
+  width: 90%;
 }
