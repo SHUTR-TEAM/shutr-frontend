@@ -45,7 +45,7 @@ const CalendarWidget: React.FC<CalendarProps> = ({
     } else {
       setSelectedDay(null);
     }
-  }, [currentMonth, currentYear]);
+  }, [currentMonth, currentYear, isCurrentMonth, currentDay]);
 
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
@@ -53,15 +53,24 @@ const CalendarWidget: React.FC<CalendarProps> = ({
     new Date(currentYear, month).toLocaleString("default", { month: "long" });
 
   const handleDayClick = (day: number) => {
-    setSelectedDay(day);
+    if (day) setSelectedDay(day);
   };
 
-  const renderDays = () => {
-    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-    const calendarDays = Array.from({ length: 42 }, (_, index) => {
-      const day = index - firstDay + 1;
-      return day > 0 && day <= daysInMonth ? day : "";
-    });
+  // const renderDays = () => {
+  //   const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  //   const calendarDays = Array.from({ length: 42 }, (_, index) => {
+  //     const day = index - firstDay + 1;
+  //     return day > 0 && day <= daysInMonth ? day : "";
+  //   });
+
+    const renderDays = () => {
+      const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay();
+      const totalSlots = 42; // 6 weeks x 7 days
+
+      const calendarDays = Array.from({ length: totalSlots }, (_, index) => {
+        const day = index - firstDayOfWeek + 1;
+        return day > 0 && day <= daysInMonth ? day : null;
+      });
 
     return calendarDays.map((day, index) => (
         // <div
@@ -118,7 +127,14 @@ const CalendarWidget: React.FC<CalendarProps> = ({
         <button className={styles.cancelBtn}>Cancel</button>
         <button className={styles.applyBtn}>Apply</button>
       </div>
+      <div className={styles.createTaskContainer}>
+            <button className={styles.createTaskButton}>+ Create Task</button>
+      </div>
+      
     </div>
+    
+    
+    
   );
 };
 
