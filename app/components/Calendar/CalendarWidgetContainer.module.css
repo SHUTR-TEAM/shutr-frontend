@@ -10,25 +10,110 @@
     background-color: #f9f9f9;
   }
   
-  .mainContent {
+  /* .mainContent {
     flex: 1;
     display:flex;
     flex-direction: column;
-    padding: 20px 40px 20px 0;
+    padding: 20px 20px 20px 0;
     background-color: #000;
     position:relative;
     height: 125vh;
-    width: 400px;
+    width: 5vh;
     margin-left: 0;
     
     
   }
   .calendarWrapper {
     display: flex;
-    justify-content: flex-start; /* Align calendar widget to the right */
+    justify-content: flex-start; 
     flex: 1;
-    padding-left: 2rem; /* Adjust spacing */
+    padding-left: 2rem; 
+  } */
+  
+  .mainContent {
+    flex-grow: 1;
   }
   
-
+  .calendarWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .calendarContainer {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    gap: 20px;
+    padding: 10px;
+  }
   
+  .sidebar {
+    width: 25%;
+    padding: 10px;
+  }
+  
+  .title {
+    padding: 10px 0;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .eventList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .noEvents {
+    font-style: italic;
+    text-align: center;
+    color: gray;
+  }
+  
+  .eventItem {
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    border-radius: 5px;
+    color: blue;
+  }
+  
+  .eventDate {
+    color: black;
+  }
+  
+  .fullCalendarContainer {
+    width: 75%;
+    margin-top: 8px;
+  }
+  
+  .dialogContent {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .dialogTitle {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .formContainer {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .eventInput {
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+  
+  .addButton {
+    background: green;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
