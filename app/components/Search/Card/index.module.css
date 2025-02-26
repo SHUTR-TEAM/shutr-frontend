@@ -5,6 +5,7 @@
   padding: 10px 30px;
   width: 100%;
   margin: 0 auto;
+  margin-top: 100px;
 }
 .card {
   background: #ffffff;
@@ -18,7 +19,6 @@
 .card:hover {
   transform: translateY(-4px);
 }
-
 .cardImages {
   display: flex;
   justify-content: space-between;
@@ -47,14 +47,12 @@
   margin-bottom: 15px;
   line-height: 1.8;
 }
-
 .tags {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 10px;
 }
-
 .tag {
   background-color: #f0f0f0;
   color: #555;
@@ -62,20 +60,16 @@
   border-radius: 4px;
   font-size: 12px;
 }
-
 .info {
   display: flex;
   justify-content: space-between;
   margin:20px 0px;
 }
-
 .name {
   font-weight: bold;
   font-size: 16px;
   color: rgb(64, 63, 63);
-
 }
-
 .location {
   color: #666;
   font-size: 14px;
@@ -84,7 +78,6 @@
 .review{
   display: flex;
 }
-
 .reviews {
   font-size: 14px;
   color: #444;
@@ -93,7 +86,6 @@
 .starIcon{
   margin-left: 8px;
 }
-
 .cardActions {
   display: flex;
   justify-content: space-between;
@@ -125,7 +117,6 @@
   cursor: pointer;
   font-size: 14px;
 }
-
 .msgIcon{
   margin-right: 8px;
   margin-top: 1.5px;
@@ -134,7 +125,6 @@
 .btnPrimary:hover {
   background-color: #000000;
 }
-
 .btnSecondary:hover {
   color: white;
   background-color:black;
@@ -165,7 +155,7 @@
     gap: 8px;
   }
 }
-@media (max-width: 1066px) {
+@media (max-width: 1150px) {
   .cards {
     grid-template-columns: 1fr;
     padding: 10px;
@@ -180,26 +170,5 @@
   .cardActions {
     flex-direction: column;
     gap: 10px;
-  }
-}
-@media (max-width: 480px) {
-  .price {
-    font-size: 16px;
-  }
-
-  .description {
-    font-size: 12px;
-  }
-
-  .name {
-    font-size: 14px;
-  }
-
-  .location {
-    font-size: 12px;
-  }
-
-  .reviews {
-    font-size: 12px;
   }
 }

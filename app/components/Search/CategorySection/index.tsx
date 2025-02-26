@@ -20,7 +20,7 @@ export default function CategorySection() {
             <h4>Price Range</h4>
             <div className={styles.priceRange}>
               <input type="number" placeholder="Min" />
-              <span className={styles.rangeSeparator}>to</span>
+              <span className={styles.rangeSeparator}>-</span>
               <input type="number" placeholder="Max" />
             </div>
           </div>

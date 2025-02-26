@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./index.module.css";
 import { IoSearch } from "react-icons/io5";
 import axios from "axios";
@@ -8,6 +8,7 @@ import Card from "../Card";
 export default function SearchBox() {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState<any[]>([]); // Store search results 
+    const [results, setResults] = useState<any[]>([]); // Store search results 
 
     // Function to handle input changes (on typing)
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +26,11 @@ export default function SearchBox() {
             setSearchResults(response.data);
             
         } catch (error) {
-            console.error("Error Searching", error);
+            if (axios.isAxiosError(error)) {
+                console.error("Axios error:", error.response?.data || error.message);
+            } else {
+                console.error("Unexpected error:", error);
+            }
         }         
     };
 
@@ -35,6 +40,19 @@ export default function SearchBox() {
             handleSearch();
         }
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+         try {
+             const response = await axios.post('http://127.0.0.1:8000/search/usersDefault/');
+             setResults(response.data);
+         } catch (error) {
+             console.error("Error Searching", error);
+         }
+      };
+ 
+      fetchData();
+     }, []);
 
     return (
         <div>
@@ -67,7 +85,12 @@ export default function SearchBox() {
                 
             </div>
             <div>
-                <Card data={searchResults} />
+                {searchResults.length === 0 ? (
+                    <Card data={results} />
+                    
+                ) : (
+                    <Card data={searchResults} />
+                )}
             </div>
         </div>
          

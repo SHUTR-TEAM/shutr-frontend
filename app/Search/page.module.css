@@ -1,6 +1,28 @@
-.Container {
-    display: flex;
-    flex-direction: row;
-    margin-top: auto;  
-    padding: 0px 20px;
+.mainContainer {
+  display: flex;
+  flex-direction: row;
 }
+.categorySection{
+  flex: 0 0 350px; 
+  height: 100%;
+  top: 80px;
+  left: 0;
+  overflow-y: auto;
+}  
+.searchBarContainer {
+  flex: 1; 
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+@media (max-width: 1150px) {
+  .categorySection {
+    flex: 0 0 330px;
+    width: 100%;
+  }
+}
+@media (max-width: 880px) {
+  .categorySection {
+    flex: 0 0 250px;
+  }
+}  
