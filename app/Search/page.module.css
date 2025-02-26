@@ -12,7 +12,6 @@
 .searchBarContainer {
   flex: 1; 
   display: flex;
-  align-items: center;
   padding: 20px;
 }
 @media (max-width: 1150px) {
