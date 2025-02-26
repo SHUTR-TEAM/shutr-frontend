@@ -91,63 +91,65 @@
 // };
 
 // export default Calendar;
-import React from "react";
-import styles from "./CalendarWorklist.module.css";
 
-interface Event {
-  title: string;
-  start: string;
-  end: string;
-  date: string;
-}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// import React from "react";
+// import styles from "./CalendarWorklist.module.css";
 
-const events: Event[] = [
-  { title: "Meeting with client", start: "09:00", end: "10:00", date: "2024-07-15" },
-  { title: "Meeting with client", start: "09:00", end: "11:00", date: "2024-07-16" },
-  { title: "Meeting with client", start: "11:00", end: "12:00", date: "2024-07-15" },
-  { title: "Mr Kasun’s Wedding", start: "10:00", end: "15:00", date: "2024-07-17" },
-];
+// interface Event {
+//   title: string;
+//   start: string;
+//   end: string;
+//   date: string;
+// }
 
-const dates = ["2024-07-15", "2024-07-16", "2024-07-17"];
-const times = Array.from({ length: 10 }, (_, i) => `${i + 9}:00`); // 9:00 AM - 6:00 PM
+// const events: Event[] = [
+//   { title: "Meeting with client", start: "09:00", end: "10:00", date: "2024-07-15" },
+//   { title: "Meeting with client", start: "09:00", end: "11:00", date: "2024-07-16" },
+//   { title: "Meeting with client", start: "11:00", end: "12:00", date: "2024-07-15" },
+//   { title: "Mr Kasun’s Wedding", start: "10:00", end: "15:00", date: "2024-07-17" },
+// ];
 
-const Calendar: React.FC = () => {
-  return (
-    <div className={styles.calendarContainer}>
-      <table className={styles.calendarTable}>
-        <thead>
-          <tr>
-            <th className={styles.timeColumn}>UTC +5:30</th>
-            {dates.map((date) => (
-              <th key={date}>{new Date(date).toDateString()}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {times.map((time) => (
-            <tr key={time}>
-              <td className={styles.timeColumn}>{time} A.M</td>
-              {dates.map((date) => {
-                const event = events.find(
-                  (e) => e.date === date && e.start === time
-                );
-                return (
-                  <td key={date}>
-                    {event && (
-                      <div className={styles.event}>
-                        <span className={styles.eventTitle}>{event.title}</span>
-                        <span className={styles.eventTime}>{event.start} - {event.end}</span>
-                      </div>
-                    )}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
+// const dates = ["2024-07-15", "2024-07-16", "2024-07-17"];
+// const times = Array.from({ length: 10 }, (_, i) => `${i + 9}:00`); // 9:00 AM - 6:00 PM
 
-export default Calendar;
+// const Calendar: React.FC = () => {
+//   return (
+//     <div className={styles.calendarContainer}>
+//       <table className={styles.calendarTable}>
+//         <thead>
+//           <tr>
+//             <th className={styles.timeColumn}>UTC +5:30</th>
+//             {dates.map((date) => (
+//               <th key={date}>{new Date(date).toDateString()}</th>
+//             ))}
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {times.map((time) => (
+//             <tr key={time}>
+//               <td className={styles.timeColumn}>{time} A.M</td>
+//               {dates.map((date) => {
+//                 const event = events.find(
+//                   (e) => e.date === date && e.start === time
+//                 );
+//                 return (
+//                   <td key={date}>
+//                     {event && (
+//                       <div className={styles.event}>
+//                         <span className={styles.eventTitle}>{event.title}</span>
+//                         <span className={styles.eventTime}>{event.start} - {event.end}</span>
+//                       </div>
+//                     )}
+//                   </td>
+//                 );
+//               })}
+//             </tr>
+//           ))}
+//         </tbody>
+//       </table>
+//     </div>
+//   );
+// };
+
+// export default Calendar;
