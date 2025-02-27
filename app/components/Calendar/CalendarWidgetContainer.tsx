@@ -241,7 +241,7 @@
 
 import styles from "./CalendarWidgetContainer.module.css";
 import Sidebar from "./Sidebar/Sidebar";
-import CalendarWidget from "./CalendarWidget/CalendarWidget";
+//import CalendarWidget from "./CalendarWidget/CalendarWidget";
 import React, { useState, useEffect } from "react";
 import { formatDate, DateSelectArg, EventClickArg, EventApi } from "@fullcalendar/core";
 import FullCalendar from "@fullcalendar/react";
@@ -433,25 +433,26 @@ const CalendarWidgetContainer: React.FC = () => {
             />
           </div>
         </div>
+        
       </div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className={styles.dialogContent}>
-          <DialogHeader>
-            <DialogTitle className={styles.dialogTitle}>Add New Event Details</DialogTitle>
-          </DialogHeader>
-          <form onSubmit={handleAddEvent} className={styles.formContainer}>
-            <input
-              type="text"
-              placeholder="Event Title"
-              value={newEventTitle}
-              onChange={(e) => setNewEventTitle(e.target.value)}
-              required
-              className={styles.eventInput}
-            />
-            <button className={styles.addButton} type="submit">Add</button>
-          </form>
-        </DialogContent>
+            <DialogContent className={styles.dialogContent}>
+              <DialogHeader>
+                <DialogTitle className={styles.dialogTitle}>Add New Event Details</DialogTitle>
+              </DialogHeader>
+              <form onSubmit={handleAddEvent} className={styles.formContainer}>
+                <input
+                  type="text"
+                  placeholder="Event Title"
+                  value={newEventTitle}
+                  onChange={(e) => setNewEventTitle(e.target.value)}
+                  required
+                  className={styles.eventInput}
+                />
+                <button className={styles.addButton} type="submit">Add</button>
+              </form>
+            </DialogContent>
       </Dialog>
 
 

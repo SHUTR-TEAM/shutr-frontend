@@ -6,8 +6,10 @@
   } */
   .CalendarWidgetContainer {
     display: flex;
+    
     /* height:130vh; */
     background-color: #f9f9f9;
+    width: auto;
   }
   
   /* .mainContent {
@@ -86,11 +88,24 @@
     margin-top: 8px;
   }
   
-  .dialogContent {
+  /* .dialogContent {
     background: white;
     padding: 20px;
     border-radius: 10px;
+  } */
+
+  .dialogContent {
+    position:fixed;
+    bottom: 3%;
+    left: 17%;
+    /* transform: translateX(-50%); */
+    width: 310px; /* Adjust as needed */
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   }
+  
   
   .dialogTitle {
     font-size: 20px;
