@@ -123,12 +123,55 @@
     padding: 10px;
     font-size: 16px;
     border-radius: 5px;
+    width: 300px;
   }
   
-  .addButton {
-    background: green;
+  /* .addButton {
+    background: #000;
     color: white;
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
+  } */
+
+
+  .addButton {
+    background: linear-gradient(135deg, #111, #222); /* Deep black gradient */
+    color: #fff; /* White text for contrast */
+    padding: 12px 18px;
+    border: 2px solid #444; /* Dark gray border for subtle contrast */
+    border-radius: 8px; /* Smooth rounded edges */
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1); /* Soft white shadow */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
   }
+  
+  /* Hover Effect */
+  .addButton:hover {
+    background: linear-gradient(135deg, #222, #333); /* Slightly lighter black */
+    border-color: #666; /* Lighter gray border */
+    transform: translateY(-2px); /* Lifts slightly */
+    box-shadow: 0 6px 15px rgba(255, 255, 255, 0.15);
+  }
+  
+  /* Active Click Effect */
+  .addButton:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Optional: Adding an Icon inside */
+  .addButton::before {
+    content: "➕"; /* Plus icon */
+    font-size: 18px;
+    color: #fff; /* White icon */
+  }
+  
+  

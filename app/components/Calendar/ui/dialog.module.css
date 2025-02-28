@@ -1,4 +1,4 @@
-/* Dialog Overlay */
+/* 
 .dialogOverlay {
     position: fixed;
     inset: 0;
@@ -7,11 +7,11 @@
     animation: fadeIn 0.3s ease-in-out;
   }
   
-  /* Dialog Content */
+  
   .dialogContent {
     position: fixed;
     left: 50%;
-    top: 10%; /* Display at the top */
+    top: 10%; 
     transform: translateX(-50%);
     z-index: 50;
     display: grid;
@@ -25,7 +25,7 @@
     animation: fadeInScale 0.3s ease-in-out;
   }
   
-  /* Close Button */
+
   .dialogCloseButton {
     position: absolute;
     right: 16px;
@@ -41,13 +41,44 @@
     opacity: 1;
   }
   
-  /* Close Icon */
-  .closeIcon {
-    width: 16px;
-    height: 16px;
-  }
-  
-  /* Header Styling */
+
+.dialogCloseButton {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+
+.closeIcon {
+  width: 20px;
+  height: 20px;
+  color: #333;
+  transition: transform 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+}
+
+
+.dialogCloseButton:hover {
+  opacity: 1;
+  transform: rotate(90deg) scale(1.1);
+}
+
+
+.dialogCloseButton:hover .closeIcon {
+  color: #ff3b3b;
+  transform: rotate(180deg);
+}
+
+
+.dialogCloseButton:active {
+  transform: scale(0.9);
+}
+
+ 
   .dialogHeader {
     display: flex;
     flex-direction: column;
@@ -55,7 +86,7 @@
     gap: 8px;
   }
   
-  /* Footer */
+
   .dialogFooter {
     display: flex;
     flex-direction: row;
@@ -63,19 +94,19 @@
     gap: 10px;
   }
   
-  /* Title */
+  
   .dialogTitle {
     font-size: 18px;
     font-weight: bold;
   }
   
-  /* Description */
+
   .dialogDescription {
     font-size: 14px;
     color: #666;
   }
   
-  /* Animations */
+  
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -95,4 +126,252 @@
       transform: translateX(-50%) scale(1);
     }
   }
+   */
+
+
+
+/*   
+.dialogOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px); 
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+
+.dialogContent {
+  position: fixed;
+  left: 50%;
+  top: 10%; 
+  transform: translateX(-50%);
+  z-index: 50;
+  display: grid;
+  width: 50%;
+  max-width: 500px;
+  gap: 16px;
+  background: linear-gradient(135deg, #ccc, #ccc); 
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0 15px 40px rgba(255, 255, 255, 0.15);
+  color: #000;
+  animation: fadeInScale 0.3s ease-in-out;
+}
+
+
+.dialogCloseButton {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+
+.closeIcon {
+  width: 13px;
+  height: 13px;
+  color: #fff;
+  transition: transform 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+}
+
+.dialogCloseButton:hover {
+  opacity: 1;
   
+}
+
+.dialogCloseButton:hover .closeIcon {
+  color: #f03e3e; 
+  
+}
+
+
+.dialogCloseButton:active {
+  transform: scale(0.9);
+}
+
+
+.dialogHeader {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 8px;
+}
+
+
+.dialogFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+
+.dialogTitle {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+.dialogDescription {
+  font-size: 15px;
+  color: #bbb;
+  line-height: 1.5;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+} */
+
+
+/* Dialog Overlay */
+.dialogOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.3); /* Lighter overlay for a softer effect */
+  backdrop-filter: blur(6px); /* Adds a subtle blur effect */
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Dialog Content */
+.dialogContent {
+  position: fixed;
+  left: 50%;
+  top: 10%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: grid;
+  width: 50%;
+  max-width: 500px;
+  gap: 16px;
+  background: linear-gradient(135deg, #fff, #f9f9f9); /* Soft white gradient */
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Softer shadow */
+  color: #222; /* Dark gray for contrast */
+  animation: fadeInScale 0.3s ease-in-out;
+}
+
+/* Close Button */
+.dialogCloseButton {
+  position: absolute;
+  right: 45px;
+  top: 16px;
+  background: rgba(255, 255, 255, 0.1); /* Subtle white tint */
+  border: 2px solid rgba(255, 255, 255, 0.3); /* Semi-transparent border */
+  cursor: pointer;
+  opacity: 0.9;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  backdrop-filter: blur(6px); /* Glassy effect */
+  transition: all 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  font-size: 18px;
+}
+
+/* Close Icon */
+.dialogCloseButton::before {
+  content: "✖"; /* Close icon */
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+/* Hover Effects */
+.dialogCloseButton:hover {
+  background: rgba(255, 255, 255, 0.2); /* More visible white tint */
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Soft glow */
+}
+
+/* Hover Icon Effect */
+.dialogCloseButton:hover::before {
+  color: #000; /* Red accent for warning */
+  transform: scale(1.1); /* Slight expansion */
+}
+
+/* Active Click Effect */
+.dialogCloseButton:active {
+  transform: scale(0.85); /* Slight compression */
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.2); /* Softer glow */
+  opacity: 0.7;
+}
+
+/* Dialog Header */
+.dialogHeader {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 8px;
+}
+
+/* Dialog Footer */
+.dialogFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Title */
+.dialogTitle {
+  font-size: 20px;
+  font-weight: bold;
+  color: #111; /* Slightly off-black for a softer feel */
+  letter-spacing: 0.5px;
+}
+
+/* Description */
+.dialogDescription {
+  font-size: 15px;
+  color: #666; /* Medium gray for readability */
+  line-height: 1.5;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}

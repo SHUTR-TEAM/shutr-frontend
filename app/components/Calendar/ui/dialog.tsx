@@ -155,7 +155,7 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content ref={ref} className={styles.dialogContent} {...props}>
       {children}
       <DialogPrimitive.Close className={styles.dialogCloseButton}>
-        <X className={styles.closeIcon} />
+        {/* <X className={styles.closeIcon} /> */}
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
