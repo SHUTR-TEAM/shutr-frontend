@@ -20,6 +20,7 @@
     margin-left: 35px;
     margin-bottom: 30px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
 }
 .cardContainer:hover {
     transform: translateY(-8px); /* Lift effect */
