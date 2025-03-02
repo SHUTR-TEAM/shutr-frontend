@@ -5,18 +5,18 @@ import { Banknote, Headset, LockOpen } from "lucide-react";
 const ConfirmationDetails = () => {
   return (
     <div className={styles.mainDiv}>
-      <div className={styles.itemWrapper}>
+      {/* <div className={styles.itemWrapper}>
         <h2>Review Booking Details</h2>
         <p>Review the details below and click submit to confirm your booking</p>
 
-        {/* <div>
+        <div>
           <h3>Event Details</h3>
           <p>Wedding</p>
           <p>12th December 2022</p>
           <p>12:00 PM - 5:00 PM</p>
           <p>Location: 1234 Wedding Hall, Lahore</p>
           <p>Guest Count: 200</p>
-        </div> */}
+        </div>
 
         <table className={styles.priceTable}>
           <tbody>
@@ -34,7 +34,7 @@ const ConfirmationDetails = () => {
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> */}
 
       <div className={styles.itemWrapper}>
         <h2>Book with confidence</h2>

@@ -5,54 +5,59 @@ import { useForm, FormProvider } from "react-hook-form";
 import styles from "./index.module.css";
 import ClientInformation from "../ClientInformation";
 import EventDetails from "../EventDetails";
-import PhotoRequirements from "../PhotoRequirements";
+// import PhotoRequirements from "../PhotoRequirements";
 import PackageSelection from "../PackageSelection";
 import Agreements from "../Agreements";
 import ConfirmationDetails from "../ConfirmationDetails";
+import { AppDispatch } from "@/app/redux/store";
+import { useDispatch } from "react-redux";
+import { createBooking } from "@/app/redux/features/booking";
+import { Booking } from "@/app/redux/types/booking.types";
 
 const steps = [
   "Client Info",
   "Event Details",
-  "Photography",
+  // "Photography",
   "Package",
   "Agreement",
 ];
 
-type BookingFormData = {
-  // Client Information
-  fullName: string;
-  contactNumber: string;
-  email: string;
-  address?: string;
+// type BookingFormData = {
+//   // Client Information
+//   fullName: string;
+//   contactNumber: string;
+//   email: string;
+//   address?: string;
 
-  // Event Details
-  eventType: string;
-  eventDate: string;
-  startTime: string;
-  endTime: string;
-  location: string;
-  guestCount: number;
-  eventSetting: "indoor" | "outdoor";
+//   // Event Details
+//   eventType: string;
+//   eventDate: string;
+//   // startTime: string;
+//   // endTime: string;
+//   location: string;
+//   guestCount: number;
+//   eventSetting: "indoor" | "outdoor";
 
-  // Photo Requirements
-  coverageDuration: string;
-  requiredShots: string[];
-  specialRequests?: string;
+//   // Photo Requirements
+//   coverageDuration: string;
+//   requiredShots: string[];
+//   specialRequests?: string;
 
-  // Package Selection
-  package: "basic" | "premium" | "luxury";
-  addons: string[];
+//   // Package Selection
+//   package: "basic" | "premium" | "luxury";
+//   addons: string[];
 
-  // Agreements
-  weatherPlan?: string;
-  permissions: boolean;
-  terms: boolean;
-  cancellation: boolean;
-};
+//   // Agreements
+//   weatherPlan?: string;
+//   permissions: boolean;
+//   terms: boolean;
+//   cancellation: boolean;
+// };
 
 export default function BookingForm() {
   const [currentStep, setCurrentStep] = useState(1);
-  const methods = useForm<BookingFormData>();
+  const methods = useForm<Booking>();
+  const dispatch: AppDispatch = useDispatch();
 
   const handleNext = async () => {
     const isValid = await methods.trigger();
@@ -69,10 +74,11 @@ export default function BookingForm() {
     }
   };
 
-  const onSubmit = (data: BookingFormData) => {
+  const onSubmit = (data: Booking) => {
     console.log("Form submitted:", data);
+    dispatch(createBooking(data));
     // Here you would typically send the data to your backend
-    alert("Booking request submitted successfully!");
+    // alert("Booking request submitted successfully!");
   };
 
   const renderStep = () => {
@@ -82,10 +88,10 @@ export default function BookingForm() {
       case 2:
         return <EventDetails />;
       case 3:
-        return <PhotoRequirements />;
-      case 4:
         return <PackageSelection />;
-      case 5:
+      // case 3:
+      //   return <PhotoRequirements />;
+      case 4:
         return <Agreements />;
       default:
         return null;

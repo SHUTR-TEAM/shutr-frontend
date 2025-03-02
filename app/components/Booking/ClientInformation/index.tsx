@@ -6,7 +6,10 @@ import styles from "./index.module.css";
 import React from "react";
 
 const ClientInformation = () => {
-  const { register } = useFormContext();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
 
   return (
     <div className={styles.container}>
@@ -17,8 +20,15 @@ const ClientInformation = () => {
           <input
             id="firstName"
             placeholder="Enter your first name"
-            {...register("firstName", { required: true })}
+            {...register("client.first_name", {
+              required: "Field is required",
+            })}
           />
+          {errors.firstName && (
+            <p className={styles.error}>
+              {errors.firstName.message?.toString()}
+            </p>
+          )}
         </div>
 
         <div className={styles.formGroup}>
@@ -26,8 +36,13 @@ const ClientInformation = () => {
           <input
             id="lastName"
             placeholder="Enter your last name"
-            {...register("lastName", { required: true })}
+            {...register("client.last_name", { required: "Field is required" })}
           />
+          {errors.lastName && (
+            <p className={styles.error}>
+              {errors.lastName.message?.toString()}
+            </p>
+          )}
         </div>
 
         <div className={styles.formGroup}>
@@ -35,8 +50,13 @@ const ClientInformation = () => {
           <input
             id="contactNumber"
             placeholder="Enter your phone number"
-            {...register("contactNumber", { required: true })}
+            {...register("client.phone", { required: "Field is required" })}
           />
+          {errors.contactNumber && (
+            <p className={styles.error}>
+              {errors.contactNumber.message?.toString()}
+            </p>
+          )}
         </div>
 
         <div className={styles.formGroup}>
@@ -45,8 +65,17 @@ const ClientInformation = () => {
             id="email"
             type="email"
             placeholder="Enter your email"
-            {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
+            {...register("client.email", {
+              required: "Field is required",
+              pattern: {
+                value: /^\S+@\S+$/i,
+                message: "Invalid email address",
+              },
+            })}
           />
+          {errors.email && (
+            <p className={styles.error}>{errors.email.message?.toString()}</p>
+          )}
         </div>
 
         <div className={styles.formGroup}>
@@ -54,7 +83,7 @@ const ClientInformation = () => {
           <input
             id="address"
             placeholder="Enter your address"
-            {...register("address")}
+            {...register("client.address")}
           />
         </div>
 
@@ -63,8 +92,11 @@ const ClientInformation = () => {
           <input
             id="nic"
             placeholder="Enter your NIC number"
-            {...register("nic")}
+            {...register("client.nic", { required: "Field is required" })}
           />
+          {errors.nic && (
+            <p className={styles.error}>{errors.nic.message?.toString()}</p>
+          )}
         </div>
       </div>
     </div>
