@@ -39,12 +39,12 @@ export default function SearchBox() {
 
     };
 
-    // Function to detect Enter key press
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "Enter") {
-            handleSearch();
-        }
-    };
+  // Function to detect Enter key press
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
 
     useEffect(() => {
        dispatch(fetchDefaultResults());
@@ -52,22 +52,10 @@ export default function SearchBox() {
 
     return (
         <div>
-            <div className={styles["search-bar-container"]}>
-                <div className={styles["search-box"]}>
-                    <IoSearch className={styles["search-icon"]} />
-                    <input
-                        type="text"
-                        className={styles["search-input"]}
-                        placeholder="Search"
-                        value={searchTerm}
-                        onChange={handleInputChange} // Update state on typing
-                        onKeyDown={handleKeyDown} // Listen for Enter key
-                    />
-                </div>
-                <div>
-                    <button className={styles["search-btn"]} onClick={handleSearch}>Search</button>
-                </div>
-
+          <button className={styles["search-btn"]} onClick={handleSearch}>
+            Search
+          </button>
+        </div>
                 <div className={styles["sort-by-container"]}>
                     <label htmlFor="sort-by" className={styles["sort-by-label"]}>
                         Sort By :
@@ -87,6 +75,10 @@ export default function SearchBox() {
                 <Card data={searchResults} />
             </div>
         </div>
-         
-    );
+      </div>
+      <div>
+        <Card data={searchResults} />
+      </div>
+    </div>
+  );
 }

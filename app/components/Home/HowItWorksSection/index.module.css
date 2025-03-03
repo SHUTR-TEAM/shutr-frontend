@@ -1,71 +1,117 @@
-.mainDivWrapper {
-  background-color: #e9e8e8;
+.container {
+  /* max-width: 72rem; */
+  /* margin: 0 auto; */
+  /* padding: 40px; */
   display: flex;
-  justify-content: center;
-}
-
-.mainDiv {
-  text-align: center;
-  padding: 40px;
-  padding: 40px;
-  max-width: 1600px;
-  width: 100%;
-}
-
-.mainDiv .text {
-  display: flex;
-  justify-content: space-between;
-}
-.title {
-  text-align: left;
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: #333;
-}
-.subtitle {
-  text-align: left;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #444;
-}
-
-.sectionDesc {
-  text-align: right;
-}
-
-.steps {
-  margin-top: 60px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  justify-content: center;
+  flex-direction: column;
   gap: 40px;
-  flex-wrap: wrap;
 }
-.step {
-  background-color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  /* max-width: 300px; */
-  text-align: left;
-  transition: transform 0.3s ease;
+
+.title {
+  text-align: center;
+  margin-bottom: 30px;
 }
-.step:hover {
-  transform: translateY(-10px);
+
+.tabContainer {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
-.icon {
-  font-size: 2rem;
-  margin-bottom: 10px;
-  color: #ff4500;
+
+.tabButton {
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-weight: 500;
+  transition: all 0.3s;
+  border: none;
 }
-.steps .step h3 {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 15px;
+
+.tabButtonPhotographers {
+  background-color: #000000;
+  color: white;
 }
-.steps .step p {
-  font-size: 1rem;
-  color: #666;
-  line-height: 1.5;
+
+.tabButtonPhotographersInactive {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+.tabButtonPhotographersInactive:hover {
+  background-color: #e5e7eb;
+}
+
+.tabButtonCustomers {
+  background-color: #1f2937;
+  color: white;
+}
+
+.tabButtonCustomersInactive {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+.tabButtonCustomersInactive:hover {
+  background-color: #e5e7eb;
+}
+
+.stepsGrid {
+  display: grid;
+  gap: 20px;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .stepsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.stepItem {
+  text-align: center;
+  position: relative;
+}
+
+.stepNumberContainer {
+  margin-bottom: 20px;
+}
+
+.stepNumber {
+  width: 42px;
+  height: 42px;
+  border-radius: 9999px;
+  background-color: #000000;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  margin: 0 auto;
+}
+
+.stepLine {
+  display: none;
+  position: absolute;
+  top: 21px;
+  left: 60%;
+  width: 80%;
+  height: 2px;
+  background-color: #e5e7eb;
+}
+
+@media (min-width: 768px) {
+  .stepLine {
+    display: block;
+  }
+}
+
+.stepTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.75rem;
+}
+
+.stepDescription {
+  color: #4b5563;
+  line-height: 1.625;
 }

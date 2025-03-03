@@ -1,10 +1,10 @@
-import { User } from "./user.types";
+// import { User } from "./user.types";
 
 export interface PortfolioState {
   allPortfolio: AllPortfolio;
   activePortfolio: ActivePortfolio;
   createPortfolio: CreatePortfolio;
-  activeGallery : ActiveGallery;
+  activeGallery: ActiveGallery;
 }
 
 export interface AllPortfolio {
@@ -35,24 +35,18 @@ export interface CreatePortfolio {
   data: Portfolio | null;
 }
 
-
-
 export interface Portfolio {
   id: string;
   name: string;
-  Background_image_url : string;
-  profile_image_url :string;
+  Background_image_url: string;
+  profile_image_url: string;
   //participants: string[];
   //participant_details: User[];
-  results:string[];
-  description : string;
-  
-  
+  results: string[];
+  description: string;
 }
 
 export interface Gallery {
   id: string;
-  photo_collection : string[];
-  
+  photo_collection: string[];
 }
-

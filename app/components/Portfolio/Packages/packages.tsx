@@ -1,11 +1,10 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 //import { useNavigate } from 'react-router-dom';
-import styles from './Packages.module.css';
+import styles from "./packages.module.css";
 
 const Packages = () => {
   //const navigate = useNavigate();
   // const [selectedPackage, setSelectedPackage] = useState(null);
-
 
   // const navigate = useNavigate();
   // const [selectedPackage, setSelectedPackage] = useState(null);
@@ -41,26 +40,30 @@ const Packages = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.heading}>Packages</h2>
-      
+
       <div className={styles.packageCard}>
         <div className={styles.packageHeader}>
           <h3 className={styles.packageTitle}>Basic Session</h3>
           <span className={styles.packagePrice}>$150</span>
         </div>
-        <p className={styles.packageDescription}>1-hour photo session with 10 edited photos</p>
+        <p className={styles.packageDescription}>
+          1-hour photo session with 10 edited photos
+        </p>
         <ul className={styles.packageList}>
           <li>1 hour of coverage</li>
           <li>10 edited photos</li>
           <li>Digital delivery</li>
         </ul>
       </div>
-      
+
       <div className={styles.packageCard}>
         <div className={styles.packageHeader}>
           <h3 className={styles.packageTitle}>Premium Package</h3>
           <span className={styles.packagePrice}>$300</span>
         </div>
-        <p className={styles.packageDescription}>2-hour photo session with 25 edited photos</p>
+        <p className={styles.packageDescription}>
+          2-hour photo session with 25 edited photos
+        </p>
         <ul className={styles.packageList}>
           <li>2 hours of coverage</li>
           <li>25 edited photos</li>
@@ -69,7 +72,7 @@ const Packages = () => {
         </ul>
       </div>
 
-        {/* <div className={styles.container}>
+      {/* <div className={styles.container}>
         <h2 className={styles.heading}>Packages</h2>
         
         {packages.map((pkg) => (
@@ -91,8 +94,6 @@ const Packages = () => {
           </div>
         ))} */}
 
-
-      
       {/* <button className={styles.bookButton} onClick={() => navigate('/book')}>Book Now</button>
       <button className={styles.messageButton}onClick={() => navigate('/message')}> */}
       {/* <button className={styles.bookButton} onClick={handleBookNow}>Book Now</button> */}
@@ -102,5 +103,5 @@ const Packages = () => {
       </button>
     </div>
   );
-}
+};
 export default Packages;
