@@ -18,7 +18,7 @@
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 body {
@@ -39,6 +39,10 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+p {
+  font-size: 16px;
+  font-weight: 400;
 }
 
 h1 {
@@ -69,4 +73,40 @@ th {
   font-size: 0.875rem;
   position: absolute;
   width: 90%;
+}
+h3 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.primary-btn {
+  background: #000;
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 999px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.secondary-btn {
+  background: transparent;
+  color: #000000;
+  /* padding: 14px 28px; */
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.boxWrapper {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 40px;
 }

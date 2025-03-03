@@ -15,29 +15,31 @@ const Footer = () => {
             <div className={styles.photographerSignupContent}>
               <h3>Are you a photographer?</h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-                architecto vitae nemo
+                Join SHUTR and connect with clients looking for professional
+                photography services. Build your portfolio, showcase your
+                talent, and start receiving bookings today!
               </p>
             </div>
-            <Link className={styles.signupBtn} href="/signup">
-              Sign up
+            <Link className={styles.signupBtn} href="/maintenance">
+              Register
             </Link>
           </div>
 
           <div className={styles.footerLinksWrapper}>
             <h4>Explore</h4>
             <div className={styles.footerLinks}>
-              <Link href="">Home</Link>
-              <Link href="">About Us</Link>
-              <Link href="">Contact Us</Link>
+              <Link href="/">Home</Link>
+              <Link href="/#about">About Us</Link>
+              {/* <Link href="">Contact Us</Link> */}
+              <Link href="/maintenance">Find a Photographer</Link>
             </div>
           </div>
 
           <div className={styles.footerLinksWrapper}>
             <h4>Policies</h4>
             <div className={styles.footerLinks}>
-              <Link href="">Terms & Conditions</Link>
-              <Link href="">Privacy Policy</Link>
+              <Link href="/maintenance">Terms & Conditions</Link>
+              <Link href="/maintenance">Privacy Policy</Link>
             </div>
           </div>
 

@@ -1,7 +1,113 @@
- .portfolio {
+.modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  text-align: center;
+}
+
+.input, .textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal_buttons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.save_button, .close_button {
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.save_button {
+  background: black;
+  color: white;
+}
+
+.close_button {
+  background: black;
+  color: white;
+}
+  
+ .edit_button{
+   margin-left: 700px ; 
+   /* position: absolute; */
+    /* bottom: 26.5rem; top-2 in Tailwind */
+    /* bottom: 12rem; */
+    /* right: 1rem; right-2 in Tailwind */
+    background-color: lightgrey ; /* bg-white */
+    padding: 10px; /* p-2 */
+    border-radius: 5px; /* rounded-full */
+    border-color: rgb(0, 0, 0);
+    
+    /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); shadow */
+   /* margin-top: -50px;  */
+  
+ }  
+  
+ 
+  .container {
+    display: flex;
+    align-items: center; /* Vertically aligns them in the center */
+    /* justify-content: space-between; Optionally, space between the text and button */
+    
+  }
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  .portfolio {
     font-family: Arial, sans-serif;
     color: #333;
     line-height: 1.6;
+
+
+    
+       /* If needed */
+       /* Change to `nowrap` */
+      
+      /*width: 1500px;
+      min-width: 1200px;
+      margin: 0 auto; */
+    
+    
   }
   
   
@@ -14,10 +120,7 @@
     margin-bottom: 60PX;
   }
   
-  .photographer_info {
-    margin-left: 350px;
-    margin-top: 20px;
-  }
+  
   
   
   .profile {
@@ -48,7 +151,10 @@
   }
 
   .social_icon {
+    color:#333;
+    /* color: rgb(23, 145, 232); */
     display: flex;
+    height: auto;
     gap: 20px;
     margin-top: 10px;
     
@@ -58,18 +164,48 @@
   .social_icon a:hover {
     color: #ff6347; 
     transform: scale(1.2);
+
   }
-   
+
   .description { 
+    margin-top: 60px;
     margin-right: 490px; 
     font-size: 0.95rem;
-    color: #555;
+    
+  }
+
+  .description {
+    flex: 1; /* Allow the description to take up remaining space */
+    margin-right: 0; /* Add spacing to the right of the description */
+    font-size: 1rem;
+    
   }
   
+  
+  
+  .connect {
+    margin-top: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-left: 0; 
+    width: 50%;
+    max-width: 800px;
+  }
+  
+  .descriptionAndCalendar {
+    display: flex; /* Horizontal alignment for description and calendar */
+    justify-content: space-between; /* Space between the two main sections */
+    align-items: flex-start; /* Align at the top */
+    gap: 20px; /* Add spacing between columns */
+    margin: 50px 100px; /* Vertical spacing and center alignment */
+    max-width: 2000px; /* Optional: Limit maximum width for consistent layout */
+    margin-top: -80px;
+  }
+  
+  
+  
   .tags {
-    padding-top: 20px;
-    flex: 20;
-    margin-left: 95px;
+    padding-top: 15px; /* Adjust spacing between description and tags */
   }
   
   .tags span {
@@ -81,13 +217,27 @@
     font-size: 0.9rem;
   }
   
-  .connect {
-    margin-top: 25px;
-    background-color: #fff;
-    border-radius: 10px;
-    margin-left: 100px; 
-    width: 90%;
-    max-width: 1200px;
+  .calendar {
+    flex: 0 0 300px;  /* Fix the width of the calendar */
+    
+  
   }
   
+  
+  @media (max-width: 768px) {
+    .descriptionAndCalendar {
+      flex-direction: column; /* Stack items vertically */
+      align-items: center; /* Center align items for small screens */
+      
+    }
+  
+    .calendar {
+      width: 100%; /* Full width calendar on small screens */
+    }
+  
+    .tags {
+      text-align: center; /* Center tags on smaller screens */
+      padding-top: 10px;
+    }
+  }
   
