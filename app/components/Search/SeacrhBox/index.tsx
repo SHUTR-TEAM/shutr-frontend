@@ -1,32 +1,42 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./index.module.css";
 import { IoSearch } from "react-icons/io5";
-import axios from "axios";
 import Card from "../Card";
+import { AppDispatch, RootState } from "@/app/redux/store";
+import { fetchDefaultResults, fetchSearchResults,setSearchTerm ,clearSearchResults} from "@/app/redux/features/searchSlice";
 
 export default function SearchBox() {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState<any[]>([]); // Store search results 
+    //Setting Up Redux Dispatch and State
+    const dispatch = useDispatch<AppDispatch>();  //Allows us to send actions to Redux.
+    /*  useSelector(state => state.search) → Gets the search state from Redux.
+        searchTerm → The text typed by the user.
+        results → The search results from the API.
+        defaultResults → Results when no search is made.
+        loading → Shows if an API request is in progress.
+        error → Stores any error messages.*/
+    const { searchTerm, results, defaultResults, loading, error } = useSelector((state: RootState) => state.search);
+
+    //const [sortBy, setSortBy] = useState("relevant");
 
     // Function to handle input changes (on typing)
+    //Dispatches an action (setSearchTerm) to the Redux store instead of updating a local state.
+    //Updates searchTerm in Redux whenever the user types in the search box
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
+        dispatch(setSearchTerm(event.target.value));
     };
 
     // Function to handle search action (Enter key or button click)
-    const handleSearch = async() => {
-        // Perform search logic here (e.g., API call)
-        //send the data to the api endpoint
-        try{
-            const response = await axios.get(`http://127.0.0.1:8000/search/users/`, {
-                params: { q: searchTerm }  //Correct way to pass query params
-            });
-            setSearchResults(response.data);
-            
-        } catch (error) {
-            console.error("Error Searching", error);
-        }         
+    //pass the serach term to the serachSlice(action)'s function called fetchSearchResults
+    const handleSearch =() => {
+        if (searchTerm.trim()!==""){
+            dispatch(fetchSearchResults(searchTerm));
+        }else {
+            dispatch(clearSearchResults());
+            dispatch(fetchDefaultResults())
+        }      
+
     };
 
     // Function to detect Enter key press
@@ -35,6 +45,10 @@ export default function SearchBox() {
             handleSearch();
         }
     };
+
+    useEffect(() => {
+       dispatch(fetchDefaultResults());
+     }, [dispatch]);
 
     return (
         <div>
@@ -67,6 +81,9 @@ export default function SearchBox() {
                 
             </div>
             <div>
+                {/*if loading true display loading, if error true display the error */}
+                {loading && <p>Loading...</p>}
+                {error && <p>Error : {error}</p>}
                 <Card data={searchResults} />
             </div>
         </div>
