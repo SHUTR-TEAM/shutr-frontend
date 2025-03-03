@@ -1,0 +1,11 @@
+.mainDiv {
+  min-height: calc(100vh - 80px);
+  position: relative;
+  display: flex;
+}
+
+.children {
+  /* margin-left: 250px; */
+  flex: 1;
+  padding: 20px;
+}

@@ -36,6 +36,7 @@ export default function SearchBox() {
             dispatch(clearSearchResults());
             dispatch(fetchDefaultResults())
         }      
+
     };
 
     // Function to detect Enter key press
@@ -83,7 +84,7 @@ export default function SearchBox() {
                 {/*if loading true display loading, if error true display the error */}
                 {loading && <p>Loading...</p>}
                 {error && <p>Error : {error}</p>}
-                <Card data={results.length > 0 ? results : defaultResults} />
+                <Card data={searchResults} />
             </div>
         </div>
          

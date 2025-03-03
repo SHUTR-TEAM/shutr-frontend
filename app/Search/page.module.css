@@ -28,3 +28,9 @@
     flex: 0 0 250px;
   }
 }  
+.Container {
+    display: flex;
+    flex-direction: row;
+    margin-top: auto;  
+    padding: 0px 20px;
+}
