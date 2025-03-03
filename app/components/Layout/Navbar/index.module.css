@@ -4,72 +4,38 @@
   align-items: center;
   padding: 0 20px;
   background: white;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 2px solid #e6e6e6;
   z-index: 10;
   position: fixed;
   height: 80px;
   width: 100%;
 }
 
-.navbarLeft {
+.navbarLogo {
+  width: auto;
+}
+
+.navLinks {
   display: flex;
   gap: 20px;
   align-items: center;
-  flex: 1;
-}
-
-.logoContainer {
-  display: flex;
-  align-items: center;
-}
-.logoImage {
-  border-radius: 50%;
-}
-.logoText {
-  color: var(--Lfg);
-  font-size: 20px;
-  font-weight: bold;
-  margin-left: 10px;
-}
-
-.searchContainer {
-  max-width: 400px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  border: 1px solid #ddd;
-  border-radius: 25px;
-  background: var(--Lbg);
-  font-size: 20px;
-  color: #333333;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  outline: none;
-  transition: all 0.3s ease;
-}
-
-.searchBar {
-  width: 100%;
-  font-size: 16px;
-  border: none;
-  outline: none;
 }
 
 .navLink {
   position: relative;
   display: inline-block;
-  margin: 0 20px;
+  margin: 0 10px;
   text-decoration: none;
   font-size: 16px;
   font-weight: 500;
   color: #333;
   transition: all 0.3s ease-in-out;
 }
+
 .navLink:hover {
   color: var(--Lfg);
-  transform: scale(1.1);
 }
+
 .navLink::after {
   content: "";
   position: absolute;

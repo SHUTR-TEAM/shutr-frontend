@@ -1,0 +1,155 @@
+/* .container {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    max-width: 1200px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    
+    text-align: center;
+    margin-left: 30px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #e0e0e0;
+    color: black;
+  }
+  
+  .button.active {
+    background-color: black;
+    color: white;
+  }
+  
+  .calendar {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+  }
+  
+  .cell {
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .timeHeader {
+    font-weight: bold;
+  }
+  
+  .dayHeader {
+    font-weight: bold;
+  }
+  
+  .timeSlot {
+    border-right: 1px solid #ccc;
+    color: #666;
+  }
+  
+  .event {
+    position: relative;
+    height: 60px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .eventTitle {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .eventTime {
+    font-size: 12px;
+  }
+   */
+
+
+  /* Container styles */
+.calendarContainer {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    max-width: 1200px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    
+    text-align: center;
+    margin-left: 30px;
+}
+
+/* Table styles */
+.calendarTable {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+/* Header styles */
+.calendarTable th {
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+/* Time column */
+.timeColumn {
+  width: 80px;
+  text-align: center;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  font-weight: bold;
+}
+
+/* Cell styles */
+.calendarTable td {
+  border: 1px solid #ccc;
+  height: 4rem; /* Adjust height for better spacing */
+  padding: 0.5rem;
+  position: relative;
+}
+
+/* Event block styles */
+.event {
+  position: absolute;
+  inset: 5px;
+  background-color: #e0e7ff;
+  padding: 0.5rem;
+  border-radius: 5px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Event title */
+.eventTitle {
+  font-weight: bold;
+  display: block;
+}
+
+/* Event time */
+.eventTime {
+  font-size: 0.75rem;
+  color: #555;
+}
+
+  

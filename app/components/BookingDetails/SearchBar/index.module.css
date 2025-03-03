@@ -1,0 +1,161 @@
+.space{
+    background-color: #F8F8FF;
+    position: fixed;
+    top: 80px; 
+    left: 0;
+    right: 0;
+    z-index: 1000; 
+}
+.searchBarContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    width: calc(100% - 70px); /* 35px on both left and right */
+    padding: 20px 20px;
+    background: white;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);  
+    margin: 20px auto 40px auto; 
+    border-radius: 9px;   
+}
+.searchBar {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    border: 1px solid #d3d3d3;
+    border-radius: 8px;
+    padding: 10px 15px;
+    background: rgb(251, 251, 251);
+    max-width: 60%; 
+    max-width: 500px;
+}
+.searchBar:hover{
+    background: #f8f8f8;
+    border-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.searchBar input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 550;
+    color: #333;
+}
+.searchBar svg {
+    margin-right: 6px;
+    font-size: 19px;
+    color: #777;
+    transition: color 0.3s ease-in-out;
+}
+.labelName {
+    font-size: 15px;
+    font-weight: 550; 
+    color: #333;
+}
+.searchBarDropdown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 12px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    background: rgb(251, 251, 251);
+    cursor: pointer;    
+    margin: 0px 10px;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover & Focus Effects */
+.searchBarDropdown:hover, 
+.searchBarDropdown:focus {
+    background: #f8f8f8;
+    border-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+.searchBarDropdown select {
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    font-weight: 550;
+}
+.btnContainer {
+    margin-left: auto; /* Push button to the right */
+}
+.btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+.btn:hover {
+    background-color: #0056b3;
+}
+/* Styles applied when the screen width is 830px or less */
+@media (max-width: 830px) {
+    .searchBarContainer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;        
+        width: 90%;
+    }
+    .searchBar {
+        width: 90%;
+        max-width: 100%;
+        padding: 7px 8px;
+    }
+    .searchBarDropdown {
+        padding: 8px 8px;
+        margin-left: 8px;        
+    }
+    .btnContainer {
+        display: flex;
+        justify-content: flex-end; 
+        width: 100%;
+    }
+    .btn {
+        font-size: 13px;
+        padding: 8px 9px;        
+    }
+}
+@media (max-width: 630px) {
+
+    .searchBarContainer {
+        flex-direction: column;
+        align-items: stretch;
+        width: 90%;
+        padding: 15px;
+    }
+    .searchBar {
+        width: 100%;
+        max-width: 100%;
+        padding: 7px 12px;
+    }
+    .searchBarDropdown {
+        padding: 7px 12px;
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+        justify-content: center;
+    }
+    .btnContainer {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+    }
+    .btn {
+        padding: 8px 12px;
+        width: 100%;
+    }
+}

@@ -1,0 +1,198 @@
+
+/* .dashboard {
+    display: flex;
+    height: 120vh;
+    background-color: #f9f9f9;
+  } */
+  .CalendarWidgetContainer {
+    display: flex;
+    
+    /* height:130vh; */
+    background-color: #f9f9f9;
+    width: auto;
+  }
+  
+  /* .mainContent {
+    flex: 1;
+    display:flex;
+    flex-direction: column;
+    padding: 20px 20px 20px 0;
+    background-color: #000;
+    position:relative;
+    height: 125vh;
+    width: 5vh;
+    margin-left: 0;
+    
+    
+  }
+  .calendarWrapper {
+    display: flex;
+    justify-content: flex-start; 
+    flex: 1;
+    padding-left: 2rem; 
+  } */
+  
+  .mainContent {
+    flex-grow: 1;
+  }
+  
+  .calendarWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .calendarContainer {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    gap: 20px;
+    padding: 10px;
+  }
+  
+  .sidebar {
+    width: 25%;
+    padding: 10px;
+  }
+  
+  .title {
+    padding: 10px 0;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .eventList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .noEvents {
+    font-style: italic;
+    text-align: center;
+    color: gray;
+  }
+  
+  .eventItem {
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    border-radius: 5px;
+    color: blue;
+  }
+  
+  .eventDate {
+    color: black;
+  }
+  
+  .fullCalendarContainer {
+    width: 75%;
+    margin-top: 8px;
+  }
+  
+  /* .dialogContent {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+  } */
+
+  .dialogContent {
+    position:fixed;
+    bottom: 3%;
+    left: 17%;
+    /* transform: translateX(-50%); */
+    width: 310px; /* Adjust as needed */
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  
+  .dialogTitle {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .formContainer {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .eventInput {
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 300px;
+  }
+  
+  /* .addButton {
+    background: #000;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  } */
+
+
+  .addButton {
+    background: linear-gradient(135deg, #111, #222); /* Deep black gradient */
+    color: #fff; /* White text for contrast */
+    padding: 12px 18px;
+    border: 2px solid #444; /* Dark gray border for subtle contrast */
+    border-radius: 8px; /* Smooth rounded edges */
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1); /* Soft white shadow */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  /* Hover Effect */
+  .addButton:hover {
+    background: linear-gradient(135deg, #222, #333); /* Slightly lighter black */
+    border-color: #666; /* Lighter gray border */
+    transform: translateY(-2px); /* Lifts slightly */
+    box-shadow: 0 6px 15px rgba(255, 255, 255, 0.15);
+  }
+  
+  /* Active Click Effect */
+  .addButton:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Optional: Adding an Icon inside */
+  .addButton::before {
+    content: "➕"; /* Plus icon */
+    font-size: 18px;
+    color: #fff; /* White icon */
+  }
+  
+  
+
+  .eventList {
+    max-height: 500px; /* Adjust height as needed */
+    overflow-y: auto;
+    padding-right: 10px; /* Prevent content from hiding behind scrollbar */
+  }
+  
+  /* Optional: Customize scrollbar */
+  .eventList::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .eventList::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+  
+  .eventList::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  
