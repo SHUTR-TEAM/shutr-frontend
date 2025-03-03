@@ -13,7 +13,7 @@
   overflow: hidden;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease;
-  padding: 10px;  
+  padding: 10px;
 }
 .card:hover {
   transform: translateY(-4px);
@@ -62,18 +62,19 @@
 .info {
   display: flex;
   justify-content: space-between;
-  margin:20px 0px;
+  margin: 20px 0px;
 }
 .name {
   font-weight: bold;
   font-size: 16px;
   color: rgb(64, 63, 63);
+}
 .location {
   color: #666;
   font-size: 14px;
-  margin:5px 0px;
+  margin: 5px 0px;
 }
-.review{
+.review {
   display: flex;
 }
 .reviews {
@@ -81,7 +82,7 @@
   color: #444;
   margin-bottom: 10px;
 }
-.starIcon{
+.starIcon {
   margin-left: 8px;
 }
 .cardActions {
@@ -89,7 +90,7 @@
   justify-content: space-between;
   gap: 10px;
 }
-.bookIcon{
+.bookIcon {
   color: rgb(255, 255, 255);
   margin-right: 8px;
   margin-top: 1.5px;
@@ -108,14 +109,14 @@
 
 .btnSecondary {
   display: flex;
-  color:black;
+  color: black;
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
 }
-.msgIcon{
+.msgIcon {
   margin-right: 8px;
   margin-top: 1.5px;
 }
@@ -125,14 +126,15 @@
 }
 .btnSecondary:hover {
   color: white;
-  background-color:black;
+  background-color: black;
 }
-@media(max-width:1865px){
-  .btnPrimary{
+@media (max-width: 1865px) {
+  .btnPrimary {
     padding: 10px 65px;
   }
-}@media(max-width:1670px){
-  .btnPrimary{
+}
+@media (max-width: 1670px) {
+  .btnPrimary {
     padding: 10px 45px;
     font-size: 13px;
   }
@@ -161,7 +163,8 @@
   .card {
     margin-bottom: 20px;
   }
-  .btnPrimary, .btnSecondary {
+  .btnPrimary,
+  .btnSecondary {
     width: 100%;
     text-align: center;
   }
