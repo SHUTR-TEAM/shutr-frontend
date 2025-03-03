@@ -1,13 +1,16 @@
 .mainContainer {
   display: flex;
   flex-direction: row;
+  height: 100vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 .categorySection{
+  position: sticky;
   flex: 0 0 350px; 
-  height: 100%;
-  top: 80px;
-  left: 0;
-  overflow-y: auto;
+  height: calc(100vh - 80px);
+  top: 0;
 }  
 .searchBarContainer {
   flex: 1; 
