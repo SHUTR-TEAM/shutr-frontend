@@ -1,46 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-//import React from "react";
-//import { useNavigate } from 'react-router-dom';
+
 import styles from './Packages.module.css';
 
-// const Packages = () => {
-  //const navigate = useNavigate();
-  // const [selectedPackage, setSelectedPackage] = useState(null);
 
-
-  // const navigate = useNavigate();
-  // const [selectedPackage, setSelectedPackage] = useState(null);
-
-  // const packages = [
-  //   {
-  //     id: 1,
-  //     title: 'Basic Session',
-  //     price: '$150',
-  //     description: '1-hour photo session with 10 edited photos',
-  //     details: ['1 hour of coverage', '10 edited photos', 'Digital delivery']
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'Premium Package',
-  //     price: '$300',
-  //     description: '2-hour photo session with 25 edited photos',
-  //     details: ['2 hours of coverage', '25 edited photos', 'Digital delivery', 'Print release']
-  //   }
-  // ];
-
-  // const handleSelectPackage = (pkg) => {
-  //   setSelectedPackage(pkg);
-  // };
-
-  // const handleBookNow = () => {
-  //   if (selectedPackage) {
-  //     navigate('/book', { state: { package: selectedPackage } });
-  //   } else {
-  //     alert('Please select a package before booking.');
-  //   }
-  // };
 
   interface Package {
     id: number;
@@ -100,33 +64,7 @@ import styles from './Packages.module.css';
     <div className={styles.container}>
       <h2 className={styles.heading}>Packages</h2>
       
-      {/* <div className={styles.packageCard}>
-        <div className={styles.packageHeader}>
-          <h3 className={styles.packageTitle}>Basic Session</h3>
-          <span className={styles.packagePrice}>$150</span>
-        </div>
-        <p className={styles.packageDescription}>1-hour photo session with 10 edited photos</p>
-        <ul className={styles.packageList}>
-          <li>1 hour of coverage</li>
-          <li>10 edited photos</li>
-          <li>Digital delivery</li>
-        </ul>
-      </div>
       
-      <div className={styles.packageCard}>
-        <div className={styles.packageHeader}>
-          <h3 className={styles.packageTitle}>Premium Package</h3>
-          <span className={styles.packagePrice}>$300</span>
-        </div>
-        <p className={styles.packageDescription}>2-hour photo session with 25 edited photos</p>
-        <ul className={styles.packageList}>
-          <li>2 hours of coverage</li>
-          <li>25 edited photos</li>
-          <li>Digital delivery</li>
-          <li>Print release</li>
-        </ul>
-      </div> */}
-
 
       {packages.map((pkg) => (
         <div key={pkg.id} className={styles.packageCard}>
@@ -150,34 +88,11 @@ import styles from './Packages.module.css';
         
       ))}
 
-        {/* <div className={styles.container}>
-        <h2 className={styles.heading}>Packages</h2>
         
-        {packages.map((pkg) => (
-          <div 
-            key={pkg.id} 
-            className={`${styles.packageCard} ${selectedPackage?.id === pkg.id ? styles.selected : ''}`} 
-            onClick={() => handleSelectPackage(pkg)}
-          >
-            <div className={styles.packageHeader}>
-              <h3 className={styles.packageTitle}>{pkg.title}</h3>
-              <span className={styles.packagePrice}>{pkg.price}</span>
-            </div>
-            <p className={styles.packageDescription}>{pkg.description}</p>
-            <ul className={styles.packageList}>
-              {pkg.details.map((detail, index) => (
-                <li key={index}>{detail}</li>
-              ))}
-            </ul>
-          </div>
-        ))} */}
 
 
       
-      {/* <button className={styles.bookButton} onClick={() => navigate('/book')}>Book Now</button>
-      <button className={styles.messageButton}onClick={() => navigate('/message')}> */}
-      {/* <button className={styles.bookButton} onClick={handleBookNow}>Book Now</button> */}
-      {/* <button className={styles.bookButton}>Book Now</button> */}
+      
       <button className={styles.messageButton}>
         <span className={styles.icon}>&#128172;</span> Message Photographer
       </button>
@@ -185,3 +100,90 @@ import styles from './Packages.module.css';
   );
 };
 export default Packages;
+
+
+
+// "use client";
+
+// import { useEffect, useState } from "react";
+// import { useRouter } from "next/navigation";
+// import styles from "./Packages.module.css";
+
+// interface Package {
+//   _id: string;  // MongoDB uses `_id` instead of `id`
+//   title: string;
+//   price: string;
+//   description: string;
+//   details: string[];  // Keep details as an array
+//   package_type: string;
+// }
+
+// const Packages = () => {
+//   const router = useRouter();
+//   const [packages, setPackages] = useState<Package[]>([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState<string | null>(null);
+
+//   useEffect(() => {
+//     const fetchPackages = async () => {
+//       try {
+//         // const response = await fetch("http://localhost:8000/packages/"); // Update with your API URL
+//         const response = await fetch("http://127.0.0.1:8000/packages/");
+//         if (!response.ok) throw new Error("Failed to fetch packages");
+        
+//         const data: Package[] = await response.json();
+//         setPackages(data);
+//       } catch (err) {
+//         setError(err instanceof Error ? err.message : "Something went wrong");
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchPackages();
+//   }, []);
+
+//   const handleBookNow = (pkg: Package) => {
+//     router.push(`/booking?package=${pkg.package_type}`);
+//   };
+
+//   if (loading) return <p>Loading packages...</p>;
+//   if (error) return <p className={styles.error}>Error: {error}</p>;
+
+//   return (
+//     <div className={styles.container}>
+//       <h2 className={styles.heading}>Packages</h2>
+
+//       {packages.length > 0 ? (
+//         packages.map((pkg) => (
+//           <div key={pkg._id} className={styles.packageCard}>
+//             <div className={styles.packageHeader}>
+//               <h3 className={styles.packageTitle}>{pkg.title}</h3>
+//               <span className={styles.packagePrice}>{pkg.price}</span>
+//             </div>
+//             <p className={styles.packageDescription}>{pkg.description}</p>
+//             <ul className={styles.packageList}>
+//               {pkg.details.map((detail, index) => (
+//                 <li key={index}>{detail}</li>
+//               ))}
+//             </ul>
+//             <button
+//               className={styles.bookButton}
+//               onClick={() => handleBookNow(pkg)}
+//             >
+//               Book Now
+//             </button>
+//           </div>
+//         ))
+//       ) : (
+//         <p>No packages available</p>
+//       )}
+
+//       <button className={styles.messageButton}>
+//         <span className={styles.icon}>&#128172;</span> Message Photographer
+//       </button>
+//     </div>
+//   );
+// };
+
+// export default Packages;

@@ -1,13 +1,13 @@
-// import Portfolio from "../components/Portfolio"
+import Portfolio from "../components/Portfolio"
 
-// function PortfolioPage() {
-//     return (
-//       <>
-//       <Portfolio/>
-//       </>
+function PortfolioPage() {
+    return (
+      <>
+      <Portfolio/>
+      </>
      
-//     )
-//   }
+    )
+  }
   
-//   export default PortfolioPage
+  export default PortfolioPage
 
