@@ -1,69 +1,595 @@
 .gallery {
-    padding: 20px 30px;
+    width: 950px;
   }
   
   .gallery h2 {
-    margin-top: 10px;
-    margin-left: 69px;
+    margin-top: 40px;
+    margin-left: 0;
   }
   
   .gallery_grid {
     margin-top: 25px;
-    margin-left: 75px;
+    margin-left: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 240px));
-    gap: 230px;
-    row-gap: 10px;
-    
-
-    
+    grid-template-columns: 1fr; 
+    gap: 1rem; 
+    margin-bottom: 1.5rem; 
+  }
+  
+  @media (min-width: 768px) {
+    .gallery_grid {
+      grid-template-columns: repeat(2, 1fr); 
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .gallery_grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
-  .gallery_images{
-    border-radius: 9%;
+  .imageView {
+    position: relative; 
+    overflow: hidden; 
+    border-radius: 0.5rem; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    cursor: pointer; 
+    width: 305px;
+    height: 230px;
+  }
+  
+  .image {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    transition: transform 0.3s ease-in-out; 
   }
 
-  .gallery_images a:hover {
-    color: #ff6347; 
+  .imageView:hover .image {
+    transform: scale(1.05); 
   }
 
-.button{
-  padding-left: 2000px;;
+
+  .imageOverlay {
+    position: absolute; /* absolute */
+    inset: 0; 
+    background-color: black; 
+    opacity: 0; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    transition: opacity 0.3s ease-in-out; 
+  }
+  
+  /* Show overlay on hover when inside a group */
+  .imageView:hover .imageOverlay {
+    opacity: 0.3; 
+  }
+
+  .imageOpacity {
+    opacity: 0; 
+    transition: opacity 0.3s ease-in-out; 
+  }
+  
+  /* Show the element on hover when inside a group */
+  .imageView:hover .imageOpacity {
+    opacity: 1; 
+  }
+
+
+  .imageBadge {
+    color: rgb(0, 0, 0);
+    background-color: white; 
+    padding: 0.25rem 0.75rem; 
+    border-radius: 9999px; 
+    font-size: 0.875rem; 
+    font-weight: 500; 
+  }
+  
+
+
+  .edit_button {
+    background-color: gray; 
+    transition: background-color 0.2s ease-in-out;
+    color: white; 
+    padding: 0.5rem 1rem; 
+    border-radius: 0.375rem; 
+    display: flex; 
+    align-items: center; 
+    border-color: white;
+  }
+  
+  .edit_button:hover {
+    background-color: black;
+  }
+
+.gallery_edit_container {
+    display: flex; /* flex */
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 1.5rem; 
 }
-
-
-
-
-
+  
 .button_container {
   margin-top: 15px;
-margin-left: 50px;
+  margin-left: 0;
 }
 
 .button {
-  margin-left: 20px;
+  margin-right: 10px;
   padding: 10px 20px; 
   font-size: 0.9rem; 
   background-color: #f0f0f0; /* Default button background color */
   color: black; 
   border: none; 
-  border-radius: 15px; /* Rounded corners */
-  transition: all 0.3s ease; /* Smooth transition for all changes */
+  border-radius: 10px; 
+  transition: all 0.1s ease; 
+}
+
+.activeButton{
+  background-color: black;
+  color: white;
+  
+}
+
+.notActiveButton:hover{
+  filter: brightness(90%);
 }
 
 .button:hover {
-  background-color: #ff6347; /* Change background color on hover */
-  color: white; 
-  transform: scale(1.1); /* Increase size on hover */
+  transform: scale(0.9); /* Increase size on hover */
+}
+
+.paginationDots {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 0.5rem; 
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  margin: 0 5px;
+  background-color: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.dot:hover {
+  background-color:darkgray; 
 }
 
 
-.image {
-   
-  transition: filter 0.3s ease; /* Smooth transition for brightness change */
+.activeDot {
+  height: 10px;
+  width: 10px;
+  margin: 0 5px;
+  background-color: black;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
 }
 
-.image:hover {
-  transform: scale(0.9);
-  filter: brightness(1.2); /* Reduce brightness to 70% on hover */
+.modalOverlay {
+  position: fixed; 
+  top: 0; 
+  right: 0; 
+  bottom: 0; 
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5); 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  z-index: 1000; 
+}
+
+.modalContainer {
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); 
+  width: 100%; /* w-full */
+  max-width: 48rem; 
+  max-height: 90vh; 
+  overflow: auto; 
+  z-index: 1001;
+}
+
+.modalHeader {
+  display: flex; /* flex */
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 1rem; 
+  border-bottom: 1px solid #e5e7eb; 
+}
+
+
+.modelCloseButton {
+  color: #6b7280; 
+  transition: color 0.2s ease-in-out; 
+  background-color: white;
+  border: none;
+}
+
+.modelCloseButton:hover {
+  color: black; 
+}
+
+.sections {
+  display: flex; /* flex */
+  border-bottom: 1px solid #e5e7eb; 
+}
+
+.select{
+  color: #2563eb; 
+  border-color:   #2563eb;
+  border-width: 3px;
+}
+
+
+.notSelect {
+  color: #6b7280; 
+  transition: color 0.2s ease-in-out; /* Smooth transition */
+  border-bottom: none;
+}
+
+.notSelect:hover {
+  color: black;
+}
+
+.sectionsButton{
+    padding-left: 1.5rem; 
+    padding-right: 1.5rem; 
+    padding-top: 0.75rem; 
+    padding-bottom: 0.75rem; 
+    font-weight: 500; 
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    background-color: white;
+}
+
+.activeTab{
+    padding: 1.5rem; 
+}
+
+.urlSection{
+  margin-bottom: 1.5rem;
+}
+
+.urlLabel{
+  
+    display: block; 
+    font-size: 0.875rem; 
+    font-weight: 500; 
+    color: #374151; 
+    margin-bottom: 0.5rem;
+  
+}
+
+.urlInput {
+  width: 100%; 
+  padding-left: 0.75rem; 
+  padding-right: 0.75rem; 
+  padding-top: 0.5rem; 
+  padding-bottom: 0.5rem; 
+  border: 1px solid #d1d5db; 
+  border-radius: 0.375rem; 
+  outline: none; 
+  transition: box-shadow 0.2s ease-in-out; /* smooth transition */
+}
+
+.urlInput:focus {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5); 
+}
+
+.imageUploadSection {
+  margin-bottom: 1.5rem; 
+}
+
+
+.imageUploadLabel{
+  display: block; 
+  font-size: 0.875rem; 
+  font-weight: 500; 
+  color: #374151; 
+  margin-bottom: 0.5rem; 
+}
+
+
+.imageInput {
+  border-width: 2px; 
+  border-style: dashed; 
+  border-color: #d1d5db; 
+  border-radius: 0.375rem; 
+  padding: 1.5rem; 
+  text-align: center; 
+}
+
+.imageInputIcon{
+    display: none; 
+  }
+  
+
+
+.fileUpload{
+    cursor: pointer; 
+}
+
+
+.itemUpload{
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+}
+
+.uploadIcon{
+  
+    color: #9ca3af; 
+    margin-bottom: 0.5rem; 
+  
+}
+
+.uploadText{
+  font-size: 0.875rem; 
+  color: #6b7280; 
+}
+
+.prevImage {
+  margin-bottom: 1.5rem; 
+}
+
+.preview {
+  font-size: 0.875rem; 
+  font-weight: 500; 
+  color: #374151; 
+  margin-bottom: 0.5rem; 
+}
+
+.prevGrid {
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 1rem; 
+}
+
+.imagePrev {
+  width: 100%; 
+  height: 6rem; 
+  object-fit: cover; 
+  border-radius: 0.375rem; 
+}
+
+.prevCloseButton {
+  position: absolute; 
+  top: 0.25rem; 
+  right: 0.25rem; 
+  background-color: #ef4444; 
+  color: #ffffff ; 
+  border-radius: 100%; 
+  padding-right: 2px;
+  padding-left: 2px;
+  padding-top: 2px;
+  border: none;
+}
+
+
+.categoryInputContainer {
+  margin-bottom: 1.5rem; 
+}
+
+.categoryInputLabel {
+  display: block; /* block */
+  font-size: 0.875rem; 
+  font-weight: 500; 
+  color: #374151; 
+  margin-bottom: 0.5rem; 
+}
+
+
+.categoryInput {
+  width: 100%; 
+  padding: 0.5rem 0.75rem; 
+  border: 1px solid #d1d5db; 
+  border-radius: 0.375rem; 
+  outline: none; 
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.categoryInput:focus {
+  box-shadow: 0 0 0 2px #3b82f6; 
+}
+
+
+.categoryInputButtonContainer{
+  display: flex; 
+  justify-content: flex-end; 
+}
+
+
+.categoryInputButton {
+  background-color: #2563eb; 
+  color: #ffffff; 
+  padding: 0.5rem 1rem; 
+  border-radius: 0.375rem; 
+  transition: background-color 0.2s ease-in-out;
+}
+
+.categoryInputButton:hover {
+  background-color: #1e40af; 
+}
+
+
+.deleteLabelSelect {
+  font-size: 0.875rem; 
+  font-weight: 500; 
+  color: #374151; 
+  margin-bottom: 1rem; 
+}
+
+.emptyImageLabel {
+  color: #6b7280;
+  text-align: center; 
+  padding-top: 2rem; 
+  padding-bottom: 2rem; 
+}
+
+.deleteGrid {
+  display: grid; 
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 1rem; 
+}
+
+@media (min-width: 768px) { 
+  .deleteGrid {
+    grid-template-columns: repeat(3, 1fr); 
+  }
+}
+
+.deleteImage {
+  width: 225px; 
+  height: 170px;
+  object-fit: cover; 
+  border-radius: 0.375rem; 
+}
+
+.group {
+  position: relative; /* relative */
+}
+
+.deleteContainer {
+  width: 225px; 
+  height: 170px;
+  border-radius: 0.375rem; 
+  position: absolute; 
+  top: 0; left: 0; right: 0; bottom: 0; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  background-color: rgba(0, 0, 0, 0); 
+  transition: opacity 0.3s ease; 
+}
+
+.group:hover .deleteContainer {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.deleteButton {
+  background-color: #ef4444; 
+  color: #ffffff; 
+  padding: 0.5rem; 
+  border-radius: 9999px; 
+  opacity: 0; 
+  transition: opacity 0.3s ease; 
+  border: none;
+}
+
+.group:hover .deleteButton { 
+  opacity: 1; 
+ }
+
+.deleteImageCategory{
+    position: absolute; 
+    bottom: 0.5rem; 
+    left: 0.5rem; 
+    background-color: #ffffff; 
+    padding: 0.25rem 0.5rem; 
+    border-radius: 0.25rem; 
+    font-size: 0.75rem; 
+    margin-bottom: 5px;
+}
+
+.imageViewerOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.imageViewerContainer {
+  position: relative;
+  max-width: 64rem; 
+  max-height: 90vh;
+  width: 100%;
+}
+
+.imageViewerClose {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: white;
+  z-index: 10;
+  /* background-color: black; */
+  background-color: transparent !important;
+  border: none;
+  margin-right: -20px;
+}
+
+.imageViewerClose:hover {
+  color: #d1d5db; 
+}
+
+.imageViewerContent {
+  position: relative;
+}
+
+.imageViewerImage {
+  max-height: 85vh;
+  width: 950px;
+  margin-left: 50px;
+  margin-right: auto;
+  object-fit: contain;
+}
+
+.previousButton  {
+  position: absolute; 
+  left: 1rem; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #ffffff; 
+  padding: 0.5rem; 
+  border-radius: 9999px; 
+  transition: background-color 0.3s ease; 
+  border: none;
+}
+
+.previousButton:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.nextButton {
+  position: absolute; 
+  right: 1rem; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  background-color: rgba(0, 0, 0, 0.5); 
+  color: #ffffff; 
+  padding: 0.5rem; 
+  border-radius: 9999px; 
+  transition: background-color 0.3s ease; 
+  margin-right: -27px;
+  border: none;
+}
+
+.nextButton:hover {
+  background-color: rgba(0, 0, 0, 0.7); 
+}
+
+.imageViewerCaption {
+  text-align: center;
+  margin-top: 1rem;
+  color: white;
+}
+
+.imageViewerCaptionPTag {
+  font-size: 0.875rem; 
+}
+
+.prevImageIndex {
+  position: relative; 
 }

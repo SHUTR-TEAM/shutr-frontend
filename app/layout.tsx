@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./components/Layout/Navbar";
 import styles from "./layout.module.css";
-import Footer from "./components/Layout/Footer";
+//import Footer from "./components/Layout/Footer";
 import StoreProvider from "./redux/StoreProvider";
 
 import { Inter } from "next/font/google";

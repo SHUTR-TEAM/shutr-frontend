@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import styles from "./index.module.css";
 import ClientInformation from "../ClientInformation";
@@ -50,9 +50,26 @@ type BookingFormData = {
   cancellation: boolean;
 };
 
-export default function BookingForm() {
+interface BookingFormProps {
+  selectedPackage?: {
+    id: number;
+    title: string;
+    price: string;
+    description: string;
+    packageType: "basic" | "premium" | "luxury";
+  };
+}
+
+export default function BookingForm({ selectedPackage }: BookingFormProps) {
   const [currentStep, setCurrentStep] = useState(1);
   const methods = useForm<BookingFormData>();
+
+
+  useEffect(() => {
+    if (selectedPackage) {
+      methods.setValue("package", selectedPackage.packageType);
+    }
+  }, [selectedPackage, methods]);
 
   const handleNext = async () => {
     const isValid = await methods.trigger();
