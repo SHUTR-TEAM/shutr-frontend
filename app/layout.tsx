@@ -4,9 +4,10 @@ import "./globals.css";
 import Navbar from "./components/Layout/Navbar";
 import styles from "./layout.module.css";
 //import Footer from "./components/Layout/Footer";
-import StoreProvider from "./redux/StoreProvider";
 
 import { Inter } from "next/font/google";
+import Footer from "./components/Layout/Footer";
+import StoreProvider from "./redux/storeProvider";
 
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({ subsets: ["latin"] });
