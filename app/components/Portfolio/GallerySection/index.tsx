@@ -1,8 +1,9 @@
 
-
 import Image from "next/image";
 import React, { useState } from "react";
 import styles from "./index.module.css";
+import {X, Plus, Trash2, Upload, Image as ImageIcon, ChevronLeft, ChevronRight } from "lucide-react";
+
 
 interface Photo {
   url: string;
@@ -11,21 +12,32 @@ interface Photo {
 
 interface GallerySectionProps {
   Gallery: Photo[];
+  onUpdateGallery: (newGallery: Photo[]) => void ;
 }
 
-export default function GallerySection({ Gallery = [] }: GallerySectionProps) {
-
+export default function GallerySection({ Gallery = [], onUpdateGallery }: GallerySectionProps) {
 
   console.log("show Gallery : " , Gallery);
-
-
 
   const imagesPerPage = 9;
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("All");
 
+  // new Added states
+  const [isModalOpen , setIsModalOpen ] = useState(false)
+  const [activeTab, setActiveTab] = useState("add");
+  const [newImageUrl, setNewImageUrl] = useState("");
+  const [newImageCategory, setNewImageCategory] = useState("");
+  const [previewImages, setPreviewImages] = useState<{ url: string; file?: File }[]>([]);
+
+   // Image viewer state
+   const [viewerOpen, setViewerOpen] = useState(false);
+   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+
   const filteredPhotos = selectedCategory === "All"
     ? Gallery
+    // : Gallery.filter(photo => photo.category.toLowerCase() === selectedCategory.toLowerCase());
     : Gallery.filter(photo => photo.catagory.toLowerCase() === selectedCategory.toLowerCase());
 
   const totalPages = Math.ceil(filteredPhotos.length / imagesPerPage);
@@ -46,37 +58,218 @@ export default function GallerySection({ Gallery = [] }: GallerySectionProps) {
 
   const uniqueCategories = ["All", ...Array.from(new Set(Gallery.map(photo => photo.catagory)))];
 
-  return (
-    <section className={styles.gallery}>
-      <h2>Gallery</h2>
+  const openModal = () => {
+    setIsModalOpen(true);
+  }
 
-      <div className={styles.button_container}>
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setPreviewImages([]);
+    setNewImageUrl("");
+    setNewImageCategory("");
+  }
+
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+  }
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const filesArray = Array.from(e.target.files);
+      const newPreviewImages = filesArray.map(file => ({
+        url: URL.createObjectURL(file),
+        file
+      }));
+      setPreviewImages([...previewImages, ...newPreviewImages]);
+    }
+  };
+
+  const handleRemovePreview = (index: number) => {
+    const newPreviewImages = [...previewImages];
+    // Revoke the object URL to avoid memory leaks
+    URL.revokeObjectURL(newPreviewImages[index].url);
+    newPreviewImages.splice(index, 1);
+    setPreviewImages(newPreviewImages);
+  };
+
+
+  const handleAddImages = () => {
+    // Add images from URL
+    // let newGallery = [...Gallery];
+    const newGallery = [...Gallery];
+    
+    if (newImageUrl && newImageCategory) {
+      newGallery.push({
+        url: newImageUrl,
+        catagory: newImageCategory
+      });
+    }
+    
+    // Add images from file uploads (in a real app, you would upload these to a server)
+    // Here we're just using the object URLs as placeholders
+    previewImages.forEach(preview => {
+      if (newImageCategory) {
+        newGallery.push({
+          url: preview.url,
+          catagory: newImageCategory
+        });
+      }
+    });
+    
+    onUpdateGallery(newGallery);
+    closeModal();
+  };
+
+  const handleDeleteImage = (index: number) => {
+    const newGallery = [...Gallery];
+    newGallery.splice(index, 1);
+    onUpdateGallery(newGallery);
+  };
+
+  // Image viewer functions
+  const openImageViewer = (index: number) => {
+    setCurrentImageIndex(index);
+    setViewerOpen(true);
+  };
+
+  const closeImageViewer = () => {
+    setViewerOpen(false);
+  };
+
+  const goToPreviousImage = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === 0 ? filteredPhotos.length - 1 : prevIndex - 1
+    );
+  };
+
+  const goToNextImage = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === filteredPhotos.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  // Handle keyboard navigation
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowLeft') {
+      goToPreviousImage();
+    } else if (e.key === 'ArrowRight') {
+      goToNextImage();
+    } else if (e.key === 'Escape') {
+      closeImageViewer();
+    }
+  };
+
+
+
+  return (
+    // <section className={styles.gallery}>
+    //   <h2>Gallery</h2>
+
+    //   <div className={styles.button_container}>
+    //     {uniqueCategories.map(category => (
+    //       <button
+    //         key={category}
+    //         className={
+    //           selectedCategory === category
+    //             ? `${styles.button} ${styles.activeButton}`
+    //             : styles.button
+    //         }
+    //         onClick={() => handleCategoryChange(category)}
+    //       >
+    //         {/* {category} Photography */}
+    //         {category}
+    //       </button>
+    //     ))}
+    //   </div>
+
+    //   <div className={styles.gallery_grid}>
+    //     {currentImages.map((photo, index) => (
+    //       <div key={index}>
+    //         <Image
+    //           src={photo.url}
+    //           alt={`Gallery item ${index + 1}`}
+    //           width={390}
+    //           height={300}
+    //           className={styles.image}
+    //         />
+    //       </div>
+    //     ))}
+    //   </div>
+
+    //   {totalPages > 1 && (
+    //     <div className={styles.paginationDots}>
+    //       {[...Array(totalPages)].map((_, index) => (
+    //         <span
+    //           key={index}
+    //           className={
+    //             index === currentPage ? styles.activeDot : styles.dot
+    //           }
+    //           onClick={() => handlePageChange(index)}
+    //         ></span>
+    //       ))}
+    //     </div>
+    //   )}
+    // </section>
+
+
+    
+    <section className={styles.gallery}>
+      <div className= {styles.gallery_edit_container} >
+        <h2>Gallery</h2>
+        <button 
+          onClick={openModal}
+          className={styles.edit_button}
+        >  
+          <Plus size={18} /> Edit Gallery
+        </button>
+      </div>
+
+      
+      <div className= {styles.button_container}>
         {uniqueCategories.map(category => (
           <button
             key={category}
+            
             className={
               selectedCategory === category
-                ? `${styles.button} ${styles.activeButton}`
-                : styles.button
+                 /*? `${styles.button} ${styles.activeButton}` */ 
+                 ? `${styles.button} ${styles.activeButton}`
+                : `${styles.button} ${styles.notActiveButton}`   
+                  // }`}  
             }
             onClick={() => handleCategoryChange(category)}
           >
-            {/* {category} Photography */}
-            {category}
+              {/* {category} Photography */}
+              {category}
           </button>
         ))}
       </div>
 
-      <div className={styles.gallery_grid}>
+      
+      <div className= {styles.gallery_grid}>
         {currentImages.map((photo, index) => (
-          <div key={index}>
+          <div 
+            key={index} 
+            
+            className= {styles.imageView}
+            onClick={() => openImageViewer(currentPage * imagesPerPage + index)}
+          >
             <Image
               src={photo.url}
               alt={`Gallery item ${index + 1}`}
+              // width={140}
+              // height={140}
               width={390}
-              height={300}
+              height={390}
               className={styles.image}
             />
+            <div className= {styles.imageOverlay}>
+                <div className = {styles.imageOpacity}>
+                <span className= {styles.imageBadge}>
+                  {photo.catagory}
+                </span>
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -84,17 +277,274 @@ export default function GallerySection({ Gallery = [] }: GallerySectionProps) {
       {totalPages > 1 && (
         <div className={styles.paginationDots}>
           {[...Array(totalPages)].map((_, index) => (
-            <span
+            <button
               key={index}
               className={
-                index === currentPage ? styles.activeDot : styles.dot
-              }
+                
+                index === currentPage ? styles.activeDot : styles.dot 
+              /*}` */}
               onClick={() => handlePageChange(index)}
-            ></span>
+              aria-label={`Go to page ${index + 1}`}
+            ></button>
           ))}
+        </div>
+      )}
+
+      {/* Edit Modal */}
+      {isModalOpen && (
+       
+        <div className={styles.modalOverlay}>
+          
+          <div className={styles.modalContainer}>
+           
+            <div className={styles.modalHeader}>
+              <h3 >Edit Gallery</h3>
+              <button 
+                onClick={closeModal}
+               
+                className={styles.modelCloseButton}
+              >
+                <X size={24} />
+              </button>
+            </div>
+            
+            
+            <div className = {styles.sections}>
+              <button 
+                
+                className={`${styles.sectionsButton} ${activeTab === 'add' ? styles.select : styles.notSelect}`}
+                onClick={() => handleTabChange('add')}
+              >
+                Add Images
+              </button>
+              <button 
+               
+                className={`${styles.sectionsButton} ${activeTab === 'delete' ? styles.select : styles.notSelect}`}
+                onClick={() => handleTabChange('delete')}
+              >
+                Delete Images
+              </button>
+            </div>
+            
+            
+            <div className = {styles.activeTab}>
+              {activeTab === 'add' && (
+                <div>
+                 
+                  <div className={styles.urlSection}>  
+                   
+                    <label className={styles.urlLabel}>
+                      Add Image URL
+                    </label>
+                    <input
+                      type="text"
+                      value={newImageUrl}
+                      onChange={(e) => setNewImageUrl(e.target.value)}
+                      placeholder="https://example.com/image.jpg"
+                      
+                      className = {styles.urlInput}
+                    />
+                  </div>
+                  
+                  
+                  <div className={styles.imageUploadSection}>  
+                    
+                    <label className={styles.imageUploadLabel}>
+                      Upload Images
+                    </label>
+                    
+                    <div className= {styles.imageInput}>
+                      <input
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        className={styles.imageInputIcon}
+                        id="file-upload"
+                      />
+                      <label htmlFor="file-upload" className= {styles.fileUpload}>
+                        <div className= {styles.itemUpload}>
+                          <Upload className= {styles.uploadIcon} size={36} />
+                          <p className= {styles.uploadText}>
+                            Drag and drop files here or click to browse
+                          </p>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                  
+                  {previewImages.length > 0 && (
+                    
+                    <div className= {styles.prevImage}>
+                      
+                      <h4 className= {styles.preview}>Preview</h4>
+                      
+                      <div className= {styles.prevGrid}>
+                        {previewImages.map((preview, index) => (
+                          <div key={index}   className = {styles.prevImageIndex}>
+                            <Image
+                              src={preview.url}
+                              alt={`Preview ${index + 1}`}
+                              width={400}
+                              height={400}
+                              className = {styles.imagePrev}
+                            />
+                            <button
+                              onClick={() => handleRemovePreview(index)}
+                              className = {styles.prevCloseButton}
+                            >
+                              <X size={14} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                 
+                  <div className = {styles.categoryInputContainer}>
+                 
+                    <label className = {styles.categoryInputLabel}>
+                      Category
+                    </label>
+                    <input
+                      type="text"
+                      value={newImageCategory}
+                      onChange={(e) => setNewImageCategory(e.target.value)}
+                      placeholder="Enter category (e.g., Nature, Wedding)"
+                     
+                      className = {styles.categoryInput}
+                    />
+                  </div>
+                  
+                  
+                  <div className = {styles.categoryInputButtonContainer}>
+                    <button
+                      onClick={handleAddImages}
+                      
+                      className = {styles.categoryInputButton}
+                      disabled={(!newImageUrl && previewImages.length === 0) || !newImageCategory}
+                    >
+                      Add to Gallery
+                    </button>
+                  </div>
+                </div>
+              )}
+              
+              {activeTab === 'delete' && (
+                <div>
+                  
+                  <h4 className= {styles.deleteLabelSelect}>Select images to delete</h4>
+                  {Gallery.length === 0 ? (
+                    
+                    <p className= {styles.emptyImageLabel}>No images in the gallery</p>
+                  ) : (
+                    
+                    <div className = {styles.deleteGrid}>
+                      {Gallery.map((photo, index) => (
+                        
+                        <div key={index} className= {styles.group}>
+                          <Image
+                            src={photo.url}
+                            alt={`Gallery item ${index + 1}`}
+                            width={200}
+                            height={20}
+                          
+                            className = {styles.deleteImage}
+                          />
+                          
+                          <div className = {styles.deleteContainer}>
+                            <button
+                              onClick={() => handleDeleteImage(index)}
+                              
+                              className = {styles.deleteButton}
+                            >
+                              <Trash2 size={18} />
+                            </button>
+                          </div>
+                          
+                          <span  className = {styles.deleteImageCategory}> 
+                            {photo.catagory}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+     
+      {viewerOpen && filteredPhotos.length > 0 && (
+        <div 
+        
+          className = {styles.imageViewerOverlay}
+          onClick={closeImageViewer}
+          onKeyDown={handleKeyDown}
+          tabIndex={0}
+        >
+          <div 
+          
+            className = {styles.imageViewerContainer}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              onClick={closeImageViewer}
+              
+              className = {styles.imageViewerClose}
+              aria-label="Close image viewer"
+            >
+              <X size={32} />
+            </button>
+            
+            
+            <div className = {styles.imageViewerContent}>
+              <Image
+                src={filteredPhotos[currentImageIndex].url}
+                alt={`Gallery image ${currentImageIndex + 1}`}
+                width={1000}
+                height={1000}
+                className = {styles.imageViewerImage}
+              />
+              
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToPreviousImage();
+                }}
+               
+                className = {styles.previousButton}
+                aria-label="Previous image"
+              >
+                <ChevronLeft size={24} />
+              </button>
+              
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToNextImage();
+                }}
+                
+                className = {styles.nextButton}
+                aria-label="Next image"
+              >
+                <ChevronRight size={24} />
+              </button>
+            </div>
+            
+           
+            <div className = {styles.imageViewerCaption}>
+              
+              <p className = {styles.imageViewerCaptionPTag}>
+                {filteredPhotos[currentImageIndex].catagory} • Image {currentImageIndex + 1} of {filteredPhotos.length}
+              </p>
+            </div>
+          </div>
         </div>
       )}
     </section>
   );
 }
-

@@ -6,7 +6,7 @@ import { FaFacebook, FaInstagram,   FaTwitter, FaLinkedin } from 'react-icons/fa
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/app/redux/store";
-import { /*getAllportfolio ,*/ getByIdportfolio, getByIdgallery, getByIdreview } from "@/app/redux/features/portfolio";
+import { /*getAllportfolio ,*/ getByIdportfolio,updateByIdportfolio, getByIdgallery, getByIdreview/*, updateByIdportfolio */} from "@/app/redux/features/portfolio";
 
 
 
@@ -20,10 +20,11 @@ import CustomerReviews from "./CustomerReviews/customerReviews";
 import Calendar from './Calendar/calendar';
 import { useState,useEffect } from "react";
 import ProfileHeader from './ProfileHeader';
+import { /*Heading, */ Pencil } from "lucide-react";
+
 import Packages from './Packages/packages';
 
 const Portfolio= () => {
- 
 
   const [currentMonth, setCurrentMonth] = useState(0); 
   const [currentYear, setCurrentYear] = useState(2025);
@@ -60,6 +61,11 @@ const Portfolio= () => {
         dispatch(getByIdportfolio({ participantId: "" }));
       }, [dispatch]);
 
+      // useEffect(() => {
+      //   // fetch by id portfolio
+      //   dispatch(updateByIdportfolio({ participantId: "" }));
+      // }, [dispatch]);
+
 
       useEffect(() => {
         // fetch by id gallery
@@ -81,7 +87,8 @@ const Portfolio= () => {
       const activePortfolio = useSelector((state: RootState) => state.portfolio.activePortfolio) || { results: [] };
       const activeGallery = useSelector((state: RootState) => state.portfolio.activeGallery) || { results: [] };
       const activeReview = useSelector((state: RootState) => state.portfolio.activeReview) || { results: [] };
-      
+
+      console.log("active portfolio : ",activePortfolio)
 
 
       //const Profile = allPortfolio?.data?.results?.find(profile => profile.id === "67acf4d1ce9e81d9345dc6ee");
@@ -90,6 +97,61 @@ const Portfolio= () => {
       const Review = activeReview?.data;
 
 
+  const [updatedName, setUpdatedName] = useState(Profile?.name || "");
+  const [updatedDescription, setUpdatedDescription] = useState(Profile?.description || "");
+
+  const [tempName, setTempName] = useState(updatedName);
+  const [tempDescription, setTempDescription] = useState(updatedDescription);
+
+  
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  /* Show edit modal with temporary values */
+// const handleOpenEditModal = () => {
+//   setTempName(updatedName);  // Initialize with the current values
+//   setTempDescription(updatedDescription);
+//   setShowEditModal(true);
+// };
+
+  useEffect(() => {
+    // Fetch portfolio data on mount
+    dispatch(getByIdportfolio({ participantId: "" }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    // Update state when Profile data changes
+    if (Profile) {
+      setUpdatedName(Profile.name);
+      setUpdatedDescription(Profile.description);
+    }
+  }, [Profile]);
+
+  const handleSaveChanges = async () => {
+    try {
+      const formData = new FormData();
+      // formData.append("name", updatedName);
+      formData.append("name", tempName);
+      // formData.append("description", updatedDescription);
+      formData.append("description", tempDescription);
+
+      // Dispatch update action
+      await dispatch(updateByIdportfolio({ formData })).unwrap();
+
+      // Fetch updated portfolio data
+      dispatch(getByIdportfolio({ participantId: "" }));
+
+      // Update the main state after saving
+      setUpdatedName(tempName);
+      setUpdatedDescription(tempDescription);
+
+
+      // Close modal
+      setShowEditModal(false);
+    } catch (error) {
+      console.error("Failed to update portfolio:", error);
+      alert("An error occurred while updating.");
+    }
+  };
 
 
       //console.log("Redux State:", useSelector((state: RootState) => state.portfolio));
@@ -111,7 +173,8 @@ const Portfolio= () => {
       //console.log('name', Profile.portfolio?.name );
       
       ///////////////////////////////////console.log("portfolio.data.review", activeReview.data);
-
+      console.log("updatedDescription", updatedDescription);  
+      console.log("updatedName", updatedName);
 
 
   return (
@@ -119,6 +182,7 @@ const Portfolio= () => {
     
     <main className={styles.portfolio}>
       <div className= {styles.banner}>
+        
 
 
 
@@ -127,12 +191,15 @@ const Portfolio= () => {
           <div key={Profile.id}>
             <ProfileHeader 
             id={Profile.id} 
-            name={Profile.name } 
+            //name={Profile.name } 
+            name={updatedName}
             coverImageUrl={Profile.Background_image_url }
 
             profileImageUrl={Profile.profile_image_url }
             
           />
+          {/* Photographer Info with Edit Button */}
+     
 
 
        
@@ -141,38 +208,95 @@ const Portfolio= () => {
       <p>Loading...</p>
     )}
   </div>
-      
+  
+
+     
       
        
         
       </div>
+
+      
+
+        {/* Popup Edit Modal */}
+        {showEditModal && (
+          <div className={styles.modal_overlay}>
+            <div className={styles.modal}>
+              <h2>Edit Profile</h2>
+              <input
+                type="text"
+                // value={editedName}
+                // value={updatedName}
+                // value={tempName}
+                // onChange={(e) => setEditedName(e.target.value)}
+                // onChange={(e) => setUpdatedName(e.target.value)}
+                onChange={(e) => setTempName(e.target.value)}
+                placeholder="Enter new name"
+                className={styles.input}
+              />
+              <textarea
+                // value={editedDescription}
+                // value={updatedDescription}
+                // onChange={(e) => setEditedDescription(e.target.value)}
+                // onChange={(e) => setUpdatedDescription(e.target.value)}
+                onChange={(e) => setTempDescription(e.target.value)}
+                placeholder="Enter new description"
+                className={styles.textarea}
+              />
+              <div className={styles.modal_buttons}>
+                <button onClick={handleSaveChanges} className={styles.save_button}>Save</button>
+                <button onClick={() => setShowEditModal(false)} className={styles.close_button}>Close</button>
+              </div>
+            </div>
+          </div>
+        )}
+
       
           
 
           <div className={styles.descriptionAndCalendar}>
             <div>
-
+            
+       
             
               <div className={styles.description}>
                 
                 
 
+
+
+              {/* <button > <p>Edit Profile</p></button>     */}
                   <div>
-                    {Profile ? (
+                    {/* {Profile ? ( */}
                       
-                      <div key={Profile.id}>
-                        <h2>Description</h2>
+                      {/* <div key={Profile.id}> */}
+                        <div className={styles.container}>
+                            <h2>Description</h2>
+                            <div>
+                              {/* <button onClick={() => setShowEditModal(true)} className={styles.edit_button}> */}
+                              {/* <button onClick={() => setShowEditModal(true)} className={styles.edit_button}>
+                                <Pencil size={20} color="black" />
+                              </button> */}
+                              <button onClick={() => setShowEditModal(true)} className={styles.edit_button}>
+                                <Pencil size={20} color="black" />
+                              </button>
+                            </div>
+                          </div>
+                        
+                        
+                        
                         <br></br>
                         <p>
-                           {Profile.description}
-        
+                           {/* {Profile.description} */}
+                           {updatedDescription}
+                                 
                         </p>
                       
                       </div>
-                    ) : (
+                    {/* ) : (
                       <p>Loading...</p>
                     )}
-                  </div>
+                  </div> */}
 
 
 
@@ -259,29 +383,16 @@ const Portfolio= () => {
               <CustomerReviews 
 
               reviews = {Review.reviews}
-
-
-             
-
               />
             </div>  
           ) : (
             <p>Loading...</p>
           )}
         </div>
-
-
-          
-
-
         
-      
-
-     
     </main>
-    
-    </>
 
+    </>
    
   )
 }

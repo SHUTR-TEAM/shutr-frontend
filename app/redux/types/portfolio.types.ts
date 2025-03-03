@@ -61,7 +61,7 @@ export interface Portfolio {
 
 export interface GalleryFormat{
   url: string;
-  catagory: string ;
+  category: string ;
 }
 
 export interface Gallery {
