@@ -1,8 +1,8 @@
 // import Header from "@/app/components/Profile/Dashboard/Header/Header";
-import EventList from "@/app/components/Profile/Dashboard/EventList/EventList";
-import ProfileOverview from "@/app/components/Profile/Dashboard/ProfileOverview/ProfileOverview";
-import Inbox from "@/app/components/Profile/Dashboard/Inbox/Inbox";
+import ProfileOverview from "@/app/components/Profile/Dashboard/ProfileOverview";
 import styles from "./page.module.css";
+import Inbox from "@/app/components/Profile/Dashboard/Inbox";
+import EventList from "@/app/components/Profile/Dashboard/EventList";
 
 function DashboardPage() {
   return (

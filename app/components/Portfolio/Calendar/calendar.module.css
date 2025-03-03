@@ -1,0 +1,142 @@
+
+  .calendarContainer {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    max-width: 550px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 16px;
+    text-align: center;
+    margin-left: 30px;
+  }
+  
+  .calendarHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .navButton {
+    background-color:#f0f0f0;
+    border-color: #999;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+    cursor: pointer;
+    padding: 8px;
+    transition: transform 0.2s ease;
+  }
+  
+  .navButton:hover {
+    
+    transform: scale(1.1);
+  }
+  
+  .monthYear {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .calendarGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin: 16px 0;
+  }
+  
+  .weekday {
+    font-size: 14px;
+    font-weight: bold;
+    color: #999;
+  }
+  
+  .day {
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .activeDay:hover {
+    background-color: #444;
+    color: #fff;
+    transform: scale(1.1);
+  }
+  
+  .activeDay:hover {
+    background-color: #000;
+    color: #fff;
+    transform: scale(1.05);
+  }
+  
+  /* .day:hover {
+    background-color: #ddd;
+    
+  } */
+  
+  .calendarFooter {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+  
+  .cancelBtn,
+  .applyBtn {
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .cancelBtn {
+    background-color: #f0f0f0;
+    color: #666;
+  }
+  
+  .cancelBtn:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .applyBtn {
+    background-color: #444;
+    color: #fff;
+  }
+  
+  .applyBtn:hover {
+    background-color: #333;
+  }
+
+  .selectedDay {
+    background-color: #000 !important;
+    color: #fff !important;
+    transform: scale(1.1);
+  }
+  
+  @media (max-width: 400px) {
+    .calendarContainer {
+      max-width: 100%;
+      padding: 12px;
+    }
+  
+    .day {
+      padding: 10px;
+    }
+  
+    .cancelBtn,
+    .applyBtn {
+      padding: 8px 20px;
+      font-size: 13px;
+    }
+  }
+  

@@ -1,80 +1,22 @@
+import React from 'react';
 import CategorySection from "../components/Search/CategorySection";
-// import SearchBox from "../components/Search/SeacrhBox";
-import SmallPortfolio from "../components/Search/SmallPortfolio";
+import SearchBox from "../components/Search/SeacrhBox";
 import styles from "./page.module.css";
-
-const data = [
-  {
-    id: 1,
-    image: "/pic.png",
-    name: "John Doe",
-    price: 8000,
-    tags: ["Wedding", "Portrait"],
-    location: "Greenwich Court",
-    reviews: 8,
-    rating: 4.5,
-  },
-  {
-    id: 2,
-    image: "/pic.png",
-    name: "John Doe",
-    price: 8000,
-    tags: ["Wedding", "Portrait"],
-    location: "Greenwich Court",
-    reviews: 8,
-    rating: 4.5,
-  },
-  {
-    id: 3,
-    image: "/pic.png",
-    name: "John Doe",
-    price: 8000,
-    tags: ["Wedding", "Portrait"],
-    location: "Greenwich Court",
-    reviews: 8,
-    rating: 4.5,
-  },
-  {
-    id: 4,
-    image: "/pic.png",
-    name: "John Doe",
-    price: 8000,
-    tags: ["Wedding", "Portrait"],
-    location: "Greenwich Court",
-    reviews: 8,
-    rating: 4.5,
-  },
-  {
-    id: 5,
-    image: "/pic.png",
-    name: "John Doe",
-    price: 8000,
-    tags: ["Wedding", "Portrait"],
-    location: "Greenwich Court",
-    reviews: 8,
-    rating: 4.5,
-  },
-  {
-    id: 6,
-    image: "/pic.png",
-    name: "John Doe",
-    price: 8000,
-    tags: ["Wedding", "Portrait"],
-    location: "Greenwich Court",
-    reviews: 8,
-    rating: 4.5,
-  },
-];
+import StoreProvider from "@/app/redux/storeProvider";
 
 export default function Search() {
-  return (
+  return(
     <div>
-      <div className={styles.parentContainer}>
-        <CategorySection />
-        <div className={styles.rightContent}>
-          <SmallPortfolio data={data} /> {/* Fixed data prop */}
+       <StoreProvider>
+        <div className={styles.mainContainer}>      
+          <div className={styles.categorySection}>
+            <CategorySection />
+          </div>
+          <div className={styles.searchBarContainer}>
+            <SearchBox />
+          </div>
         </div>
-      </div>
-    </div>
-  );
+       </StoreProvider>
+    </div>     
+  ) 
 }

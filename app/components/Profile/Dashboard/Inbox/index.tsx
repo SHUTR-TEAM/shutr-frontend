@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import styles from "../Inbox/Inbox.module.css";
+import styles from "./index.module.css";
 
 const Inbox: React.FC = () => {
   return (

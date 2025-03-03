@@ -1,0 +1,61 @@
+.mainDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.itemWrapper {
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.itemWrapper h2 {
+  font-size: 18px;
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.itemWrapper p {
+  font-size: 14px;
+  font-weight: 200;
+  color: #868686;
+  margin-bottom: 1rem;
+  max-width: 400px;
+}
+
+.priceTable tr :nth-child(1) {
+  font-size: 14px;
+  font-weight: 400;
+  color: #868686;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.priceTable tr :nth-child(2) {
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  min-width: max-content;
+  text-align: right;
+}
+
+.priceTable .totalRow td {
+  font-size: 16px;
+  font-weight: 500;
+  color: black;
+  padding-top: 10px;
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  /* gap: 10px; */
+  margin-top: 20px;
+}
+
+.featureWrapper h4 {
+  font-size: 14px;
+  font-weight: 500;
+}
