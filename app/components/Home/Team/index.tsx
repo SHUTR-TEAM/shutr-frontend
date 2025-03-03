@@ -31,7 +31,7 @@ const TeamSection = () => {
       image: "/team/pehesara.jpg",
       socials: [
         {
-          url: "www.linkedin.com/in/thasitha-wijethunga-574b26295",
+          url: "https://www.linkedin.com/in/thasitha-wijethunga-574b26295",
           icon: <FaLinkedinIn />,
         },
         {
