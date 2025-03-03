@@ -9,7 +9,6 @@ import { Pencil, Plus, Star } from "lucide-react";
 
 import styles from "./index.module.css";
 
-
 interface ProfileHeaderProps {
   id: string;
   name: string;

@@ -14,7 +14,7 @@ import { /*getAllportfolio ,*/ getByIdportfolio,updateByIdportfolio, getByIdgall
 import styles from './index.module.css'
 import Link from 'next/link'
 
-import GallerySection from './GallerySection';
+import GallerySection from "./GallerySection";
 import CustomerReviews from "./CustomerReviews/customerReviews";
 
 import Calendar from './Calendar/calendar';
@@ -47,10 +47,9 @@ const Portfolio= () => {
     }
   };
 
-
   const dispatch: AppDispatch = useDispatch();
-    
-      /*useEffect(() => {
+
+  /*useEffect(() => {
         // fetch all portfolio
         dispatch(getAllportfolio({ participantId: "" }));
       }, [dispatch]);

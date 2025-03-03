@@ -1,7 +1,7 @@
 "use client";
 //import React from "react";
 import React, { useState, useEffect } from "react";
-import styles from "./Calendar.module.css";
+import styles from "./calendar.module.css";
 
 interface CalendarProps {
   currentMonth: number;
@@ -26,8 +26,7 @@ const Calendar: React.FC<CalendarProps> = ({
   // const handleDayClick = (day: number) => {
   //   setSelectedDay(day);
   // };
-  
-  
+
   const today = new Date();
   const currentDay = today.getDate();
   const isCurrentMonth =

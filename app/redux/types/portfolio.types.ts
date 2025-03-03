@@ -43,19 +43,15 @@ export interface CreatePortfolio {
   data: Portfolio | null;
 }
 
-
-
 export interface Portfolio {
   id: string;
   name: string;
-  Background_image_url : string;
-  profile_image_url :string;
+  Background_image_url: string;
+  profile_image_url: string;
   //participants: string[];
   //participant_details: User[];
-  results:string[];
-  description : string;
-  
-  
+  results: string[];
+  description: string;
 }
 
 

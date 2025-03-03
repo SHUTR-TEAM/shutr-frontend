@@ -1,12 +1,10 @@
-import { PortfolioState } from './../../types/portfolio.types';
+import { PortfolioState } from "./../../types/portfolio.types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 //import build from "next/dist/build";
 
 //const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL ;
 //const ROUTE_URL = `${BACKEND_BASE_URL}/portfolio/....`
-
-
 
 const initialState: PortfolioState = {
     allPortfolio: {
@@ -70,9 +68,10 @@ const initialState: PortfolioState = {
         return rejectWithValue(e.message);
       }
     }
-  );
+  }
+);
 
-  export const getByIdportfolio = createAsyncThunk(
+export const getByIdportfolio = createAsyncThunk(
   "portfolio/get-by-id",
     async ({ participantId }: { participantId: string }, { rejectWithValue }) => {
       const config = {
@@ -92,13 +91,9 @@ const initialState: PortfolioState = {
       //   axios.get("http://127.0.0.1:8000/api/headers/67ab65b24cb48a7c886d0dfa"),
       //   axios.get("http://127.0.0.1:8000/api/galleries/67aecc532071993d23e91175"),
       //  ])
-
-
-      
-      } catch (error) {
-        const e = error as AxiosError;
-        return rejectWithValue(e.message);
-      }
+    } catch (error) {
+      const e = error as AxiosError;
+      return rejectWithValue(e.message);
     }
   );
 
@@ -420,4 +415,4 @@ const initialState: PortfolioState = {
     },
   });
 
-  export default portfolioSlice.reducer;
+export default portfolioSlice.reducer;

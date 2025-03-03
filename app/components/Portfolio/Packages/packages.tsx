@@ -88,11 +88,6 @@ import styles from './Packages.module.css';
         
       ))}
 
-        
-
-
-      
-      
       <button className={styles.messageButton}>
         <span className={styles.icon}>&#128172;</span> Message Photographer
       </button>
