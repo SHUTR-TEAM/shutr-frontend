@@ -1,75 +1,98 @@
 "use client";
-import { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./index.module.css";
 import { IoSearch } from "react-icons/io5";
-import axios from "axios";
 import Card from "../Card";
+import { AppDispatch, RootState } from "@/app/redux/store";
+import {
+  fetchDefaultResults,
+  fetchSearchResults,
+  setSearchTerm,
+  clearSearchResults,
+} from "@/app/redux/features/searchSlice";
 
 export default function SearchBox() {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState<any[]>([]); // Store search results 
+  //Setting Up Redux Dispatch and State
+  const dispatch = useDispatch<AppDispatch>(); //Allows us to send actions to Redux.
+  /*  useSelector(state => state.search) → Gets the search state from Redux.
+        searchTerm → The text typed by the user.
+        results → The search results from the API.
+        defaultResults → Results when no search is made.
+        loading → Shows if an API request is in progress.
+        error → Stores any error messages.*/
+  const { searchTerm, results, defaultResults, loading, error } = useSelector(
+    (state: RootState) => state.search
+  );
 
-    // Function to handle input changes (on typing)
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
-    };
+  //const [sortBy, setSortBy] = useState("relevant");
 
-    // Function to handle search action (Enter key or button click)
-    const handleSearch = async() => {
-        // Perform search logic here (e.g., API call)
-        //send the data to the api endpoint
-        try{
-            const response = await axios.get(`http://127.0.0.1:8000/search/users/`, {
-                params: { q: searchTerm }  //Correct way to pass query params
-            });
-            setSearchResults(response.data);
-            
-        } catch (error) {
-            console.error("Error Searching", error);
-        }         
-    };
+  // Function to handle input changes (on typing)
+  //Dispatches an action (setSearchTerm) to the Redux store instead of updating a local state.
+  //Updates searchTerm in Redux whenever the user types in the search box
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSearchTerm(event.target.value));
+  };
 
-    // Function to detect Enter key press
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "Enter") {
-            handleSearch();
-        }
-    };
+  // Function to handle search action (Enter key or button click)
+  //pass the serach term to the serachSlice(action)'s function called fetchSearchResults
+  const handleSearch = () => {
+    if (searchTerm.trim() !== "") {
+      dispatch(fetchSearchResults(searchTerm));
+    } else {
+      dispatch(clearSearchResults());
+      dispatch(fetchDefaultResults());
+    }
+  };
 
-    return (
-        <div>
-            <div className={styles["search-bar-container"]}>
-                <div className={styles["search-box"]}>
-                    <IoSearch className={styles["search-icon"]} />
-                    <input
-                        type="text"
-                        className={styles["search-input"]}
-                        placeholder="Search"
-                        value={searchTerm}
-                        onChange={handleInputChange} // Update state on typing
-                        onKeyDown={handleKeyDown} // Listen for Enter key
-                    />
-                </div>
-                <div>
-                    <button className={styles["search-btn"]} onClick={handleSearch}>Search</button>
-                </div>
+  // Function to detect Enter key press
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
 
-                <div className={styles["sort-by-container"]}>
-                    <label htmlFor="sort-by" className={styles["sort-by-label"]}>
-                        Sort By :
-                    </label>
-                    <select id="sort-by" className={styles["search-dropdown"]}>
-                        <option value="relevant">Most relevant</option>
-                        <option value="recent">Most recent</option>
-                        <option value="popular">Most popular</option>
-                    </select>               
-                </div>         
-                
-            </div>
-            <div>
-                <Card data={searchResults} />
-            </div>
+  useEffect(() => {
+    dispatch(fetchDefaultResults());
+  }, [dispatch]);
+
+  return (
+    <div>
+      <div className={styles["search-bar-container"]}>
+        <div className={styles["search-box"]}>
+          <IoSearch className={styles["search-icon"]} />
+          <input
+            type="text"
+            className={styles["search-input"]}
+            placeholder="Search"
+            value={searchTerm}
+            onChange={handleInputChange} // Update state on typing
+            onKeyDown={handleKeyDown} // Listen for Enter key
+          />
         </div>
-         
-    );
+        <div>
+          <button className={styles["search-btn"]} onClick={handleSearch}>
+            Search
+          </button>
+        </div>
+
+        <div className={styles["sort-by-container"]}>
+          <label htmlFor="sort-by" className={styles["sort-by-label"]}>
+            Sort By :
+          </label>
+          <select id="sort-by" className={styles["search-dropdown"]}>
+            <option value="relevant">Most relevant</option>
+            <option value="recent">Most recent</option>
+            <option value="popular">Most popular</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        {/*if loading true display loading, if error true display the error */}
+        {loading && <p>Loading...</p>}
+        {error && <p>Error : {error}</p>}
+        <Card data={results.length > 0 ? results : defaultResults} />
+      </div>
+    </div>
+  );
 }

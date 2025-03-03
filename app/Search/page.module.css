@@ -1,3 +1,33 @@
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+.categorySection{
+  position: sticky;
+  flex: 0 0 350px; 
+  height: calc(100vh - 80px);
+  top: 0;
+}  
+.searchBarContainer {
+  flex: 1; 
+  display: flex;
+  padding: 20px;
+}
+@media (max-width: 1150px) {
+  .categorySection {
+    flex: 0 0 330px;
+    width: 100%;
+  }
+}
+@media (max-width: 880px) {
+  .categorySection {
+    flex: 0 0 250px;
+  }
+}  
 .Container {
     display: flex;
     flex-direction: row;
