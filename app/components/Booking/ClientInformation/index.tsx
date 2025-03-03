@@ -2,14 +2,13 @@
 
 import { useFormContext } from "react-hook-form";
 import styles from "./index.module.css";
+import { useFormState } from "react-hook-form";
 
 import React from "react";
 
 const ClientInformation = () => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
+  const { register } = useFormContext();
+  const { errors } = useFormState();
 
   return (
     <div className={styles.container}>
@@ -23,12 +22,18 @@ const ClientInformation = () => {
             {...register("client.first_name", {
               required: "Field is required",
             })}
+            onClick={() => console.log(errors)}
           />
-          {errors.firstName && (
-            <p className={styles.error}>
-              {errors.firstName.message?.toString()}
-            </p>
-          )}
+          {errors.client &&
+            (errors.client as Record<string, { message: string }>).first_name
+              ?.message && (
+              <p className={styles.error}>
+                {
+                  (errors.client as Record<string, { message: string }>)
+                    .first_name.message
+                }
+              </p>
+            )}
         </div>
 
         <div className={styles.formGroup}>
@@ -38,11 +43,16 @@ const ClientInformation = () => {
             placeholder="Enter your last name"
             {...register("client.last_name", { required: "Field is required" })}
           />
-          {errors.lastName && (
-            <p className={styles.error}>
-              {errors.lastName.message?.toString()}
-            </p>
-          )}
+          {errors.client &&
+            (errors.client as Record<string, { message: string }>).last_name
+              ?.message && (
+              <p className={styles.error}>
+                {
+                  (errors.client as Record<string, { message: string }>)
+                    .last_name.message
+                }
+              </p>
+            )}
         </div>
 
         <div className={styles.formGroup}>
@@ -52,11 +62,16 @@ const ClientInformation = () => {
             placeholder="Enter your phone number"
             {...register("client.phone", { required: "Field is required" })}
           />
-          {errors.contactNumber && (
-            <p className={styles.error}>
-              {errors.contactNumber.message?.toString()}
-            </p>
-          )}
+          {errors.client &&
+            (errors.client as Record<string, { message: string }>).phone
+              ?.message && (
+              <p className={styles.error}>
+                {
+                  (errors.client as Record<string, { message: string }>).phone
+                    .message
+                }
+              </p>
+            )}
         </div>
 
         <div className={styles.formGroup}>
@@ -73,9 +88,16 @@ const ClientInformation = () => {
               },
             })}
           />
-          {errors.email && (
-            <p className={styles.error}>{errors.email.message?.toString()}</p>
-          )}
+          {errors.client &&
+            (errors.client as Record<string, { message: string }>).email
+              ?.message && (
+              <p className={styles.error}>
+                {
+                  (errors.client as Record<string, { message: string }>).email
+                    .message
+                }
+              </p>
+            )}
         </div>
 
         <div className={styles.formGroup}>
@@ -94,9 +116,16 @@ const ClientInformation = () => {
             placeholder="Enter your NIC number"
             {...register("client.nic", { required: "Field is required" })}
           />
-          {errors.nic && (
-            <p className={styles.error}>{errors.nic.message?.toString()}</p>
-          )}
+          {errors.client &&
+            (errors.client as Record<string, { message: string }>).nic
+              ?.message && (
+              <p className={styles.error}>
+                {
+                  (errors.client as Record<string, { message: string }>).nic
+                    .message
+                }
+              </p>
+            )}
         </div>
       </div>
     </div>
