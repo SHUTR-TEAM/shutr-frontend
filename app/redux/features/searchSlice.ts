@@ -70,10 +70,9 @@ export const fetchFilteredResults = createAsyncThunk(
       const state = getState() as { search: SearchState };
       const { filters } = state.search;
 
-      const response = await axios.get("http://127.0.0.1:8000/search/filter/", {
+      const response = await axios.get("http://127.0.0.1:8000/api/users", {
         params: filters,
       });
-
       return response.data;
     } catch (error) {
       return rejectWithValue("Failed to fetch filtered results");
@@ -90,7 +89,7 @@ export const fetchSearchResults = createAsyncThunk(
   async (query: string, { rejectWithValue }) => {
     //send the data to the api endpoint
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/search/users/`, {
+      const response = await axios.get(`http://127.0.0.1:8000/api/users`, {
         params: { q: query },                                                       //query??  fetchSearchResults(searchTerm))  searchTerm=query
       });
       return response.data; // Returns fetched data as payload (action)
@@ -105,7 +104,7 @@ export const fetchDefaultResults = createAsyncThunk(
   "search/fetchDefaultResults",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.post("http://127.0.0.1:8000/search/usersDefault/");
+      const response = await axios.get("http://127.0.0.1:8000/api/users");
       return response.data;    // Returns fetched data as payload (action)
     } catch (error) {
       return rejectWithValue("Failed to fetch default results");
