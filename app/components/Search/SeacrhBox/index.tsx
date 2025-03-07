@@ -11,6 +11,7 @@ import {
   setSearchTerm,
   clearSearchResults,
 } from "@/app/redux/features/searchSlice";
+import ErrorSection from "../ErrorSection";
 
 export default function SearchBox() {
   //Setting Up Redux Dispatch and State
@@ -87,11 +88,13 @@ export default function SearchBox() {
           </select>
         </div>
       </div>
-      <div>
+      <div className={styles.cardSection}>
         {/*if loading true display loading, if error true display the error */}
         {loading && <p>Loading...</p>}
         {error && <p>Error : {error}</p>}
-        <Card data={results.length > 0 ? results : defaultResults} />
+        
+        {<Card data={results.length > 0 ? results : defaultResults} />}
+        
       </div>
     </div>
   );
