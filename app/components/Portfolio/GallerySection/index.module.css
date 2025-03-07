@@ -223,8 +223,8 @@
 }
 
 .select{
-  color: #2563eb; 
-  border-color:   #2563eb;
+  color: black; 
+  border-color:  black;
   border-width: 3px;
 }
 
@@ -282,7 +282,7 @@
 }
 
 .urlInput:focus {
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5); 
+  box-shadow: 0 0 0 2px black; 
 }
 
 .imageUploadSection {
@@ -398,7 +398,7 @@
 }
 
 .categoryInput:focus {
-  box-shadow: 0 0 0 2px #3b82f6; 
+  box-shadow: 0 0 0 2px black; 
 }
 
 
@@ -409,7 +409,7 @@
 
 
 .categoryInputButton {
-  background-color: #2563eb; 
+  background-color: black; 
   color: #ffffff; 
   padding: 0.5rem 1rem; 
   border-radius: 0.375rem; 
@@ -417,7 +417,7 @@
 }
 
 .categoryInputButton:hover {
-  background-color: #1e40af; 
+  background-color: black; 
 }
 
 
@@ -593,3 +593,284 @@
 .prevImageIndex {
   position: relative; 
 }
+
+
+
+
+
+/*  NEW ADDED FOR CATEGORY NAV */
+
+.mainContainer {
+  min-height: 30px;
+  /* background-color: var(--background); */
+  background-color: white;
+}
+
+.wrapper {
+  max-width: 1120px; /* Equivalent to max-w-7xl */
+  margin: 10px auto;
+  /* padding: 2rem 1rem; */
+}
+
+.scrollWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+
+
+
+
+
+
+
+.scrollContainer {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.5rem 2rem;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* .scrollContainer::-webkit-scrollbar {
+  display: none;
+} */
+
+.buttonContainer {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+
+
+.activeButton {
+  background-color: black;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+/* .notActiveButton {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+} */
+
+/* .notActiveButton:hover {
+   background-color: rgba(var(--secondary), 0.8); 
+  background-color: #6b7265;
+} */
+
+
+.arrowRight {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+
+
+.arrowButton:hover {
+  background-color: white;
+}
+
+.icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+
+.arrowLeft {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.arrowButton {
+  padding: 0.5rem;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+
+
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6); /* Dark overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+/* 🔲 Modal Container */
+.modalContainer {
+  background: white; /* Dark Grey */
+  color: black;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+  text-align: left;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* 🔘 Modal Header */
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 10px;
+}
+
+.modalHeader h3 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.modelCloseButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+
+
+.sections {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sectionsButton {
+  flex: 1;
+  padding: 12px 0;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  background: none;
+  color: #bbb;
+  transition: color 0.3s ease-in-out;
+}
+
+.select {
+  color: black;
+  border-bottom: 2px solid black;
+}
+
+.notSelect:hover {
+  color: black;
+}
+
+
+
+
+.imageUploadLabel,
+.categoryInputLabel {
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 5px;
+  display: block;
+}
+
+
+
+
+
+.imageInput {
+  border: 2px dashed lightgray;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.imageInput:hover {
+  border-color: black;
+}
+
+.uploadText {
+  font-size: 14px;
+}
+
+
+
+.preview {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.prevGrid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.prevImageIndex {
+  position: relative;
+}
+
+.imagePrev {
+  border-radius: 8px;
+  border:none;
+}
+
+.imagePrev:hover{
+  border : 2px solid lightgrey;
+}
+
+
+.prevCloseButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+
+
+.categoryInputButton {
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+

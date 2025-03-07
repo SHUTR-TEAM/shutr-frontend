@@ -188,6 +188,67 @@ const initialState: PortfolioState = {
       }
   );
 
+  export const updateByIdgallery = createAsyncThunk(
+    "gallery/update-by-id",
+    async ({ /*participantId,*/ formData }: { /*participantId: "67ab65b24cb48a7c886d0dfa ";*/ formData: FormData }, { rejectWithValue }) => {
+      try {
+        const response = await axios.post(
+          // `http://127.0.0.1:8000/api/headers/${participantId}/update/`, 
+          `http://127.0.0.1:8000/api/galleries/67bb771b7ca1638d20e4023f/update`,
+          
+          formData,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+        return response.data;
+      } catch (error) {
+        const e = error as AxiosError;
+        return rejectWithValue(e.message);
+      }
+    }
+  );
+
+
+  export const deleteImage = createAsyncThunk(
+    "gallery/delete-image",
+    async ({ galleryId, imageUrl }: { galleryId: string; imageUrl: string }, { rejectWithValue }) => {
+      try {
+        // Make the POST request to your API to delete the image by URL
+        const response = await axios.post(
+          `http://127.0.0.1:8000/api/galleries/${galleryId}/delete_photo`,
+          // `http://127.0.0.1:8000/api/galleries/67bb771b7ca1638d20e4023f/delete_photo`,
+          { image_url: imageUrl } // Send the image URL in the body
+        );
+        return response.data; // Assuming the response contains the deleted image info
+      } catch (error) {
+        const e = error as AxiosError;
+        return rejectWithValue(e.message);
+      }
+    }
+  );
+  
+
+  
+  // export const deleteByidGallery = createAsyncThunk(
+  //    "gallery/delete-by-id",
+  //   async ({ /*participantId,*/ formData }: { /*participantId: "67ab65b24cb48a7c886d0dfa ";*/ formData: FormData }, { rejectWithValue }) => {
+  //     try {
+  //       const response = await axios.post(
+  //         // `http://127.0.0.1:8000/api/headers/${participantId}/update/`, 
+  //         `http://127.0.0.1:8000/api/galleries/67bb771b7ca1638d20e4023f/update`,
+          
+  //         formData,
+  //         { headers: { "Content-Type": "multipart/form-data" } }
+  //       );
+  //       return response.data;
+  //     } catch (error) {
+  //       const e = error as AxiosError;
+  //       return rejectWithValue(e.message);
+  //     }
+  //   }
+  // );
+
+
+
   
   export const getByIdreview = createAsyncThunk(
    "review/get-by-id",

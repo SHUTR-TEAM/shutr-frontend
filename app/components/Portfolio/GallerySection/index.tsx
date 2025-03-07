@@ -1,21 +1,34 @@
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./index.module.css";
-import {X, Plus, Trash2, Upload, Image as ImageIcon, ChevronLeft, ChevronRight } from "lucide-react";
+import {X, Plus, Trash2, Upload , ChevronLeft, ChevronRight } from "lucide-react";
+import { useDispatch} from "react-redux";
 
+
+import { AppDispatch } from "@/app/redux/store";
+import { getByIdgallery, updateByIdgallery, deleteImage } from "@/app/redux/features/portfolio";
+
+// import things.....Categories-based button nav
+import {useRef} from "react";
+import { cn } from "../../../utils/Category-basedNav";
 
 interface Photo {
   url: string;
-  catagory: string;
+  category: string;
 }
 
 interface GallerySectionProps {
   Gallery: Photo[];
-  onUpdateGallery: (newGallery: Photo[]) => void ;
+  
 }
 
-export default function GallerySection({ Gallery = [], onUpdateGallery }: GallerySectionProps) {
+export default function GallerySection({ Gallery = [],  }: GallerySectionProps) {
+
+  const dispatch = useDispatch<AppDispatch>();
+  const participantId = "67bb771b7ca1638d20e4023f"; 
+   const galleryId = "67bb771b7ca1638d20e4023f";
+ 
 
   console.log("show Gallery : " , Gallery);
 
@@ -28,7 +41,11 @@ export default function GallerySection({ Gallery = [], onUpdateGallery }: Galler
   const [activeTab, setActiveTab] = useState("add");
   const [newImageUrl, setNewImageUrl] = useState("");
   const [newImageCategory, setNewImageCategory] = useState("");
-  const [previewImages, setPreviewImages] = useState<{ url: string; file?: File }[]>([]);
+  // const [previewImages, setPreviewImages] = useState<{ url: string; file?: File }[]>([]);
+  const [previewImages, setPreviewImages] = useState<{ url: string; file?: File; category?: string }[]>([]);
+  
+  const [localGallery, setLocalGallery] = useState(Gallery);
+
 
    // Image viewer state
    const [viewerOpen, setViewerOpen] = useState(false);
@@ -38,7 +55,7 @@ export default function GallerySection({ Gallery = [], onUpdateGallery }: Galler
   const filteredPhotos = selectedCategory === "All"
     ? Gallery
     // : Gallery.filter(photo => photo.category.toLowerCase() === selectedCategory.toLowerCase());
-    : Gallery.filter(photo => photo.catagory.toLowerCase() === selectedCategory.toLowerCase());
+    : Gallery.filter(photo => photo.category.toLowerCase() === selectedCategory.toLowerCase());
 
   const totalPages = Math.ceil(filteredPhotos.length / imagesPerPage);
 
@@ -56,17 +73,25 @@ export default function GallerySection({ Gallery = [], onUpdateGallery }: Galler
     setCurrentPage(0);
   };
 
-  const uniqueCategories = ["All", ...Array.from(new Set(Gallery.map(photo => photo.catagory)))];
+  
+  
+
+  const uniqueCategories = ["All", ...Array.from(new Set(Gallery.map(photo => photo.category)))];
+
+  // console.log("uniqueCategories" , uniqueCategories);
 
   const openModal = () => {
     setIsModalOpen(true);
   }
 
-  const closeModal = () => {
+  const closeModal = async () => {
+    
+    console.log("close window is working");
     setIsModalOpen(false);
     setPreviewImages([]);
     setNewImageUrl("");
     setNewImageCategory("");
+    await dispatch(getByIdgallery({ participantId })).unwrap();
   }
 
   const handleTabChange = (tab: string) => {
@@ -76,14 +101,38 @@ export default function GallerySection({ Gallery = [], onUpdateGallery }: Galler
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files);
-      const newPreviewImages = filesArray.map(file => ({
-        url: URL.createObjectURL(file),
-        file
-      }));
-      setPreviewImages([...previewImages, ...newPreviewImages]);
+  
+      filesArray.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setPreviewImages((prev) => [
+            ...prev,
+            {
+              url: reader.result as string,
+              file,
+              category: newImageCategory || "", // Assign category immediately if available
+            },
+          ]);
+        };
+        reader.readAsDataURL(file);
+      });
     }
   };
 
+  useEffect(() => {
+    if (newImageCategory.trim() !== "") {
+      setPreviewImages((prev) =>
+        prev.map((img) => ({
+          ...img,
+          category: newImageCategory, // Update category for all images
+        }))
+      );
+    }
+  }, [newImageCategory]);
+  
+  
+
+  
   const handleRemovePreview = (index: number) => {
     const newPreviewImages = [...previewImages];
     // Revoke the object URL to avoid memory leaks
@@ -93,38 +142,84 @@ export default function GallerySection({ Gallery = [], onUpdateGallery }: Galler
   };
 
 
-  const handleAddImages = () => {
-    // Add images from URL
-    // let newGallery = [...Gallery];
-    const newGallery = [...Gallery];
-    
-    if (newImageUrl && newImageCategory) {
-      newGallery.push({
-        url: newImageUrl,
-        catagory: newImageCategory
-      });
-    }
-    
-    // Add images from file uploads (in a real app, you would upload these to a server)
-    // Here we're just using the object URLs as placeholders
-    previewImages.forEach(preview => {
-      if (newImageCategory) {
-        newGallery.push({
-          url: preview.url,
-          catagory: newImageCategory
-        });
+
+  const handleAddImages = async () => {
+    if (previewImages.length === 0) return;
+  
+    const formData = new FormData();
+  
+    // Append each image and its category to FormData
+    previewImages.forEach(({ file, category }) => {
+      if (file) {
+        formData.append("Gallery", file);
+        formData.append("category", category || "Uncategorized"); // Default category if empty
+
+        console.log("gallery_images", file);
+        console.log("image_categories", category);
       }
     });
-    
-    onUpdateGallery(newGallery);
-    closeModal();
-  };
+  
+    try {
 
-  const handleDeleteImage = (index: number) => {
-    const newGallery = [...Gallery];
-    newGallery.splice(index, 1);
-    onUpdateGallery(newGallery);
+      // console.log("Uploading images...");
+      // const response = await dispatch(updateByIdportfolio({ formData })).unwrap();
+      //await dispatch(getByIdgallery({ participantId })).unwrap();
+
+      console.log("Uploading image..." )
+      const response = await dispatch(updateByIdgallery({ formData })).unwrap();
+      
+      console.log("Upload response:", response);
+
+      // ✅ Access the correct array inside response.Gallery
+      if (response.Gallery && Array.isArray(response.Gallery.Gallery)){
+
+        // const updatedGallery = [...Gallery,...response.Gallery.Gallery];
+
+        // onUpdateGallery([...Gallery,...response.Gallery.Gallery]);
+        /*onUpdateGallery(updatedGallery);*/
+
+
+        setSelectedCategory('All');
+
+        closeModal();
+      }else{
+        console.log("Invalid Gallery response format", response);
+      }
+      await dispatch(getByIdgallery({ participantId })).unwrap();
+  
+      //const newGallery = response.updated_gallery || [];
+  
+      // Merge new gallery images with existing ones
+      //onUpdateGallery([...Gallery, ...newGallery]);
+  
+      
+    } catch (error) {
+      // console.error("Upload failed:", error);
+      console.log("Upload failed:", error);
+    }
   };
+  
+
+
+  const handleDeleteImage = async (indices: number | number[]) => {
+    // Ensure indices is always an array
+    const indexArray = Array.isArray(indices) ? indices : [indices];
+
+    const imagesToDelete = indexArray
+        .map(index => localGallery[index]?.url)
+        .filter(Boolean);
+
+    for (const imageUrl of imagesToDelete) {
+        try {
+            await dispatch(deleteImage({ galleryId, imageUrl })).unwrap();
+            setLocalGallery(prevGallery => prevGallery.filter(img => img.url !== imageUrl));
+        } catch (error) {
+            console.error("Error deleting image:", error);
+        }
+    }
+};
+
+
 
   // Image viewer functions
   const openImageViewer = (index: number) => {
@@ -160,56 +255,52 @@ export default function GallerySection({ Gallery = [], onUpdateGallery }: Galler
   };
 
 
+  //Categories-based button nav
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+
+  const checkScrollPosition = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      
+      // Show left arrow if we're not at the start
+      setShowLeftArrow(scrollLeft > 0);
+      
+      // Show right arrow if we haven't scrolled to the end
+      // Add a small buffer (1px) to account for rounding errors
+      setShowRightArrow(scrollLeft + clientWidth < scrollWidth - 1);
+    }
+  };
+
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', checkScrollPosition);
+      // Check initial scroll position
+      checkScrollPosition();
+      
+      // Check again after a short delay to account for any layout shifts
+      const timeoutId = setTimeout(checkScrollPosition, 100);
+
+      return () => {
+        scrollContainer.removeEventListener('scroll', checkScrollPosition);
+        clearTimeout(timeoutId);
+      };
+    }
+  }, []);
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 200;
+      scrollContainerRef.current.scrollLeft += direction === "left" ? -scrollAmount : scrollAmount;
+    }
+  };
+
+
+
 
   return (
-    // <section className={styles.gallery}>
-    //   <h2>Gallery</h2>
-
-    //   <div className={styles.button_container}>
-    //     {uniqueCategories.map(category => (
-    //       <button
-    //         key={category}
-    //         className={
-    //           selectedCategory === category
-    //             ? `${styles.button} ${styles.activeButton}`
-    //             : styles.button
-    //         }
-    //         onClick={() => handleCategoryChange(category)}
-    //       >
-    //         {/* {category} Photography */}
-    //         {category}
-    //       </button>
-    //     ))}
-    //   </div>
-
-    //   <div className={styles.gallery_grid}>
-    //     {currentImages.map((photo, index) => (
-    //       <div key={index}>
-    //         <Image
-    //           src={photo.url}
-    //           alt={`Gallery item ${index + 1}`}
-    //           width={390}
-    //           height={300}
-    //           className={styles.image}
-    //         />
-    //       </div>
-    //     ))}
-    //   </div>
-
-    //   {totalPages > 1 && (
-    //     <div className={styles.paginationDots}>
-    //       {[...Array(totalPages)].map((_, index) => (
-    //         <span
-    //           key={index}
-    //           className={
-    //             index === currentPage ? styles.activeDot : styles.dot
-    //           }
-    //           onClick={() => handlePageChange(index)}
-    //         ></span>
-    //       ))}
-    //     </div>
-    //   )}
-    // </section>
 
 
     
@@ -224,26 +315,63 @@ export default function GallerySection({ Gallery = [], onUpdateGallery }: Galler
         </button>
       </div>
 
+      {/* this is where button nav is located */}
       
-      <div className= {styles.button_container}>
-        {uniqueCategories.map(category => (
-          <button
-            key={category}
-            
-            className={
-              selectedCategory === category
-                 /*? `${styles.button} ${styles.activeButton}` */ 
-                 ? `${styles.button} ${styles.activeButton}`
-                : `${styles.button} ${styles.notActiveButton}`   
-                  // }`}  
-            }
-            onClick={() => handleCategoryChange(category)}
-          >
-              {/* {category} Photography */}
-              {category}
-          </button>
-        ))}
+      <div className={styles.mainContainer}>
+      <div className={styles.wrapper}>
+        <div className={styles.scrollWrapper}>
+          
+
+          {showLeftArrow && (
+            <div className={styles.arrowLeft}>
+              <button
+                onClick={() => scroll("left")}
+                className={styles.arrowButton}
+                aria-label="Scroll left"
+              >
+                <ChevronLeft className={styles.icon} />
+              </button>
+            </div>
+          )}
+
+
+
+
+          <div ref={scrollContainerRef} className={styles.scrollContainer}>
+            <div className={styles.buttonContainer}>
+              {uniqueCategories.map((category) => (
+                <button
+                  key={category}
+                  className={cn(
+                    styles.button,
+                    selectedCategory === category ? styles.activeButton : styles.notActiveButton
+                  )}
+                  onClick={() => handleCategoryChange(category)}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          
+
+          {showRightArrow && (
+            <div className={styles.arrowRight}>
+              <button
+                onClick={() => scroll("right")}
+                className={styles.arrowButton}
+                aria-label="Scroll right"
+              >
+                <ChevronRight className={styles.icon} />
+              </button>
+            </div>
+          )}
+
+        </div>
       </div>
+    </div>
+          
 
       
       <div className= {styles.gallery_grid}>
@@ -266,7 +394,7 @@ export default function GallerySection({ Gallery = [], onUpdateGallery }: Galler
             <div className= {styles.imageOverlay}>
                 <div className = {styles.imageOpacity}>
                 <span className= {styles.imageBadge}>
-                  {photo.catagory}
+                  {photo.category}
                 </span>
               </div>
             </div>
@@ -331,20 +459,7 @@ export default function GallerySection({ Gallery = [], onUpdateGallery }: Galler
               {activeTab === 'add' && (
                 <div>
                  
-                  <div className={styles.urlSection}>  
-                   
-                    <label className={styles.urlLabel}>
-                      Add Image URL
-                    </label>
-                    <input
-                      type="text"
-                      value={newImageUrl}
-                      onChange={(e) => setNewImageUrl(e.target.value)}
-                      placeholder="https://example.com/image.jpg"
-                      
-                      className = {styles.urlInput}
-                    />
-                  </div>
+        
                   
                   
                   <div className={styles.imageUploadSection}>  
@@ -366,8 +481,8 @@ export default function GallerySection({ Gallery = [], onUpdateGallery }: Galler
                         <div className= {styles.itemUpload}>
                           <Upload className= {styles.uploadIcon} size={36} />
                           <p className= {styles.uploadText}>
-                            Drag and drop files here or click to browse
-                          </p>
+                             click to browse {/* Drag and drop files here or  click to browse*/}
+                          </p> 
                         </div>
                       </label>
                     </div>
@@ -385,8 +500,8 @@ export default function GallerySection({ Gallery = [], onUpdateGallery }: Galler
                             <Image
                               src={preview.url}
                               alt={`Preview ${index + 1}`}
-                              width={400}
-                              height={400}
+                              width={40}
+                              height={40}
                               className = {styles.imagePrev}
                             />
                             <button
@@ -410,9 +525,9 @@ export default function GallerySection({ Gallery = [], onUpdateGallery }: Galler
                     <input
                       type="text"
                       value={newImageCategory}
-                      onChange={(e) => setNewImageCategory(e.target.value)}
+                       onChange={(e) => setNewImageCategory(e.target.value)}
+                      // onChange={ handleCategoryChange}
                       placeholder="Enter category (e.g., Nature, Wedding)"
-                     
                       className = {styles.categoryInput}
                     />
                   </div>
@@ -441,7 +556,8 @@ export default function GallerySection({ Gallery = [], onUpdateGallery }: Galler
                   ) : (
                     
                     <div className = {styles.deleteGrid}>
-                      {Gallery.map((photo, index) => (
+                      {/* {Gallery.map((photo, index) => ( */}
+                      {localGallery.map((photo, index) => (
                         
                         <div key={index} className= {styles.group}>
                           <Image
@@ -464,7 +580,7 @@ export default function GallerySection({ Gallery = [], onUpdateGallery }: Galler
                           </div>
                           
                           <span  className = {styles.deleteImageCategory}> 
-                            {photo.catagory}
+                            {photo.category}
                           </span>
                         </div>
                       ))}
@@ -539,7 +655,7 @@ export default function GallerySection({ Gallery = [], onUpdateGallery }: Galler
             <div className = {styles.imageViewerCaption}>
               
               <p className = {styles.imageViewerCaptionPTag}>
-                {filteredPhotos[currentImageIndex].catagory} • Image {currentImageIndex + 1} of {filteredPhotos.length}
+                {filteredPhotos[currentImageIndex].category} • Image {currentImageIndex + 1} of {filteredPhotos.length}
               </p>
             </div>
           </div>

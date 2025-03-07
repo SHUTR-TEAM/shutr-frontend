@@ -8,6 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(8px);
 }
 
 .modal {
@@ -51,63 +52,24 @@
   
  .edit_button{
    margin-left: 700px ; 
-   /* position: absolute; */
-    /* bottom: 26.5rem; top-2 in Tailwind */
-    /* bottom: 12rem; */
-    /* right: 1rem; right-2 in Tailwind */
-    background-color: lightgrey ; /* bg-white */
-    padding: 10px; /* p-2 */
-    border-radius: 5px; /* rounded-full */
+   
+    background-color: lightgrey ; 
+    padding: 10px; 
+    border-radius: 5px; 
     border-color: rgb(0, 0, 0);
-    
-    /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); shadow */
-   /* margin-top: -50px;  */
-  
  }  
   
  
   .container {
     display: flex;
-    align-items: center; /* Vertically aligns them in the center */
-    /* justify-content: space-between; Optionally, space between the text and button */
-    
+    align-items: center; 
   }
  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
   .portfolio {
     font-family: Arial, sans-serif;
     color: #333;
     line-height: 1.6;
-
-
-    
-       /* If needed */
-       /* Change to `nowrap` */
-      
-      /*width: 1500px;
-      min-width: 1200px;
-      margin: 0 auto; */
-    
-    
   }
   
   
@@ -175,8 +137,8 @@
   }
 
   .description {
-    flex: 1; /* Allow the description to take up remaining space */
-    margin-right: 0; /* Add spacing to the right of the description */
+    flex: 1; 
+    margin-right: 0; 
     font-size: 1rem;
     
   }
@@ -193,19 +155,19 @@
   }
   
   .descriptionAndCalendar {
-    display: flex; /* Horizontal alignment for description and calendar */
-    justify-content: space-between; /* Space between the two main sections */
-    align-items: flex-start; /* Align at the top */
-    gap: 20px; /* Add spacing between columns */
-    margin: 50px 100px; /* Vertical spacing and center alignment */
-    max-width: 2000px; /* Optional: Limit maximum width for consistent layout */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-start; 
+    gap: 20px; 
+    margin: 50px 100px; 
+    max-width: 2000px; 
     margin-top: -80px;
   }
   
   
   
   .tags {
-    padding-top: 15px; /* Adjust spacing between description and tags */
+    padding-top: 15px; 
   }
   
   .tags span {
@@ -218,7 +180,7 @@
   }
   
   .calendar {
-    flex: 0 0 300px;  /* Fix the width of the calendar */
+    flex: 0 0 300px;  
     
   
   }
@@ -226,17 +188,17 @@
   
   @media (max-width: 768px) {
     .descriptionAndCalendar {
-      flex-direction: column; /* Stack items vertically */
-      align-items: center; /* Center align items for small screens */
+      flex-direction: column; 
+      align-items: center; 
       
     }
   
     .calendar {
-      width: 100%; /* Full width calendar on small screens */
+      width: 100%; 
     }
   
     .tags {
-      text-align: center; /* Center tags on smaller screens */
+      text-align: center; 
       padding-top: 10px;
     }
   }

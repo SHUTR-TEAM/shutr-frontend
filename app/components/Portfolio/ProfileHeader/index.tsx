@@ -215,7 +215,7 @@ export default function ProfileHeader({
             />
 
             {/* Button to Trigger File Input */}
-            <button onClick={() => document.getElementById("fileInput")?.click()}>
+            <button onClick={() => document.getElementById("fileInput")?.click()} className={styles.imageSelectButton}>
               Select Image
             </button>
 
@@ -233,7 +233,7 @@ export default function ProfileHeader({
                 />
               </div>
             ) : (
-              <p style={{ color: "red" }}>No image selected</p>
+              <p className={styles.notSelected }>No image selected</p>
             )}
 
             {/* Zoom Control */}
@@ -244,11 +244,12 @@ export default function ProfileHeader({
               step={0.1} 
               value={zoom} 
               onChange={(e) => setZoom(Number(e.target.value))} 
+              className={styles.zoomIndicator}
             />
 
             {/* Save and Close Buttons */}
-            <button onClick={handleSaveCroppedImage}>Save Photo</button>
-            <button onClick={() => setShowModal(false)}>Close</button>
+            <button onClick={handleSaveCroppedImage} className={styles.saveButton}>Save Photo</button>
+            <button onClick={() => setShowModal(false)} className={styles.closeButton}>Close</button>
           </div>
         </div>
       )}
