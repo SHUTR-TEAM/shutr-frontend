@@ -14,29 +14,30 @@ import {
 import ErrorSection from "../ErrorSection";
 
 export default function SearchBox() {
+
   //Setting Up Redux Dispatch and State
-  const dispatch = useDispatch<AppDispatch>(); //Allows us to send actions to Redux.
-  /*  useSelector(state => state.search) → Gets the search state from Redux.
-        searchTerm → The text typed by the user.
-        results → The search results from the API.
-        defaultResults → Results when no search is made.
-        loading → Shows if an API request is in progress.
-        error → Stores any error messages.*/
+  //Allows us to send actions to Redux.
+  const dispatch = useDispatch<AppDispatch>(); 
+
   const { searchTerm, results, defaultResults, loading, error } = useSelector(
-    (state: RootState) => state.search
+    (state: RootState) => state.search //get the search state from the redux 
   );
 
-  //const [sortBy, setSortBy] = useState("relevant");
-
-  // Function to handle input changes (on typing)
-  //Dispatches an action (setSearchTerm) to the Redux store instead of updating a local state.
-  //Updates searchTerm in Redux whenever the user types in the search box
+  // Handle input changes and dispatch search term
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSearchTerm(event.target.value));
+    const value = event.target.value;
+    dispatch(setSearchTerm(value));
+
+    //user enter a search term
+    if (value.trim() !== "") {
+      dispatch(fetchSearchResults(value));
+    } else {
+      dispatch(clearSearchResults());
+      dispatch(fetchDefaultResults()); 
+    }
   };
 
-  // Function to handle search action (Enter key or button click)
-  //pass the serach term to the serachSlice(action)'s function called fetchSearchResults
+  //if user click the button
   const handleSearch = () => {
     if (searchTerm.trim() !== "") {
       dispatch(fetchSearchResults(searchTerm));
@@ -46,13 +47,14 @@ export default function SearchBox() {
     }
   };
 
-  // Function to detect Enter key press
+  //user press the Enter Key
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleSearch();
     }
   };
 
+  // Fetch default results on first load
   useEffect(() => {
     dispatch(fetchDefaultResults());
   }, [dispatch]);
@@ -67,8 +69,8 @@ export default function SearchBox() {
             className={styles["search-input"]}
             placeholder="Search"
             value={searchTerm}
-            onChange={handleInputChange} // Update state on typing
-            onKeyDown={handleKeyDown} // Listen for Enter key
+            onChange={handleInputChange} 
+            onKeyDown={handleKeyDown} 
           />
         </div>
         <div>
@@ -88,13 +90,20 @@ export default function SearchBox() {
           </select>
         </div>
       </div>
+
       <div className={styles.cardSection}>
-        {/*if loading true display loading, if error true display the error */}
-        {loading && <p>Loading...</p>}
-        {error && <p>Error : {error}</p>}
-        
-        {<Card data={results.length > 0 ? results : defaultResults} />}
-        
+        {/* Show ErrorSection if no results are found */}
+        {!loading && !error && searchTerm.trim() !== "" && results.length === 0 && (
+          <ErrorSection />
+        )}
+
+        {/* Show search results if available */}
+        {!loading && !error && results.length > 0 && <Card data={results} />}
+
+        {/* Show default results*/}
+        {!loading && !error && results.length === 0 && searchTerm.trim() === "" && (
+          <Card data={defaultResults} />
+        )}
       </div>
     </div>
   );
