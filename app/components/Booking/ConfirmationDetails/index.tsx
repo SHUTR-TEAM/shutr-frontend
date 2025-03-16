@@ -1,22 +1,22 @@
 import React from "react";
 import styles from "./index.module.css";
-import { Banknote, Headset, LockOpen } from "lucide-react";
+import { BadgeDollarSign, Camera, ShieldCheck } from "lucide-react";
 
 const ConfirmationDetails = () => {
   return (
     <div className={styles.mainDiv}>
-      <div className={styles.itemWrapper}>
+      {/* <div className={styles.itemWrapper}>
         <h2>Review Booking Details</h2>
         <p>Review the details below and click submit to confirm your booking</p>
 
-        {/* <div>
+        <div>
           <h3>Event Details</h3>
           <p>Wedding</p>
           <p>12th December 2022</p>
           <p>12:00 PM - 5:00 PM</p>
           <p>Location: 1234 Wedding Hall, Lahore</p>
           <p>Guest Count: 200</p>
-        </div> */}
+        </div>
 
         <table className={styles.priceTable}>
           <tbody>
@@ -34,40 +34,40 @@ const ConfirmationDetails = () => {
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> */}
 
       <div className={styles.itemWrapper}>
         <h2>Book with confidence</h2>
         <div className={styles.features}>
           <div className={styles.featureWrapper}>
-            <Banknote />
+            <ShieldCheck />
             <div>
-              <h4>Lowest Price guaranteed</h4>
+              <h4>Secure Payments</h4>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Repellendus, labore?
+                Your transactions are safe and protected with our trusted
+                payment system.
               </p>
             </div>
           </div>
 
           <div className={styles.featureWrapper}>
-            <LockOpen />
+            <BadgeDollarSign />
             <div>
-              <h4>Lowest Price guaranteed</h4>
+              <h4>Competitive Prices</h4>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Repellendus, labore?
+                We offer competitive pricing to ensure you get the best deal for
+                your photography session.
               </p>
             </div>
           </div>
 
           <div className={styles.featureWrapper}>
-            <Headset />
+            <Camera />
             <div>
-              <h4>Lowest Price guaranteed</h4>
+              <h4>Trusted Photographers</h4>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Repellendus, labore?
+                Our network includes verified professionals to deliver
+                high-quality photography services.
               </p>
             </div>
           </div>

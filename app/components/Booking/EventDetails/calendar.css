@@ -1,0 +1,10 @@
+.react-calendar {
+  border-radius: 18px;
+  font-family: var(--font-geologica-sans);
+}
+
+.react-calendar__month-view__days__day {
+  background-color: #ffffff;
+  border-radius: 100%;
+  aspect-ratio: 1/1;
+}

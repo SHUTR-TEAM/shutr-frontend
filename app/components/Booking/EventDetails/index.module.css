@@ -45,3 +45,17 @@
     gap: 1rem;
   }
 }
+
+.calendarContainer {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.error {
+  color: #ff6347;
+  font-weight: 400;
+  font-size: 12px;
+  /* margin-top: 0.25rem; */
+}
