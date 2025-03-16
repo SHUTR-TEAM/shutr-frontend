@@ -11,20 +11,17 @@ export default function Agreements() {
       <h3 className={styles.sectionTitle}>Additional Notes & Agreements</h3>
 
       <div className={styles.formSection}>
-        <label htmlFor="weatherPlan">
-          Weather Backup Plan (for outdoor events)
-        </label>
+        <label htmlFor="additional_notes">Additional Notes</label>
         <textarea
-          id="weatherPlan"
-          placeholder="Describe your backup plan in case of bad weather"
+          id="additional_notes"
+          placeholder="Add any additional notes or requests here"
           className={styles.textarea}
-          {...register("weatherPlan")}
+          {...register("additional_notes")}
         />
       </div>
 
       <div className={styles.agreements}>
-        <div className={styles.agreement}>
-          {/* <Checkbox id="permissions" {...register("permissions", { required: true })} /> */}
+        {/* <div className={styles.agreement}>
           <input
             type="checkbox"
             id="permissions"
@@ -34,16 +31,19 @@ export default function Agreements() {
             I understand and agree to the photography permissions and
             restrictions
           </label>
-        </div>
+        </div> */}
 
         <div className={styles.agreement}>
           {/* <Checkbox id="terms" {...register("terms", { required: true })} /> */}
           <input
             type="checkbox"
-            id="terms"
-            {...register("terms", { required: true })}
+            id="terms_and_conditions_agreed"
+            {...register("terms_and_conditions_agreed", { required: true })}
           />
-          <label htmlFor="terms" className={styles.agreementlabel}>
+          <label
+            htmlFor="terms_and_conditions_agreed"
+            className={styles.agreementlabel}
+          >
             I have read and accept the terms and conditions
           </label>
         </div>
@@ -52,10 +52,13 @@ export default function Agreements() {
           {/* <Checkbox id="cancellation" {...register("cancellation", { required: true })} /> */}
           <input
             type="checkbox"
-            id="cancellation"
-            {...register("cancellation", { required: true })}
+            id="cancellation_policy_agreed"
+            {...register("cancellation_policy_agreed", { required: true })}
           />
-          <label htmlFor="cancellation" className={styles.agreementlabel}>
+          <label
+            htmlFor="cancellation_policy_agreed"
+            className={styles.agreementlabel}
+          >
             I agree to the cancellation and rescheduling policies
           </label>
         </div>
