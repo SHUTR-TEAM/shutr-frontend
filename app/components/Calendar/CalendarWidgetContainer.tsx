@@ -112,7 +112,7 @@ const CalendarWidgetContainer: React.FC = () => {
               headerToolbar={{
                 left: "prev,next today",
                 center: "title",
-                right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
+                right: "dayGridMonth,timeGridWeek,timeGridDay",
               }}
               initialView="dayGridMonth"
               editable={true}

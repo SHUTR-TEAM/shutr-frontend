@@ -83,9 +83,16 @@
     color: black;
   }
   
-  .fullCalendarContainer {
+  /* .fullCalendarContainer {
     width: 75%;
     margin-top: 8px;
+  } */
+
+  .fullCalendarContainer {
+    width: 100%;
+    height: 85vh;
+    padding: 20px;
+    box-sizing: border-box;
   }
   
   /* .dialogContent {
@@ -196,3 +203,169 @@
     background-color: #555;
   }
   
+
+  /* Default styles (Desktop First Approach) */
+
+/* Large Screens (1440px and above) */
+@media (min-width: 1440px) {
+  .CalendarWidgetContainer {
+    flex-direction: row;
+  }
+
+  .sidebar {
+    width: 25%;
+  }
+
+  .fullCalendarContainer {
+    width: 75%;
+  }
+}
+
+/* Medium Screens (1024px - 1439px) */
+@media (max-width: 1439px) {
+  .CalendarWidgetContainer {
+    flex-direction: row;
+  }
+
+  .sidebar {
+    width: 30%;
+  }
+
+  .fullCalendarContainer {
+    width: 70%;
+  }
+}
+
+/* Tablets (768px - 1023px) */
+@media (max-width: 1023px) {
+  .CalendarWidgetContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* .sidebar {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  } */
+  /* .sidebar {
+    display: none;  
+  } */
+
+  .fullCalendarContainer {
+    width: 100%;
+    height: 87vh;
+    padding: 10px;
+  }
+
+
+  .fc-header-toolbar {
+    flex-direction: column;
+    font-size: 14px;
+  }
+
+  .fc-toolbar-title {
+    font-size: 16px !important;
+  }
+
+  .fc-button {
+    font-size: 12px !important;
+    padding: 6px !important;
+  }
+
+  .eventItem {
+    font-size: 14px;
+    padding: 6px;
+  }
+}
+
+/* Mobile (480px - 767px) */
+@media (max-width: 767px) {
+  .CalendarWidgetContainer {
+    flex-direction: column;
+  }
+
+  
+
+  /* .fullCalendarContainer {
+    width: 100%;
+  } */
+  .fullCalendarContainer {
+    width: 100%;
+    height: 87vh;
+    padding: 10px;
+  }
+
+  .fc-header-toolbar {
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+  }
+  .fc-toolbar-title {
+    font-size: 14px !important;
+  }
+
+  .fc-button {
+    font-size: 10px !important;
+    padding: 6px !important;
+  }
+  .dialogContent {
+    width: 90%;
+    left: 5%;
+    bottom: 5%;
+  }
+
+  .eventInput {
+    width: 100%;
+  }
+
+  .addButton {
+    width: 100%;
+  }
+}
+
+/* Small Mobile (Below 480px) */
+@media (max-width: 480px) {
+  .CalendarWidgetContainer {
+    padding: 10px;
+  }
+
+  /* .fullCalendarContainer {
+    width: 100%;
+  } */
+
+  .fullCalendarContainer {
+    width: 100%;
+    height: 85vh;
+    padding: 5px;
+  }
+
+  .fc-header-toolbar {
+    flex-direction: column;
+    font-size: 14px;
+  }
+
+  .fc-toolbar-title {
+    font-size: 12px !important;
+  }
+
+  .fc-button {
+    font-size: 8px !important;
+    padding: 6px !important;
+  }
+
+  .dialogContent {
+    width: 95%;
+    left: 2.5%;
+  }
+
+  .addButton {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .eventInput {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
