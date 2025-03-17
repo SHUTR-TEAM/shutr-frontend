@@ -27,7 +27,7 @@ interface SearchState {
   defaultResults: Item[]; // Default data when no search query
   loading: boolean;
   error: string | null;
- 
+  sortBy: string;
 }
 
 //Defining the Item Interface
@@ -58,6 +58,7 @@ const initialState: SearchState = {
   defaultResults: [],
   loading: false,
   error: null,
+  sortBy: "relevant", // Default sorting
   
 };
 
@@ -68,11 +69,12 @@ export const fetchFilteredResults = createAsyncThunk(
   async (_, { getState, rejectWithValue }) => {
     try {
       const state = getState() as { search: SearchState };
-      const { filters } = state.search;
+      const { searchTerm, filters, sortBy } = state.search;
 
       const response = await axios.get("http://127.0.0.1:8000/api/users", {
-        params: filters,
+        params: { q: searchTerm, ...filters, sortBy },
       });
+
       return response.data;
     } catch (error) {
       return rejectWithValue("Failed to fetch filtered results");
@@ -86,11 +88,14 @@ export const fetchFilteredResults = createAsyncThunk(
 export const fetchSearchResults = createAsyncThunk(
     // unique name for this action in Redux.
   "search/fetchResults",
-  async (query: string, { rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
     //send the data to the api endpoint
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/users`, {
-        params: { q: query },                                                       //query??  fetchSearchResults(searchTerm))  searchTerm=query
+      const state = getState() as { search: SearchState };
+      const { searchTerm, filters, sortBy } = state.search;
+
+      const response = await axios.get("http://127.0.0.1:8000/api/users", {
+        params: { q: searchTerm, ...filters, sortBy },
       });
       return response.data; // Returns fetched data as payload (action)
     } catch (error) {
@@ -102,9 +107,11 @@ export const fetchSearchResults = createAsyncThunk(
 // Async thunk to fetch default results
 export const fetchDefaultResults = createAsyncThunk(
   "search/fetchDefaultResults",
-  async (_, { rejectWithValue }) => {
+  async (sortBy: string, { rejectWithValue }) => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/users");
+      const response = await axios.get("http://127.0.0.1:8000/api/users", {
+        params: { sortBy },
+      });
       return response.data;    // Returns fetched data as payload (action)
     } catch (error) {
       return rejectWithValue("Failed to fetch default results");
@@ -135,6 +142,9 @@ const searchSlice = createSlice({
     },
     clearFilters: (state) => {
       state.filters = initialState.filters;
+    },
+    setSortBy: (state, action) => {
+      state.sortBy = action.payload;
     },
   },
 
@@ -188,7 +198,7 @@ const searchSlice = createSlice({
 // Export actions and reducer
 // exports actions and the reducer from the searchSlice so that they can be used in other parts of the application.
 //These functions are action creators that will be used to update the Redux state.
-export const { setSearchTerm, clearSearchResults,setFilters ,clearFilters } = searchSlice.actions;
+export const { setSearchTerm, clearSearchResults,setFilters ,clearFilters ,setSortBy} = searchSlice.actions;
 //Exports the reducer so that it can be added to the Redux store.
 export default searchSlice.reducer;  //searchSlice.reducer=searchReducer
 

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect ,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./index.module.css";
 import { IoSearch } from "react-icons/io5";
@@ -10,6 +10,8 @@ import {
   fetchSearchResults,
   setSearchTerm,
   clearSearchResults,
+  setSortBy,
+  fetchFilteredResults,
 } from "@/app/redux/features/searchSlice";
 import ErrorSection from "../ErrorSection";
 
@@ -19,9 +21,11 @@ export default function SearchBox() {
   //Allows us to send actions to Redux.
   const dispatch = useDispatch<AppDispatch>(); 
 
-  const { searchTerm, results, defaultResults, loading, error } = useSelector(
+  const { searchTerm, results, defaultResults, loading, error ,sortBy,filters} = useSelector(
     (state: RootState) => state.search //get the search state from the redux 
   );
+
+  const [selectedSort, setSelectedSort] = useState("relevant"); // Default sorting
 
   // Handle input changes and dispatch search term
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,20 +34,21 @@ export default function SearchBox() {
 
     //user enter a search term
     if (value.trim() !== "") {
-      dispatch(fetchSearchResults(value));
+      dispatch(fetchFilteredResults());
     } else {
       dispatch(clearSearchResults());
-      dispatch(fetchDefaultResults()); 
+      dispatch(fetchDefaultResults(selectedSort));
     }
   };
 
   //if user click the button
   const handleSearch = () => {
     if (searchTerm.trim() !== "") {
-      dispatch(fetchSearchResults(searchTerm));
+      dispatch(setSearchTerm(searchTerm));
+      dispatch(fetchFilteredResults());
     } else {
       dispatch(clearSearchResults());
-      dispatch(fetchDefaultResults());
+      dispatch(fetchDefaultResults(selectedSort));
     }
   };
 
@@ -54,10 +59,23 @@ export default function SearchBox() {
     }
   };
 
+  // Handle sorting selection
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const sortValue = event.target.value;
+    setSelectedSort(sortValue);
+    dispatch(setSortBy(sortValue));
+  
+    dispatch(fetchFilteredResults()); // Fetch sorted results with the search term
+  };
+  
+  
+
   // Fetch default results on first load
   useEffect(() => {
-    dispatch(fetchDefaultResults());
-  }, [dispatch]);
+    dispatch(fetchFilteredResults());
+  }, [dispatch, selectedSort, filters, searchTerm]); // Now updates with search term
+  
+  
 
   return (
     <div>
@@ -81,16 +99,20 @@ export default function SearchBox() {
 
         <div className={styles["sort-by-container"]}>
           <label htmlFor="sort-by" className={styles["sort-by-label"]}>
-            Sort By :
+            Sort By:
           </label>
-          <select id="sort-by" className={styles["search-dropdown"]}>
+          <select
+            id="sort-by"
+            className={styles["search-dropdown"]}
+            value={selectedSort}
+            onChange={handleSortChange}
+          >
             <option value="relevant">Most relevant</option>
             <option value="recent">Most recent</option>
-            <option value="popular">Most popular</option>
+            <option value="popular">Top rated</option>
           </select>
         </div>
       </div>
-
       <div className={styles.cardSection}>
         {/* Show ErrorSection if no results are found */}
         {!loading && !error && searchTerm.trim() !== "" && results.length === 0 && (
