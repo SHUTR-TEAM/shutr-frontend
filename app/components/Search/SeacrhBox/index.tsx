@@ -114,10 +114,10 @@ export default function SearchBox() {
         </div>
       </div>
       <div className={styles.cardSection}>
-        {/* Show ErrorSection if no results are found */}
-        {!loading && !error && searchTerm.trim() !== "" && results.length === 0 && (
-          <ErrorSection />
-        )}
+         {/* Show ErrorSection if no results are found and search term or filters are applied */}
+         {!loading && !error && results.length === 0 && (searchTerm.trim() !== "" || Object.values(filters).some((value) => value !== "")) && (
+           <ErrorSection />
+         )}
 
         {/* Show search results if available */}
         {!loading && !error && results.length > 0 && <Card data={results} />}

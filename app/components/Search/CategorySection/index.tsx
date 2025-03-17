@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styles from "./index.module.css";
 import { AppDispatch } from "@/app/redux/store";
-import { setFilters, fetchFilteredResults } from "@/app/redux/features/searchSlice";
+import { setFilters,clearFilters, fetchFilteredResults } from "@/app/redux/features/searchSlice";
 
 export default function CategorySection() {
 
@@ -40,6 +40,20 @@ export default function CategorySection() {
   const applyFilters = () => {
     dispatch(setFilters(filters)); // Save filters to Redux
     dispatch(fetchFilteredResults()); // Fetch results based on applied filters
+  };
+
+  // **CLEAR FILTERS**: Reset local state and Redux state
+  const handleClearFilters = () => {
+    setLocalFilters({
+      style: "",
+      minPrice: "",
+      maxPrice: "",
+      availability: "",
+      experienceLevel: "",
+    });
+
+    dispatch(clearFilters()); // Reset Redux filters
+    dispatch(fetchFilteredResults()); // Fetch default results
   };
 
 
@@ -126,7 +140,15 @@ export default function CategorySection() {
           </div>
         </div>
 
-        <button onClick={applyFilters} className={styles.applyBtn} >Apply Filters</button>
+        <div className={styles.buttonGroup}>
+          <button onClick={applyFilters} className={styles.applyBtn}>
+            Apply Filters
+          </button>
+          <button onClick={handleClearFilters} className={styles.clearBtn}>
+            Clear Filters
+          </button>
+        </div>
+        
       </aside>
     </div>
   );    

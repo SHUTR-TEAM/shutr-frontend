@@ -120,6 +120,9 @@
   border-color: #000000;
   transform: translateY(-2px);
 }
+.buttonGroup{
+  display: flex;
+}
 .applyBtn{
   display: block;
   margin: 30px auto;
@@ -135,6 +138,23 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .applyBtn:hover{
+  background-color: #1c1c1c;
+}
+.clearBtn {
+  display: block;
+  margin: 30px auto;
+  width: 40%;
+  color: #ffffff;
+  background-color: #494949;
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.clearBtn:hover{
   background-color: #1c1c1c;
 }
 /* Media queries for tablet devices */
