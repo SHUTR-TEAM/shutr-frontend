@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "./components/Layout/Navbar";
 import styles from "./layout.module.css";
 import Footer from "./components/Layout/Footer";
-import StoreProvider from "./redux/StoreProvider";
+import StoreProvider from "./redux/storeProvider";
 
 import { Inter } from "next/font/google";
 
@@ -15,6 +15,7 @@ const inter = Inter({ subsets: ["latin"] });
 //   src: "./fonts/Geologica.ttf",
 //   variable: "--font-geologica-sans",
 //   weight: "100 900",
+
 // });
 
 export const metadata: Metadata = {

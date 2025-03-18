@@ -12,7 +12,16 @@ const BookingDetails = () => {
             status: "Upcoming",
             time: "7:00 PM",
             event: "Wedding",
-            location: "Grand Theater"
+            location: "Grand Theater",
+            client: { name: "Sarah Johans", email: "sarah@example.com", phone: "+1 (111) 222-3333" },
+            details: {
+                eventType: "Wedding",
+                dateTime: "2025-03-15 14:00",
+                duration: "5 hours",
+                location: "Grand Theater",
+                packageType: "Platinum",
+                price: "$2500"
+            }
         },
         {
             picture: "/sports.jpg",
@@ -20,57 +29,69 @@ const BookingDetails = () => {
             status: "Live",
             time: "6:30 PM",
             event: "Sports",
-            location: "City Stadium"
-        },
-        {
-            picture: "/festival.jpg",
-            name: "Spandana",
-            status: "Live",
-            time: "8:00 PM",
-            event: "Music",
-            location: "Central Park"
-        },
-        {
-            picture: "/event.jpg",
-            name: "Ramuwa",
-            status: "Upcoming",
-            time: "2:00 PM",
-            event: "Technology",
-            location: "Convention Center"
-        },
-        {
-            picture: "/birthday.jpg",
-            name: "John Doe",
-            status: "Ongoing",
-            time: "12:00 PM",
-            event: "Food",
-            location: "Town Square"
+            location: "City Stadium",
+            client: { name: "Mahinda", email: "mahinda@example.com", phone: "+1 (444) 555-6666" },
+            details: {
+                eventType: "Sports",
+                dateTime: "2025-04-10 18:30",
+                duration: "3 hours",
+                location: "City Stadium",
+                packageType: "Gold",
+                price: "$1500"
+            }
         },
         {
             picture: "/art.jpg",
-            name: "Japura",
+            name: "Michael Brown",
             status: "Upcoming",
-            time: "5:00 PM",
-            event: "Art",
-            location: "Modern Art Museum"
+            time: "11:00 AM",
+            event: "Art Exhibition",
+            location: "Modern Art Museum",
+            client: { name: "Michael Brown", email: "michael@example.com", phone: "+1 (321) 654-0987" },
+            details: {
+                eventType: "Art Exhibition",
+                dateTime: "2025-09-22 11:00",
+                duration: "5 hours",
+                location: "Modern Art Museum",
+                packageType: "Silver",
+                price: "$1800"
+            }
         },
         {
             picture: "/movie.jpg",
-            name: "Movie Premiere",
+            name: "Chris Evans",
             status: "Upcoming",
-            time: "9:00 PM",
-            event: "Film",
-            location: "Downtown Cinema"
+            time: "8:30 PM",
+            event: "Movie Premiere",
+            location: "Downtown Cinema",
+            client: { name: "Chris Evans", email: "chris@example.com", phone: "+1 (444) 777-9999" },
+            details: {
+                eventType: "Movie Premiere",
+                dateTime: "2025-10-30 20:30",
+                duration: "3 hours",
+                location: "Downtown Cinema",
+                packageType: "Red Carpet",
+                price: "$7000"
+            }
         },
         {
-            picture: "/portrait.jpg",
-            name: "Sunny",
-            status: "Upcoming",
-            time: "3:00 PM",
-            event: "Portrait",
-            location: "Corporate Hub"
-        }
-    ];    
+            picture: "/wedding.jpg",
+            name: "Sophia Lee",
+            status: "Live",
+            time: "5:00 PM",
+            event: "Wedding Show",
+            location: "Luxury Hotel",
+            client: { name: "Sophia Lee", email: "sophia@example.com", phone: "+1 (999) 888-7777" },
+            details: {
+                eventType: "Wedding Show",
+                dateTime: "2025-08-15 17:00",
+                duration: "3 hours",
+                location: "Luxury Hotel",
+                packageType: "Exclusive",
+                price: "$6000"
+            }
+        },
+    ];  
 
     return(
         <div>
