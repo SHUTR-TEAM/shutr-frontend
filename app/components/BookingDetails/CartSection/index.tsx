@@ -28,9 +28,9 @@ const CartSection: React.FC<CartSectionProps> = ({data}) => {
             <div className={styles.cardsContainer}>
                 {data.map((item,index)=>(
                     // Loop through the 'data' array and create a card for each item
-                    <div key={index} className={styles.cardContainer} onClick={() => router.push("/BookingInformation/MoreDetails")}>
+                    <div key={index} className={styles.cardContainer} onClick={() => router.push(`/BookingInformation/${index}`)}>
                         <div className={styles.image}>
-                            <Image src={item.picture}alt={item.name} width={190} height={150}/>
+                            <Image src={item.picture} alt={item.name} width={190} height={150}/>
                         </div>
                         <div className={styles.status}>
                             <span>{item.status}</span>
