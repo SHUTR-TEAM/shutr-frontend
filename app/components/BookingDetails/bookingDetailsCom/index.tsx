@@ -1,25 +1,23 @@
-// components/BookingDetails.tsx
+'use client';
 import { FC } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/redux/store';
 import styles from './index.module.css';
 
-interface BookingDetailsProps {
-  eventType: string;
-  dateTime: string;
-  duration: string;
-  location: string;
-  packageType: string;
-  price: string;
-}
+const BookingDetailsCom: FC = () => {
+  const selectedBooking = useSelector((state: RootState) => state.booking.selectedBooking);
 
-const BookingDetailsCom: FC<BookingDetailsProps> = ({ eventType, dateTime, duration, location, packageType, price }) => {
+  if (!selectedBooking || !selectedBooking.details) {
+    return <p>No booking details available.</p>;
+  }
+
+  const { eventType, dateTime, duration, location, packageType, price } = selectedBooking.details;
+
   return (
-    <>
     <div className={styles.bookingDetails}>
-      
       <div className={styles.topic}>
         <h2>Booking Details</h2>
       </div>
-
       <div className={styles.row}>
         <div className={styles.name}>Event Type</div>
         <div className={styles.data}>{eventType}</div>
@@ -44,9 +42,7 @@ const BookingDetailsCom: FC<BookingDetailsProps> = ({ eventType, dateTime, durat
         <div className={styles.name}>Price</div>
         <div className={styles.data}>{price}</div>
       </div>
-
     </div>
-    </>
   );
 };
 
