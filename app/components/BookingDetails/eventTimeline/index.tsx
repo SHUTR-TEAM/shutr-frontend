@@ -1,66 +1,67 @@
-"use client"
-import { FC, useState } from 'react';
+"use client";
+import { FC, useState, useEffect } from "react";
 import { FaPlus } from "react-icons/fa";
 import { IoMdCloseCircle } from "react-icons/io";
-import styles from './index.module.css';
+import styles from "./index.module.css";
 
+// Define Booking Type
+interface Booking {
+  event: {
+    type: string;
+    date: string;
+    address: string;
+  };
+}
 
-const EventTimeline: FC = () => {
+// Accept booking as a prop instead of using Redux
+const EventTimeline: FC<{ booking: Booking }> = ({ booking }) => {
+  // Used to store the events
+  const [eventList, setEventList] = useState<{ time: string; occasion: string }[]>([]);
 
-  //used to store the events
-  const [eventList,setEventList]=useState<{time: string, occasion: string}[]>([])
-
-  //create a newEvenet var to store the event details
-  const [newEvent,setNewEvent]=useState({
-    time:"",
-    occasion:""
+  // Store new event details
+  const [newEvent, setNewEvent] = useState({
+    time: "",
+    occasion: ""
   });
 
-  //this state use to update the boolean value
-  const [showInput,setShowInput] = useState(false); 
-  
+  // This state is used to toggle the input field visibility
+  const [showInput, setShowInput] = useState(false);
 
-  const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
-    console.log(e.target)
-    //name refers to the name attribute of the input field.
-    //value is the current value entered in the input field.
-    const { name ,value } =e.target;
-    setNewEvent({ ...newEvent ,[name]:value}) ;   
+  // Load existing event details when the component mounts
+  useEffect(() => {
+    if (booking && booking.event) {
+      setEventList([{ time: booking.event.date, occasion: booking.event.type }]);
+    }
+  }, [booking]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNewEvent({ ...newEvent, [name]: value });
   };
 
-  const addEvent = ()=>{
+  const addEvent = () => {
     setEventList([...eventList, newEvent]);
     setNewEvent({ time: "", occasion: "" });
     setShowInput(false);
   };
 
-  const showInputField =()=>{
-    setShowInput(true)
-  };
-
-
-  const close =()=>{
-    setShowInput(false)
-  };
-
-
   return (
     <div className={styles.timeline}>
-
       <div className={styles.topic}>
         <h2>Event Timeline</h2>
-        <span className={styles.plus} onClick={showInputField}><FaPlus /></span>
+        <span className={styles.plus} onClick={() => setShowInput(true)}>
+          <FaPlus />
+        </span>
       </div>
-      {/*this part only shows when click the plus icon
-      if the showinput state is true , the code inside the parentheses will be rendered.
-      && -if the left-hand condition is true, then render the right-hand expression.*/}
+
+      {/* Show input field when plus icon is clicked */}
       {showInput && (
         <div className={styles.inputContainer}>
-          <div >
-            <IoMdCloseCircle onClick={close} className={styles.icon} />
+          <div>
+            <IoMdCloseCircle onClick={() => setShowInput(false)} className={styles.icon} />
           </div>
           <div className={styles.box}>
-            <input 
+            <input
               type="text"
               name="time"
               placeholder="Time"
@@ -77,24 +78,23 @@ const EventTimeline: FC = () => {
               className={styles.inputBoxOccasion}
             />
           </div>
-          <div className={styles.btn} >
+          <div className={styles.btn}>
             <button onClick={addEvent}>Add Event</button>
           </div>
-
         </div>
       )}
 
+      {/* Display event list */}
       <div className={styles.events}>
         <ul>
-          {eventList.map((event,index)=>(
+          {eventList.map((event, index) => (
             <li key={index}>
               <div className={styles.time}>{event.time}</div>
               <div className={styles.event}>{event.occasion}</div>
             </li>
           ))}
         </ul>
-      </div> 
-         
+      </div>
     </div>
   );
 };

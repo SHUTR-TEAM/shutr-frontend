@@ -1,20 +1,27 @@
 'use client';
 import { FC } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/redux/store';
 import { FaRegUser } from 'react-icons/fa';
 import { MdOutlineMailOutline } from "react-icons/md";
 import { IoCallOutline } from "react-icons/io5";
 import styles from './index.module.css';
 
-const ClientInformation: FC = () => {
-  const selectedBooking = useSelector((state: RootState) => state.booking.selectedBooking);
+// Define Booking Type
+interface Booking {
+  client: {
+    first_name: string;
+    last_name: string;
+    email: string;
+    phone: string;
+  };
+}
 
-  if (!selectedBooking || !selectedBooking.client) {
+// Accept booking as a prop instead of using Redux
+const ClientInformation: FC<{ booking: Booking }> = ({ booking }) => {
+  if (!booking || !booking.client) {
     return <p>No client information available.</p>;
   }
 
-  const { name, email, phone } = selectedBooking.client;
+  const { first_name, last_name, email, phone } = booking.client;
 
   return (
     <div className={styles.clientInfo}>
@@ -22,7 +29,7 @@ const ClientInformation: FC = () => {
         <h2>Client Information</h2>
       </div>
       <div className={styles.userDetails}>
-        <p><FaRegUser className={styles.icon} /> {name}</p>
+        <p><FaRegUser className={styles.icon} /> {first_name} {last_name}</p>
         <p><MdOutlineMailOutline className={styles.icon} /> {email}</p>
         <p><IoCallOutline className={styles.icon} /> {phone}</p>
       </div>
