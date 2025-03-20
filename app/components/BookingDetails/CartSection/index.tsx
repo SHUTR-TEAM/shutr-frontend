@@ -18,10 +18,10 @@ const CartSection: React.FC = () => {
     // Map event types to corresponding images
     const eventImages: { [key: string]: string } = {
         "Wedding": "/wedding.jpg",
-        "Birthday": "/birthday.jpg",
+        "Birthday Party": "/Birthday.jpg",
         "Corporate": "/images/corporate.jpg",
         "Concert": "/festival.jpg",
-        "Sports": "/images/sports.jpg",
+        "Sports": "/sports.jpg",
         "Engagement": "/images/engagement.jpg",
         "Other": "/event.jpg" // Default image for unknown types
     };
