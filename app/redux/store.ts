@@ -3,10 +3,14 @@ import chatReducer from "./features/chat";
 import portfolioReducer from "./features/portfolio";
 import searchReducer from "./features/searchSlice";
 import bookingReducer from "./features/booking";
+import { apiSlice } from './features/auth/apiSlice';
+import authReducer from './features/auth/authSlice'
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
+      [apiSlice.reducerPath]: apiSlice.reducer,
+      auth: authReducer,
       chat: chatReducer,
       portfolio: portfolioReducer,
       search: searchReducer,

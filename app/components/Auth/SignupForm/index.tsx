@@ -1,7 +1,8 @@
 import React from "react";
 import styles from "./index.module.css";
 import authStyles from "../auth.module.css";
-import Image from "next/image";
+import { RegisterForm } from "../forms";
+
 
 const SignupForm = () => {
   return (
@@ -17,69 +18,17 @@ const SignupForm = () => {
       </div>
 
       {/* form */}
-      <form>
         <div className={styles.grid}>
-          <label className={authStyles.inputLabel}>
-            <span>First Name</span>
-            <input type="text" placeholder="Enter your first name" />
-          </label>
-          <label className={authStyles.inputLabel}>
-            <span>Last Name</span>
-            <input type="text" placeholder="Enter your last name" />
-          </label>
-          <label className={authStyles.inputLabel}>
-            <span>Email</span>
-            <input type="text" placeholder="Enter your email address" />
-          </label>
-          <label className={authStyles.inputLabel}>
-            <span>Mobile No</span>
-            <input type="text" placeholder="Enter your mobile no" />
-          </label>
+          <RegisterForm />
           {/* <label className={authStyles.inputLabel}>
             <span>NIC</span>
             <input type="text" placeholder="Enter your email address" />
           </label> */}
-          <label className={authStyles.inputLabel}>
-            <span>Password</span>
-            <input type="password" placeholder="Enter a password" />
-          </label>
-          <label className={authStyles.inputLabel}>
-            <span>Confirm Password</span>
-            <input type="password" placeholder="Enter the password again" />
-          </label>
+          <hr></hr>
+          <p>Already have a account? {' '} 
+             <a href=' annonimus' >Login here</a>
+          </p>
         </div>
-        <button type="submit" className={styles.ctaBtn}>
-          Sign up
-        </button>
-      </form>
-
-      <div>
-        <div className={styles.elseText}>
-          <hr />
-          <span>or sign up with</span>
-        </div>
-
-        <div className={styles.btnWrapper}>
-          <button className={styles.linkBtn}>
-            <Image
-              src="/icons/google-icon.svg"
-              alt="Google icon"
-              width={16}
-              height={16}
-            />
-            <span>Google</span>
-          </button>
-          <button className={styles.linkBtn}>
-            <Image
-              src="/icons/facebook-icon.svg"
-              alt="Facebook icon"
-              width={16}
-              height={16}
-            />
-            <span>Facebook</span>
-          </button>
-        </div>
-      </div>
     </div>
   );
 };
