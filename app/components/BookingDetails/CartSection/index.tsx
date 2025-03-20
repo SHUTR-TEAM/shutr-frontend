@@ -15,9 +15,18 @@ const CartSection: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const bookings = useSelector((state: RootState) => state.booking.bookings);
 
+    // Map event types to corresponding images
+    const eventImages: { [key: string]: string } = {
+        "Wedding": "/wedding.jpg",
+        "Birthday": "/birthday.jpg",
+        "Corporate": "/images/corporate.jpg",
+        "Concert": "/festival.jpg",
+        "Sports": "/images/sports.jpg",
+        "Engagement": "/images/engagement.jpg",
+        "Other": "/event.jpg" // Default image for unknown types
+    };
 
     const handleClick = (id: string) => {
-        
         if (!id) {
             console.error("Booking ID is undefined!");
             return;
@@ -28,42 +37,46 @@ const CartSection: React.FC = () => {
     
     return (
         <div className={styles.cardsContainer}>
-            {bookings.map((item) => (
-                
-                <div key={item.id} className={styles.cardContainer} onClick={() => handleClick(item.id)}>
-                    {/* Placeholder image as MongoDB data doesn't include pictures */}
-                    
-                    <div className={styles.image}>
-                        <Image
-                            src="/images/default_booking.jpg" // Use a default placeholder image
-                            alt={`${item.client.first_name} ${item.client.last_name}'s Booking`}
-                            width={190}
-                            height={150}
-                        />
-                    </div>
+            {bookings.map((item) => {
+                // Determine the appropriate image based on event type
+                const eventType = item.event.type || "Other"; // Default to "Other" if type is missing
+                const imageSrc = eventImages[eventType] || eventImages["Other"]; // Fallback to default
 
-                    {/* Status & Date */}
-                    <div className={styles.status}>
-                        <span>{item.status}</span>
-                        <span>
-                            <FaClock className={styles.clockIcon} /> {item.event.date}
-                        </span>
-                    </div>
+                return (
+                    <div key={item.id} className={styles.cardContainer} onClick={() => handleClick(item.id)}>
+                        {/* Display dynamic event image */}
+                        <div className={styles.image}>
+                            <Image
+                                src={imageSrc}
+                                alt={`${item.event.type} event`}
+                                width={190}
+                                height={150}
+                            />
+                        </div>
 
-                    {/* Booking Details */}
-                    <div className={styles.details}>
-                        <div className={styles.name}>
-                            {item.client.first_name} {item.client.last_name}
+                        {/* Status & Date */}
+                        <div className={styles.status}>
+                            <span>{item.status}</span>
+                            <span>
+                                <FaClock className={styles.clockIcon} /> {item.event.date}
+                            </span>
                         </div>
-                        <div className={styles.type}>
-                            <IoMdCamera className={styles.icons} /> {item.event.type}
-                        </div>
-                        <div className={styles.location}>
-                            <IoLocationSharp className={styles.icons} /> {item.event.address}
+
+                        {/* Booking Details */}
+                        <div className={styles.details}>
+                            <div className={styles.name}>
+                                {item.client.first_name} {item.client.last_name}
+                            </div>
+                            <div className={styles.type}>
+                                <IoMdCamera className={styles.icons} /> {item.event.type}
+                            </div>
+                            <div className={styles.location}>
+                                <IoLocationSharp className={styles.icons} /> {item.event.address}
+                            </div>
                         </div>
                     </div>
-                </div>
-            ))}
+                );
+            })}
         </div>
     );
 };
