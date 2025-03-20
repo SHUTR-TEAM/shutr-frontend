@@ -24,7 +24,6 @@ const BookingDetails = () => {
 
     return (
         <div className={styles.container}>
-            <SearchBar />
 
             {loading ? (
                 <LoadingSection/>
