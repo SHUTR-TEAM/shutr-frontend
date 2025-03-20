@@ -15,18 +15,19 @@ interface Booking {
   };
 }
 
-// Accept booking as a prop instead of using Redux
 const BookingDetailsCom: FC<{ booking: Booking }> = ({ booking }) => {
   if (!booking || !booking.event) {
     return <p>No booking details available.</p>;
   }
 
+  // Destructure event details from the booking object
   const { type, date, address } = booking.event;
   const packageType = booking.package_id || "N/A";
   const price = `$${booking.payment?.total_amount.toFixed(2)}`;
 
   return (
     <div className={styles.bookingDetails}>
+      {/*Display the event details */}
       <div className={styles.topic}>
         <h2>Booking Details</h2>
       </div>

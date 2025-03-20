@@ -5,7 +5,7 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { IoCallOutline } from "react-icons/io5";
 import styles from './index.module.css';
 
-// Define Booking Type
+// Define the Booking interface to ensure type safety
 interface Booking {
   client: {
     first_name: string;
@@ -15,12 +15,12 @@ interface Booking {
   };
 }
 
-// Accept booking as a prop instead of using Redux
 const ClientInformation: FC<{ booking: Booking }> = ({ booking }) => {
   if (!booking || !booking.client) {
     return <p>No client information available.</p>;
   }
 
+  // Destructure client details from the booking object
   const { first_name, last_name, email, phone } = booking.client;
 
   return (

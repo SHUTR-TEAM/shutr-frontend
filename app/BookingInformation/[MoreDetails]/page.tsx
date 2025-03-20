@@ -9,14 +9,22 @@ import ClientInformation from "@/app/components/BookingDetails/clientInformation
 import BookingDetailsCom from "@/app/components/BookingDetails/bookingDetailsCom";
 import EventTimeline from "@/app/components/BookingDetails/eventTimeline";
 import { FaArrowLeft } from "react-icons/fa";
+import LoadingSection from "@/app/components/BookingDetails/loadingComponent";
+import ErrorSection from "@/app/components/BookingDetails/errorComponent";
 
 const MoreDetails = () => {
     const router = useRouter();
     const dispatch = useDispatch<AppDispatch>();
+
+    // Extract relevant data from Redux store
     const { selectedBooking, loading, error } = useSelector((state: RootState) => state.booking);
+
+    // State to store the booking ID extracted from the URL
     const [bookingId, setBookingId] = useState<string | null>(null);
     
+    // Extract booking ID from the URL when the component mounts
     useEffect(() => {
+        // Get the parts of the URL path
         const pathParts = window.location.pathname.split("/");    
         const idFromUrl = pathParts[pathParts.length - 1];
        
@@ -25,6 +33,7 @@ const MoreDetails = () => {
         }
     }, []);
     
+    // Fetch booking details when booking ID is available and not already selected
     useEffect(() => {
         if (bookingId && !selectedBooking) {
             dispatch(fetchBookingDetails(bookingId));
@@ -32,21 +41,18 @@ const MoreDetails = () => {
     }, [bookingId, selectedBooking, dispatch]);
     
     
-    // Handle loading state
-    if (loading) return <p>Loading booking details...</p>;
+    if (loading) return <LoadingSection/>;
 
-    // Handle errors or missing booking
     if (!selectedBooking || error) {
         return (
-            <div className={styles.noBooking}>
-                <p>{error || "No booking details found!"}</p>
-            </div>
+            <ErrorSection/>
         );
     }
 
     return (
         <div className={styles.cover}>
             <div className={styles.topic}>
+                 {/* Back button to navigate to the Booking Information page */}
                 <div className={styles.backBtn}>
                     <FaArrowLeft className={styles.arrow}  onClick={() => router.push('/BookingInformation')}/>
                 </div> 
@@ -54,6 +60,7 @@ const MoreDetails = () => {
             </div>
 
             <div className={styles.mainContainer}>
+                {/*passing the selected booking */}
                 <div className={styles.left}>
                     <ClientInformation booking={selectedBooking} />
                     <BookingDetailsCom booking={selectedBooking} />

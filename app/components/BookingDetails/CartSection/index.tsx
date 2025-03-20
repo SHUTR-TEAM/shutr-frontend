@@ -13,6 +13,8 @@ import { IoLocationSharp } from "react-icons/io5";
 const CartSection: React.FC = () => {
     const router = useRouter();
     const dispatch = useDispatch<AppDispatch>();
+
+    // Get booking data from Redux store
     const bookings = useSelector((state: RootState) => state.booking.bookings);
 
     // Map event types to corresponding images
@@ -23,9 +25,10 @@ const CartSection: React.FC = () => {
         "Concert": "/festival.jpg",
         "Sports": "/sports.jpg",
         "Engagement": "/images/engagement.jpg",
-        "Other": "/event.jpg" // Default image for unknown types
+        "Other": "/event.jpg" 
     };
 
+     // Handle click event to navigate to booking details page
     const handleClick = (id: string) => {
         if (!id) {
             console.error("Booking ID is undefined!");
@@ -37,14 +40,17 @@ const CartSection: React.FC = () => {
     
     return (
         <div className={styles.cardsContainer}>
+            {/* Iterate over the list of bookings */}
             {bookings.map((item) => {
-                // Determine the appropriate image based on event type
-                const eventType = item.event.type || "Other"; // Default to "Other" if type is missing
-                const imageSrc = eventImages[eventType] || eventImages["Other"]; // Fallback to default
+                // Extract event type, use "Other" if not provided
+                const eventType = item.event.type || "Other"; 
+                // Get the corresponding image for the event type, default to "Other" image if not found
+                const imageSrc = eventImages[eventType] || eventImages["Other"]; 
 
                 return (
                     <div key={item.id} className={styles.cardContainer} onClick={() => handleClick(item.id)}>
-                        {/* Display dynamic event image */}
+
+                        {/*Image*/}
                         <div className={styles.image}>
                             <Image
                                 src={imageSrc}

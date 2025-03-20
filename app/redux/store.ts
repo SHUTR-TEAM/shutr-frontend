@@ -10,7 +10,7 @@ export const makeStore = () => {
     reducer: {
       chat: chatReducer,
       portfolio : portfolioReducer,
-      search: searchReducer,
+      search: searchReducer,     
       booking: bookingReducer,
     },
   });

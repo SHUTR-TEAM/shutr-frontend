@@ -1,4 +1,3 @@
-// Importing Dependencies
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 // Fetch all bookings from the API
@@ -12,10 +11,10 @@ export const fetchAllBookings = createAsyncThunk(
             }
             const data = await response.json();
 
+            // Transform the API response into a structured format
             return data.map((booking: any) => {
                 let bookingId = booking.id || booking._id;
                 
-                // Handle MongoDB ObjectId
                 if (typeof bookingId === "object" && "$oid" in bookingId) {
                     bookingId = bookingId.$oid;
                 }
@@ -24,6 +23,7 @@ export const fetchAllBookings = createAsyncThunk(
                     console.error("Missing ID in booking:", booking);
                 }
 
+                // Maps the API response to a structured booking object, ensuring default values for missing fields.
                 return {
                     id: bookingId || "N/A",
                     status: booking.status || "Unknown",
@@ -57,7 +57,6 @@ export const fetchAllBookings = createAsyncThunk(
 );
 
 
-
 // Fetch single booking by ID
 export const fetchBookingDetails = createAsyncThunk(
     "booking/fetchBookingDetails",
@@ -77,6 +76,7 @@ export const fetchBookingDetails = createAsyncThunk(
                 bookingIdFormatted = bookingIdFormatted.$oid;
             }
 
+            // structured booking details
             return {
                 id: bookingIdFormatted || "N/A",
                 photographer_id: data.photographer_id || "N/A",
@@ -96,8 +96,7 @@ export const fetchBookingDetails = createAsyncThunk(
     }
 );
 
-
-// Updated Booking Interface
+// Structure of a Booking object
 interface Booking {
     id: string;
     status: string;
@@ -123,7 +122,6 @@ interface Booking {
     terms_and_conditions_agreed: boolean;
 }
 
-// Booking State Interface
 interface BookingState {
     bookings: Booking[];
     selectedBooking: Booking | null;
@@ -131,7 +129,7 @@ interface BookingState {
     error: string | null;
 }
 
-// Initial State
+//Initial State 
 const initialState: BookingState = {
     bookings: [],
     selectedBooking: null,
@@ -139,19 +137,21 @@ const initialState: BookingState = {
     error: null
 };
 
-// Create Booking Slice
+// Create a Redux slice for booking management
 const bookingSlice = createSlice({
     name: "booking",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
+            // Store fetched bookings in state
+
             .addCase(fetchAllBookings.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
             .addCase(fetchAllBookings.fulfilled, (state, action: PayloadAction<Booking[]>) => {
-                state.bookings = action.payload;
+                state.bookings = action.payload;  // Store fetched bookings in state
                 state.loading = false;
             })
             .addCase(fetchAllBookings.rejected, (state, action) => {
@@ -163,7 +163,7 @@ const bookingSlice = createSlice({
                 state.error = null;
             })
             .addCase(fetchBookingDetails.fulfilled, (state, action: PayloadAction<any>) => {
-                state.selectedBooking = action.payload;
+                state.selectedBooking = action.payload;   // Store fetched bookings in state
                 state.loading = false;
             })
             .addCase(fetchBookingDetails.rejected, (state, action) => {
@@ -173,4 +173,5 @@ const bookingSlice = createSlice({
     }
 });
 
+// Export the booking reducer so it can be added to the Redux store configuration and used globally in the application.
 export default bookingSlice.reducer;
