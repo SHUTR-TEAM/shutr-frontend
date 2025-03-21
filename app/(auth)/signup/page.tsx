@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "./page.module.css";
-import SignupForm from "@/app/components/Auth/SignupForm";
+import CustomerSignupForm from "@/app/components/Auth/SignupForm/customerSignUp";
 
 const Signup = () => {
   return (
     <div className={styles.mainDiv}>
-      <SignupForm />
+      <CustomerSignupForm />
     </div>
   );
 };

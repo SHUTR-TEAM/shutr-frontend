@@ -1,38 +1,30 @@
 import React from "react";
 import styles from "./index.module.css";
-import { RegisterForm } from "@/app/components/Auth/forms";
+import Link from "next/link";
+import UserRegisterForm from "../../forms/UserRegisterForm";
 
-
-const SignupForm = () => {
+const CustomerSignupForm = () => {
   return (
     <div className={styles.formContainer}>
       {/* header */}
-      <div>
-        <h2>Sign up</h2>
+      <div className={styles.header}>
+        <h2>Welcome to SHUTR!</h2>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque rerum
-          perspiciatis beatae odit tempora velit, error numquam similique minus?
-          Hic?
+          Join SHUTR and connect with your ideal professional photographers.
+          Sign up to explore stunning portfolios, book photography sessions, and
+          create unforgettable memories. Let’s capture your moments together!
         </p>
       </div>
 
       {/* form */}
-      <RegisterForm />
-        <div className={styles.grid}>
-          
-          {/* <label className={authStyles.inputLabel}>
-            <span>NIC</span>
-            <input type="text" placeholder="Enter your email address" />
-          </label> */}
-          <hr></hr>
-          <p className={styles.elseText}>Already have a account? {' '}
-             <a
-              href='../LoginForm/index.tsx' >Login here</a>
-          </p>
-        </div>
-    
+      <UserRegisterForm />
+      <div className={styles.grid}>
+        <p className={styles.elseText}>
+          Already have a account? <Link href="/signin">Login here</Link>
+        </p>
+      </div>
     </div>
   );
 };
 
-export default SignupForm;
+export default CustomerSignupForm;

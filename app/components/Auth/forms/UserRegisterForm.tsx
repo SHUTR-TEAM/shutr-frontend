@@ -2,9 +2,9 @@
 
 import { useRegister } from "../hooks";
 import { Form } from ".";
-import styles from "./index.module.css";
+import styles from "../forms/index.module.css";
 
-export default function PhotographerRegisterForm() {
+export default function UserRegisterForm() {
   const {
     first_name,
     last_name,
@@ -16,10 +16,7 @@ export default function PhotographerRegisterForm() {
     isLoading,
     onChange,
     onSubmit,
-    setRole,
   } = useRegister();
-
-  setRole("photographer");
 
   const config = [
     {

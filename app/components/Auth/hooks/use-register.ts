@@ -1,50 +1,79 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
-import { useRegisterMutation } from '@/app/redux/features/auth/authApiSlice';
-import { toast } from 'react-toastify';
+import { useState, ChangeEvent, FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import { useRegisterMutation } from "@/app/redux/features/auth/authApiSlice";
+import { toast } from "react-toastify";
 
 export default function useRegister() {
-	const router = useRouter();
-	const [register, { isLoading }] = useRegisterMutation();
+  const router = useRouter();
+  const [register, { isLoading }] = useRegisterMutation();
 
-	const [formData, setFormData] = useState({
-		first_name: '',
-		last_name: '',
-		email: '',
-		password: '',
-		re_password: '',
-	});
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    re_password: "",
+    phone_num: "",
+    nic: "",
+    role: "user",
+  });
 
-	const { first_name, last_name, email, password, re_password } = formData;
+  const {
+    first_name,
+    last_name,
+    email,
+    password,
+    re_password,
+    phone_num,
+    nic,
+    role,
+  } = formData;
 
-	const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = event.target;
+  const setRole = (role: string) => {
+    setFormData({ ...formData, role });
+  };
 
-		setFormData({ ...formData, [name]: value });
-	};
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
 
-	const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
+    setFormData({ ...formData, [name]: value });
+  };
 
-		register({ first_name, last_name, email, password, re_password })
-			.unwrap()
-			.then(() => {
-				toast.success('Please check email to verify account');
-				router.push('/auth/login');
-			})
-			.catch(() => {
-				toast.error('Failed to register account');
-			});
-	};
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-	return {
-		first_name,
-		last_name,
-		email,
-		password,
-		re_password,
-		isLoading,
-		onChange,
-		onSubmit,
-	};
+    register({
+      first_name,
+      last_name,
+      email,
+      password,
+      re_password,
+      phone_num,
+      nic,
+      role,
+    })
+      .unwrap()
+      .then(() => {
+        toast.success("Please check email to verify account");
+        router.push("/auth/login");
+      })
+      .catch(() => {
+        toast.error("Failed to register account");
+      });
+  };
+
+  return {
+    first_name,
+    last_name,
+    email,
+    password,
+    re_password,
+    phone_num,
+    nic,
+    role,
+    isLoading,
+    onChange,
+    onSubmit,
+    setRole,
+  };
 }
