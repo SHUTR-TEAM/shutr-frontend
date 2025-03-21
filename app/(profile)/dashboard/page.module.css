@@ -1,4 +1,16 @@
-.dashboard {
+.mainDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* .dashboard {
   display: flex;
   background-color: #f9f9f9;
 }
@@ -39,4 +51,4 @@
   left: 20px;
   width: 400px;
   z-index: 10;
-}
+} */

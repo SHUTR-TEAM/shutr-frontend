@@ -15,6 +15,7 @@ export const useInitializeAuth = () => {
   const { data, isLoading, error } = useRetrieveUserQuery();
 
   useEffect(() => {
+    console.log("--------------------------------");
     if (data) {
       dispatch(setUser({ user: data }));
       dispatch(setAuth());

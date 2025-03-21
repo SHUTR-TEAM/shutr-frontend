@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.welcomeMessage {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.welcomeMessage > p {
+  font-size: 14px;
+  color: #333;
+}
