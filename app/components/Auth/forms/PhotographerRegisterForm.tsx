@@ -4,7 +4,7 @@ import { useRegister } from '../hooks';
 import { Form } from '../forms';
 import styles from '../forms/index.module.css';
 
-export default function PhotographerRegisterForm() {
+export default function RegisterForm() {
 	const {
 		first_name,
 		last_name,
@@ -39,19 +39,19 @@ export default function PhotographerRegisterForm() {
 			required: true,
 		},
 		{
-			labelText: 'Phone Number',
-			labelId: 'phone_number',
-			type: 'text',
-			value: last_name,
-			required: true,
-		},
-		{
 			labelText: 'Password',
 			labelId: 'password',
 			type: 'password',
 			value: password,
 			required: true,
 		},
+        {
+            labelText: 'Email address',
+			labelId: 'email',
+			type: 'email',
+			value: email,
+			required: true,
+        },
 		{
 			labelText: 'Confirm password',
 			labelId: 're_password',

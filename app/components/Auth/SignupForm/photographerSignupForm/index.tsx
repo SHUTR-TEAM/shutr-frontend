@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./index.module.css";
-import authStyles from "../auth.module.css";
-import { RegisterForm } from "../forms";
+import { PhotographerRegisterForm} from "../../forms"
 
 
 const SignupForm = () => {
@@ -18,17 +17,20 @@ const SignupForm = () => {
       </div>
 
       {/* form */}
+      < PhotographerRegisterForm/>
         <div className={styles.grid}>
-          <RegisterForm />
+          
           {/* <label className={authStyles.inputLabel}>
             <span>NIC</span>
             <input type="text" placeholder="Enter your email address" />
           </label> */}
           <hr></hr>
-          <p>Already have a account? {' '} 
-             <a href=' annonimus' >Login here</a>
+          <p className={styles.elseText}>Already have a account? {' '}
+             <a
+              href='../LoginForm/index.tsx' >Login here</a>
           </p>
         </div>
+    
     </div>
   );
 };

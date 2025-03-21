@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent } from 'react';
 import { Input } from '../forms';
 import { Spinner } from '@/app/components/Auth/forms';
+import styles from "./index.module.css";
 
 
 interface Config {
@@ -31,7 +32,7 @@ export default function Form({
 	onSubmit,
 }: Props) {
 	return (
-		<form className='space-y-6' onSubmit={onSubmit}>
+		<form className={styles.formContainer} onSubmit={onSubmit}>
 			{config.map(input => (
 				<Input
 					key={input.labelId}
@@ -41,15 +42,16 @@ export default function Form({
 					value={input.value}
 					link={input.link}
 					required={input.required}
+					
 				>
 					{input.labelText}
 				</Input>
 			))}
 
-			<div>
+			<div className={styles.btnWrapper}>
 			<button
 					type='submit'
-					className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+					className={styles.ctaBtn}
 					disabled={isLoading}
 				>
 					{isLoading ? <Spinner sm /> : `${btnText}`}
