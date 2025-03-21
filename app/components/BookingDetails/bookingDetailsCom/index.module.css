@@ -2,15 +2,15 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 25px 25px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #ffffff, #f9f9f9);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
     width: 90%;
   }
   
   .topic h2 {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: bold;
-    margin-bottom: 17px;
+    margin-bottom: 18px;
     color: #333;
   }
   
@@ -18,7 +18,7 @@
     display: flex;
     justify-content: space-between;
     padding: 8px 0;
-    font-size: 14px;
+    font-size: 15px;
     color: #555;
     border-bottom: 1px solid #f0f0f0;
   }
@@ -41,3 +41,16 @@
     font-weight: bold;
     color: #000;
   }
+  @media (max-width: 768px) {
+    .bookingDetails{
+      width: 100%;
+    }
+    .row {
+      font-size: 14px;
+    }
+}
+@media (max-width: 400px) {
+  .row {
+    font-size: 13px;
+  }
+}

@@ -16,6 +16,7 @@ const inter = Inter({ subsets: ["latin"] });
 //   src: "./fonts/Geologica.ttf",
 //   variable: "--font-geologica-sans",
 //   weight: "100 900",
+
 // });
 
 export const metadata: Metadata = {

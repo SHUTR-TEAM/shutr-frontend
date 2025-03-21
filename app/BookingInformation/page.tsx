@@ -1,83 +1,41 @@
-import React from "react";
-import styles from "./page.module.css"
-import SearchBar from "../components/BookingDetails/SearchBar";
-import CartSection from "../components/BookingDetails/CartSection";
+"use client";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllBookings } from "@/app/redux/features/bookingInformation";
+import { RootState, AppDispatch } from "@/app/redux/store";
+import styles from "./page.module.css";
+import SearchBar from "@/app/components/BookingDetails/SearchBar";
+import CartSection from "@/app/components/BookingDetails/CartSection";
+import ErrorSection from "@/app/components/BookingDetails/errorComponent"
+import LoadingSection from "../components/BookingDetails/loadingComponent";
 
 const BookingDetails = () => {
+    const dispatch = useDispatch<AppDispatch>();
 
-    const eventData = [
-        {
-            picture: "/wedding.jpg",
-            name: "Sarah Johans",
-            status: "Upcoming",
-            time: "7:00 PM",
-            event: "Wedding",
-            location: "Grand Theater"
-        },
-        {
-            picture: "/sports.jpg",
-            name: "Mahinda",
-            status: "Live",
-            time: "6:30 PM",
-            event: "Sports",
-            location: "City Stadium"
-        },
-        {
-            picture: "/festival.jpg",
-            name: "Spandana",
-            status: "Live",
-            time: "8:00 PM",
-            event: "Music",
-            location: "Central Park"
-        },
-        {
-            picture: "/event.jpg",
-            name: "Ramuwa",
-            status: "Upcoming",
-            time: "2:00 PM",
-            event: "Technology",
-            location: "Convention Center"
-        },
-        {
-            picture: "/birthday.jpg",
-            name: "John Doe",
-            status: "Ongoing",
-            time: "12:00 PM",
-            event: "Food",
-            location: "Town Square"
-        },
-        {
-            picture: "/art.jpg",
-            name: "Japura",
-            status: "Upcoming",
-            time: "5:00 PM",
-            event: "Art",
-            location: "Modern Art Museum"
-        },
-        {
-            picture: "/movie.jpg",
-            name: "Movie Premiere",
-            status: "Upcoming",
-            time: "9:00 PM",
-            event: "Film",
-            location: "Downtown Cinema"
-        },
-        {
-            picture: "/portrait.jpg",
-            name: "Sunny",
-            status: "Upcoming",
-            time: "3:00 PM",
-            event: "Portrait",
-            location: "Corporate Hub"
+    // Select booking-related state from Redux store
+    const { bookings, loading, error } = useSelector((state: RootState) => state.booking);
+
+    // Fetch all bookings when the component mounts if the list is empty
+    useEffect(() => {
+        if (bookings.length === 0) {
+            dispatch(fetchAllBookings());
         }
-    ];    
+    }, [dispatch, bookings.length]);  //Dependencies ensure it runs only when bookings.length changes
 
-    return(
-        <div>
-            <SearchBar/>
-            <CartSection data={eventData}/>                 
+    return (
+        <div className={styles.container}>
+
+            {loading ? (
+                <LoadingSection/>
+            ) : error ? (
+                <p className={styles.error}>{error}</p>
+            ) : bookings.length === 0 ? (
+                <ErrorSection/>
+            ) : (
+                <CartSection />                             
+            )}
         </div>
-    )
-}
+    );
+};
 
 export default BookingDetails;
