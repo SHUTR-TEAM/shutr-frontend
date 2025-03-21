@@ -17,12 +17,14 @@ export default function Search() {
     <div>
       <StoreProvider>
         <div className={styles.mobileToggleContainer}>
-          <button
+          <div
             className={styles.filterToggleBtn}
             onClick={() => setShowFilters(true)}
-          >
-            <IoFilter /> Show Filters
-          </button>
+          ><div className={styles.btnBox}>
+            <IoFilter className={styles.btnFilter}/>
+            <div>Show Filters</div> 
+           </div>            
+          </div>
         </div>
 
         {showFilters && (

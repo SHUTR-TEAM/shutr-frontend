@@ -16,7 +16,7 @@
   margin: 0;
   padding: 20px;
   width: 100%;
-  height: 100%;  
+  height:100vh;  
 }
 .overlay {
   position: fixed;
@@ -59,21 +59,36 @@
   color: #333;
 }
 .filterToggleBtn {
+  
   display: none;
   background-color: #494949;
   color: white;
-  padding: 10px 15px;
+  padding: 9px 13px;
   border: none;
   border-radius: 8px;
   font-size: 14px;
   margin: 15px;
   cursor: pointer;
+  width: 135px;
 }
 .filterToggleBtn:hover {
-  background-color: #1c1c1c;
+  background-color: #000000;
+}
+.btnBox{
+  display: flex;
+}
+.btnFilter {
+  transform: rotate(-90deg);
+  margin-top: 2px;
+  margin-right: 5px;
 }
 .mobileToggleContainer {
   display: none;
+  position: fixed;
+  background-color: white;
+  left: 0;
+  width: 100%;
+  z-index: 100;
 }
 @media (max-width: 1150px) {
   .categorySection {
@@ -99,11 +114,10 @@
     display: block;
   }
   .mobileToggleContainer {    
-    display: flex;
-    justify-content: flex-start;
-    padding-left: 10px;
+    display: block;
   }
   .searchBarContainer {
     padding: 10px;
+    
   }
 }
