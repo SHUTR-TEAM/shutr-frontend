@@ -1,0 +1,44 @@
+.mainDivWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  padding: 40px;
+}
+
+.mainDiv {
+  display: flex;
+  gap: 100px;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: 1200px;
+}
+
+.image {
+  aspect-ratio: 1/1;
+  max-height: 400px;
+  max-width: 400px;
+  object-fit: contain;
+}
+
+.mainDiv p {
+  color: #6b6b6b;
+  margin-top: 10px;
+}
+
+.details {
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  gap: 20px;
+}
+
+.supportLink {
+  background-color: #f5a623;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+}
