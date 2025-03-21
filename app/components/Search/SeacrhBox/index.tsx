@@ -80,39 +80,47 @@ export default function SearchBox() {
   return (
     <div>
       <div className={styles["search-bar-container"]}>
-        <div className={styles["search-box"]}>
-          <IoSearch className={styles["search-icon"]} />
-          <input
-            type="text"
-            className={styles["search-input"]}
-            placeholder="Search"
-            value={searchTerm}
-            onChange={handleInputChange} 
-            onKeyDown={handleKeyDown} 
-          />
-        </div>
-        <div>
-          <button className={styles["search-btn"]} onClick={handleSearch}>
-            Search
-          </button>
+
+        <div className={styles["searchSection"]}>
+          <div className={styles["search-box"]}>
+            <IoSearch className={styles["search-icon"]} />
+            <input
+              type="text"
+              className={styles["search-input"]}
+              placeholder="Search"
+              value={searchTerm}
+              onChange={handleInputChange} 
+              onKeyDown={handleKeyDown} 
+            />
+          </div>
+          <div>
+            <button className={styles["search-btn"]} onClick={handleSearch}>
+              Search
+            </button>
+          </div>
+        </div>  
+
+        <div className={styles["filterSection"]}>
+          <div className={styles["sort-by-container"]}>
+            <label htmlFor="sort-by" className={styles["sort-by-label"]}>
+              Sort By:
+            </label>
+            <select
+              id="sort-by"
+              className={styles["search-dropdown"]}
+              value={selectedSort}
+              onChange={handleSortChange}
+            >
+              <option value="relevant">Most relevant</option>
+              <option value="recent">Most recent</option>
+              <option value="popular">Top rated</option>
+            </select>
+          </div>
         </div>
 
-        <div className={styles["sort-by-container"]}>
-          <label htmlFor="sort-by" className={styles["sort-by-label"]}>
-            Sort By:
-          </label>
-          <select
-            id="sort-by"
-            className={styles["search-dropdown"]}
-            value={selectedSort}
-            onChange={handleSortChange}
-          >
-            <option value="relevant">Most relevant</option>
-            <option value="recent">Most recent</option>
-            <option value="popular">Top rated</option>
-          </select>
-        </div>
-      </div>
+      </div>     
+
+       
       <div className={styles.cardSection}>
          {/* Show ErrorSection if no results are found and search term or filters are applied */}
          {!loading && !error && results.length === 0 && (searchTerm.trim() !== "" || Object.values(filters).some((value) => value !== "")) && (
@@ -123,10 +131,11 @@ export default function SearchBox() {
         {!loading && !error && results.length > 0 && <Card data={results} />}
 
         {/* Show default results*/}
-        {!loading && !error && results.length === 0 && searchTerm.trim() === "" && (
+        {!loading && !error && results.length === 0 && (searchTerm.trim() === "" &&  Object.values(filters).some((value) => value == "")) && (
           <Card data={defaultResults} />
         )}
       </div>
+      
     </div>
   );
 }

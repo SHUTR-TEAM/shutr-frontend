@@ -7,16 +7,6 @@ import { setFilters,clearFilters, fetchFilteredResults } from "@/app/redux/featu
 
 export default function CategorySection() {
 
-  //to get the user input (filter)
-  //key-value pair structure used to store related data.
-  // const [filters,setFilters] = useState({
-  //   style:"",
-  //   minPrice:"",
-  //   maxPrice:"",
-  //   availability:"",
-  //   experienceLevel:"",
-  // });
-
   const dispatch = useDispatch<AppDispatch>();
 
   // Local filter state before applying
@@ -52,28 +42,9 @@ export default function CategorySection() {
       experienceLevel: "",
     });
 
-    dispatch(clearFilters()); // Reset Redux filters
-    dispatch(fetchFilteredResults()); // Fetch default results
+    dispatch(clearFilters()); 
+    dispatch(fetchFilteredResults()); 
   };
-
-
-  /*
-  const handleButtonClick = (name,value) =>{
-    // Update the filters state while preserving existing values
-    // 1. 'prevFilters' holds the current state before the update.
-    // 2. '...prevFilters' ensures all previous filter values remain unchanged.
-    // 3. '[name]: value' dynamically updates only the specified filter.
-    // This prevents overwriting the entire state and ensures only the intended property is modified.
-    setFilters((preFilters)=>({
-      ...preFilters,   // Keep existing filter values
-      //If the current filter value (prevFilters[name]) is already equal to the value, it sets it to "" (empty string), meaning the filter value removed.
-      //Otherwise, it updates the filter with the value.
-      [name]: preFilters[name] === value ? "" : value,   
-    }));
-
-  };*/
-
- 
 
   return (
     <div className={styles.container}>
