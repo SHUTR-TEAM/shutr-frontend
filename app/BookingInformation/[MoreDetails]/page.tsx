@@ -66,7 +66,7 @@ const MoreDetails = () => {
                     <BookingDetailsCom booking={selectedBooking} />
                 </div>
                 <div className={styles.right}>
-                    <EventTimeline booking={selectedBooking} />
+                    <EventTimeline booking={{ ...selectedBooking, additional_notes: selectedBooking.additional_notes || "" }} />
                 </div>
             </div>
 

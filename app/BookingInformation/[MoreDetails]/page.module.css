@@ -2,7 +2,8 @@
     width: 95%;
     margin-top: 20px;
     margin-left: auto;
-    margin-right: auto;   
+    margin-right: auto;
+    padding: 0px 10px;   
 }
 .topic{
     display: flex;
@@ -16,6 +17,7 @@
     padding: 5px;
     color: #555;
     margin-right: 5px;
+    margin-top: 2px;
 }
 .arrow{
     cursor: pointer;
@@ -26,7 +28,7 @@
 }
 .word{
     padding: 5px;
-    font-size: 16px;
+    font-size: 19px;
     font-weight: 550;
     color: #555;
 }
@@ -44,7 +46,7 @@
     margin-top: 25px;
 }
 .btn1{
-    padding: 10px 40px;
+    padding: 12px 40px;
     width: 29%;
     border: 2px solid #3f96d8;
     border-radius: 7px;
@@ -60,7 +62,7 @@
     background-color: #1b70b2;
 }
 .btn2{
-    padding: 10px 40px;
+    padding: 12px 40px;
     width: 29%;
     border-radius: 7px;
     border: 2px solid #3f96d8;
@@ -74,4 +76,76 @@
 .btn2:hover{
     background-color: #b0b0b0;
 
+}
+@media (max-width: 820px){
+    .btn2,.btn1 {
+        width: 29%;
+        font-size: 12px;
+    }
+}
+@media (max-width: 768px) {
+    .cover{
+        margin-top: 10px;
+    }    
+    .topic {     
+        margin-top: 0px;   
+        padding: 15px 0;
+        margin-bottom: 10px;
+    }
+    .backBtn{
+        margin-top: 4px;
+    }
+    .word {
+        font-size: 19px;
+    }
+    .mainContainer {
+        grid-template-columns: 1fr; 
+        gap: 20px;
+        
+    } 
+    .btnContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .btn1{
+        margin-right: 0px;
+        width: 60%; 
+        padding: 12px;
+        font-size: 16px;
+    }
+    .btn2 {
+        width: 60%; 
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    .backBtn {
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .cover{
+        margin-top: 10px;
+    }
+    .topic{
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .backBtn{
+        margin-top: 3px;
+    }
+    .word {
+        font-size: 18px;
+    }
+
+    .btn1{
+        margin-right: 0px;
+    }
+    .btn2 {
+        padding: 10px;
+        font-size: 14px;
+    }
 }
