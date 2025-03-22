@@ -1,0 +1,429 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal {
+  background-color: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.modalContent {
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Todos Section */
+.todosSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.todosSection h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.addTodoForm {
+  display: flex;
+  gap: 10px;
+}
+
+.todoInput {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.todoInput:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.addButton {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.addButton:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.todoList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.todoItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.todoItem:hover {
+  background-color: #f0f0f0;
+}
+
+.todoContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.todoCheckbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.completedTodo {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.todoActions {
+  display: flex;
+  gap: 8px;
+}
+
+.editButton,
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.editButton {
+  color: #3498db;
+}
+
+.editButton:hover {
+  background-color: rgba(52, 152, 219, 0.1);
+}
+
+.deleteButton {
+  color: #e74c3c;
+}
+
+.deleteButton:hover {
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+.editTodoForm {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.editTodoInput {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #3498db;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.editActions {
+  display: flex;
+  gap: 6px;
+}
+
+.saveButton,
+.cancelButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.saveButton {
+  color: #27ae60;
+}
+
+.saveButton:hover {
+  background-color: rgba(39, 174, 96, 0.1);
+}
+
+.cancelButton {
+  color: #e74c3c;
+}
+
+.cancelButton:hover {
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+/* Bookings Section */
+.bookingsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bookingsSection h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.bookingsList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.bookingCard {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.bookingHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.bookingHeader h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.bookingStatus {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.statusConfirmed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.statusPending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.statusCancelled {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.paymentStatus {
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.bookingDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.detailItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.paymentDetails,
+.clientDetails,
+.notesSection {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #eaeaea;
+}
+
+.paymentDetails h5,
+.clientDetails h5 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.emptyState {
+  padding: 20px;
+  text-align: center;
+  color: #888;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .modal {
+    width: 95%;
+  }
+
+  .modalHeader h2 {
+    font-size: 20px;
+  }
+
+  .bookingHeader h4 {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalHeader {
+    padding: 16px;
+  }
+
+  .modalContent {
+    padding: 16px;
+  }
+
+  .modalHeader h2 {
+    font-size: 18px;
+  }
+
+  .todoItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .todoActions {
+    align-self: flex-end;
+  }
+
+  .bookingCard {
+    padding: 16px;
+  }
+
+  .bookingHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .bookingStatus {
+    align-self: flex-start;
+  }
+}

@@ -1,0 +1,73 @@
+.todoForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.todoInput {
+  padding: 14px;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: border-color 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.todoInput:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
+}
+
+.formButtons {
+  display: flex;
+  gap: 12px;
+}
+
+.submitButton,
+.cancelButton {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.submitButton {
+  background-color: #3498db;
+  color: white;
+  box-shadow: 0 2px 6px rgba(52, 152, 219, 0.3);
+}
+
+.submitButton:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.4);
+}
+
+.cancelButton {
+  background-color: #f1f1f1;
+  color: #555;
+}
+
+.cancelButton:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-2px);
+}
+
+/* Responsive styles */
+@media (max-width: 480px) {
+  .todoInput {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .submitButton,
+  .cancelButton {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+}

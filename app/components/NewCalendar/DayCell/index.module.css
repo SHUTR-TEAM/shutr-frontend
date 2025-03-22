@@ -1,0 +1,203 @@
+.dayCell {
+  border: 1px solid #eaeaea;
+  padding: 12px;
+  min-height: 120px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.dayCell:hover {
+  background-color: #f9f9f9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.today {
+  background-color: #f0f7ff;
+  border: 2px solid #3498db;
+}
+
+.dayNumber {
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.today .dayNumber {
+  color: #3498db;
+}
+
+.indicators {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.bookingIndicator {
+  background-color: #e74c3c;
+  color: white;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(231, 76, 60, 0.2);
+}
+
+.todoIndicator {
+  background-color: #3498db;
+  color: white;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  display: inline-block;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+}
+
+.detailsPopup {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  z-index: 10;
+  background-color: white;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  padding: 12px;
+  width: 280px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bookingsList,
+.todosList {
+  margin-bottom: 12px;
+}
+
+.bookingsList h4,
+.todosList h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #555;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bookingsList h4::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #e74c3c;
+  border-radius: 50%;
+}
+
+.todosList h4::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #3498db;
+  border-radius: 50%;
+}
+
+.bookingsList ul,
+.todosList ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 13px;
+  color: #444;
+}
+
+.bookingsList li,
+.todosList li {
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.completedTodo {
+  text-decoration: line-through;
+  color: #888;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .dayCell {
+    padding: 8px;
+    min-height: 100px;
+  }
+
+  .dayNumber {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .bookingIndicator,
+  .todoIndicator {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  .detailsPopup {
+    width: 240px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dayCell {
+    padding: 6px;
+    min-height: 80px;
+    border-radius: 8px;
+  }
+
+  .dayNumber {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .bookingIndicator,
+  .todoIndicator {
+    font-size: 9px;
+    padding: 2px 4px;
+  }
+
+  .detailsPopup {
+    width: 200px;
+    padding: 8px;
+  }
+
+  .bookingsList h4,
+  .todosList h4 {
+    font-size: 12px;
+  }
+
+  .bookingsList ul,
+  .todosList ul {
+    font-size: 11px;
+  }
+}

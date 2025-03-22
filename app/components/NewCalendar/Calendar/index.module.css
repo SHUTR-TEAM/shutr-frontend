@@ -1,0 +1,197 @@
+.calendarContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Inter", Arial, sans-serif;
+  position: relative;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.calendarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.calendarHeader h2 {
+  font-size: 28px;
+  margin: 0;
+  font-weight: 600;
+  color: #333;
+}
+
+.navButton {
+  background: none;
+  border: 1px solid #eaeaea;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.navButton:hover {
+  background-color: #f5f5f5;
+  transform: scale(1.05);
+}
+
+.weekdaysHeader {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.weekday {
+  text-align: center;
+  font-weight: 600;
+  padding: 12px 8px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #555;
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+}
+
+.dayCell {
+  min-height: 120px;
+  border-radius: 12px;
+  background-color: #fff;
+  transition: transform 0.2s ease;
+}
+
+.todoFormOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.todoFormContainer {
+  background-color: white;
+  padding: 24px;
+  border-radius: 16px;
+  width: 450px;
+  max-width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.todoFormContainer h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .calendarContainer {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .calendarHeader h2 {
+    font-size: 22px;
+  }
+
+  .weekdaysHeader {
+    gap: 8px;
+  }
+
+  .weekday {
+    padding: 8px 4px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+
+  .calendarGrid {
+    gap: 8px;
+  }
+
+  .dayCell {
+    min-height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .calendarContainer {
+    padding: 12px;
+  }
+
+  .calendarHeader h2 {
+    font-size: 18px;
+  }
+
+  .navButton {
+    width: 36px;
+    height: 36px;
+  }
+
+  .weekday {
+    font-size: 10px;
+    padding: 6px 2px;
+  }
+
+  .dayCell {
+    min-height: 80px;
+  }
+}
