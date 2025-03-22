@@ -31,7 +31,7 @@
 .filterButtons button { 
   color: #494949;
   background-color: #ffffff;
-  border: 1px solid #ddd;
+  border: 1px solid #c0bfbf;
   padding: 8px 16px;
   border-radius: 7px;
   font-size: 13px;
@@ -59,7 +59,7 @@
 .priceRange input {
   width: 100px;
   padding: 9px 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #c0bfbf;
   border-radius: 7px;
   font-size: 13px;
   text-align: center;
@@ -80,7 +80,7 @@
   color: #555;
   width: 60%;
   padding: 9px;
-  border: 1px solid #ddd;
+  border: 1px solid #c0bfbf;
   border-radius: 7px;
   font-size: 14px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -101,7 +101,7 @@
   width: 80%;
   color: #494949;
   background-color: #ffffff;
-  border: 1px solid #ddd;
+  border: 1px solid #c0bfbf;
   padding: 9px 12px;
   border-radius: 5px;
   font-size: 12px;

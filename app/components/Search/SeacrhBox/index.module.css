@@ -18,7 +18,7 @@
   background-color: #f0f0f0;
   padding: 10px 40px 10px 20px;
   border-radius: 25px;
-  border: 1px solid #ddd;
+  border: 1px solid #c0bfbf;
   flex: 1;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -39,14 +39,13 @@
 .search-btn {
   padding: 10px 12px;
   font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 20px;
+  border: 1px solid #bbbbbb;
+  border-radius: 25px;
   background-color: #f0f0f0;
   cursor: pointer;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .sort-by-container {
-
   display: flex;
   align-items: center;
   gap: 10px;
@@ -60,7 +59,7 @@
 .search-dropdown {
   padding: 10px 12px;
   font-size: 14px;
-  border: 1px solid #ddd;
+  border: 1px solid #bbbbbb;
   border-radius: 20px;
   background-color: #f0f0f0;
   cursor: pointer;

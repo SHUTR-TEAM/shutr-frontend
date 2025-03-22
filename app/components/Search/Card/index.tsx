@@ -3,6 +3,7 @@ import styles from "./index.module.css"
 import { MdLibraryBooks } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
 import { BsFillChatTextFill } from "react-icons/bs";
+import Link from 'next/link';
 
 //Defining type
 interface Item {
@@ -17,6 +18,7 @@ interface Item {
   rating: number;
 }
 
+
 interface CardsProps {
   data: Item[];
 }
@@ -25,7 +27,7 @@ const Card = ({ data }: CardsProps) => {
   return (
     <div className={styles.cards}>
       {data.map((item,index) => (
-        <div key={item.id ?? index} className={styles.card}>
+        <Link key={item.id ?? index}  href={`/portfolio/${item.id}`} className={styles.card}>
           <div className={styles.cardImages}>
             {Array.isArray(item.images) && item.images.slice(0, 3).map((image, index) => (
             <div key={index} className={styles.imageWrapper}>
@@ -69,17 +71,17 @@ const Card = ({ data }: CardsProps) => {
             </div>
 
             <div className={styles.cardActions}>
-              <button className={styles.btnPrimary}>
+              <Link href={`/booking/${item.id}`}  onClick={(e) => e.stopPropagation()} className={styles.btnPrimary}>
                 <div><MdLibraryBooks className={styles.bookIcon} /></div>
                 Book Now
-              </button>
-              <button className={styles.btnSecondary}>
+              </Link>
+              <Link href={`/message/${item.id}`}  onClick={(e) => e.stopPropagation()} className={styles.btnSecondary}>
                 <div><BsFillChatTextFill className={styles.msgIcon} /></div>
                 Message
-              </button>
+              </Link>
             </div>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );
