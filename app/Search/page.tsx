@@ -5,10 +5,12 @@ import SearchBox from "../components/Search/SeacrhBox";
 import styles from "./page.module.css";
 import StoreProvider from "@/app/redux/storeProvider";
 import { IoFilter } from "react-icons/io5";
+import { IoMdClose } from "react-icons/io";
 
 export default function Search() {
   const [showFilters, setShowFilters] = useState(false);
 
+  // Close the overlay and hide filters
   const handleCloseOverlay = () => {
     setShowFilters(false);
   };
@@ -16,6 +18,7 @@ export default function Search() {
   return (
     <div>
       <StoreProvider>
+
         <div className={styles.mobileToggleContainer}>
           <div
             className={styles.filterToggleBtn}
@@ -27,6 +30,7 @@ export default function Search() {
           </div>
         </div>
 
+        {/* Conditionally rendered overlay and mobile sidebar when filters are shown */}
         {showFilters && (
           <>
             <div className={styles.overlay} onClick={handleCloseOverlay}></div>
@@ -35,7 +39,7 @@ export default function Search() {
                 className={styles.closeBtn}
                 onClick={handleCloseOverlay}
               >
-                ✕ Close
+                <IoMdClose />
               </button>
               <CategorySection />
             </div>

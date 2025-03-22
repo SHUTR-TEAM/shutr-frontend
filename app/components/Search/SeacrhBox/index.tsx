@@ -17,7 +17,6 @@ import ErrorSection from "../ErrorSection";
 
 export default function SearchBox() {
 
-  //Setting Up Redux Dispatch and State
   //Allows us to send actions to Redux.
   const dispatch = useDispatch<AppDispatch>(); 
 
@@ -25,7 +24,7 @@ export default function SearchBox() {
     (state: RootState) => state.search //get the search state from the redux 
   );
 
-  const [selectedSort, setSelectedSort] = useState("relevant"); // Default sorting
+  const [selectedSort, setSelectedSort] = useState("relevant");
 
   // Handle input changes and dispatch search term
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,15 +65,12 @@ export default function SearchBox() {
     dispatch(setSortBy(sortValue));
   
     dispatch(fetchFilteredResults()); // Fetch sorted results with the search term
-  };
+  };  
   
-  
-
   // Fetch default results on first load
   useEffect(() => {
     dispatch(fetchFilteredResults());
-  }, [dispatch, selectedSort, filters, searchTerm]); // Now updates with search term
-  
+  }, [dispatch, selectedSort, filters, searchTerm]); 
   
 
   return (
@@ -122,18 +118,17 @@ export default function SearchBox() {
 
        
       <div className={styles.cardSection}>
-         {/* Show ErrorSection if no results are found and search term or filters are applied */}
+
          {!loading && !error && results.length === 0 && (searchTerm.trim() !== "" || Object.values(filters).some((value) => value !== "")) && (
            <ErrorSection />
          )}
 
-        {/* Show search results if available */}
         {!loading && !error && results.length > 0 && <Card data={results} />}
 
-        {/* Show default results*/}
         {!loading && !error && results.length === 0 && (searchTerm.trim() === "" &&  Object.values(filters).some((value) => value == "")) && (
           <Card data={defaultResults} />
         )}
+        
       </div>
       
     </div>

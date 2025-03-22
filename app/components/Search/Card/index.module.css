@@ -105,7 +105,6 @@
   font-size: 14px;
   transition: background-color 0.3s ease;
 }
-
 .btnSecondary {
   display: flex;
   color: black;
@@ -119,7 +118,6 @@
   margin-right: 8px;
   margin-top: 1.5px;
 }
-
 .btnPrimary:hover {
   background-color: #000000;
 }
@@ -175,25 +173,25 @@
 @media (max-width: 768px) {
   .cards{
     margin-top: 200px;
+    padding: 0px 30px;
   }
 }  
 @media (max-width: 480px) {
+  .cards{
+    padding: 0px 10px;
+  }
   .price {
     font-size: 16px;
   }
-
   .description {
     font-size: 12px;
   }
-
   .name {
     font-size: 14px;
   }
-
   .location {
     font-size: 12px;
   }
-
   .reviews {
     font-size: 12px;
   }

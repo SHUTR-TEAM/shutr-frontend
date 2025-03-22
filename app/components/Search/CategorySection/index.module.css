@@ -56,7 +56,6 @@
   border-color: #000 !important;
   transform: translateY(-2px);
 }
-
 .priceRange {
   display: flex;
   align-items: center;
@@ -158,7 +157,6 @@
 .clearBtn:hover{
   background-color: #1c1c1c;
 }
-/* Media queries for tablet devices */
 @media (max-width: 1150px) {
   .filters {
     max-width: 330px;

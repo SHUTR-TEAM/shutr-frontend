@@ -52,14 +52,13 @@
 .closeBtn {
   background: none;
   border: none;
-  font-size: 18px;
+  font-size: 30px;
   font-weight: bold;
   margin-bottom: 10px;
   cursor: pointer;
-  color: #333;
+  color: #333;  
 }
-.filterToggleBtn {
-  
+.filterToggleBtn {  
   display: none;
   background-color: #494949;
   color: white;
@@ -88,7 +87,7 @@
   background-color: white;
   left: 0;
   width: 100%;
-  z-index: 100;
+  z-index: 5;
 }
 @media (max-width: 1150px) {
   .categorySection {
@@ -99,13 +98,11 @@
 @media (max-width: 880px) {
   .categorySection {
     flex: 0 0 280px;
-
   }
 }  
 @media (max-width: 768px) {
   .mainContainer {
-    flex-direction: column;
-    
+    flex-direction: column;    
   }
   .categorySection {
     display: none;   
@@ -118,6 +115,5 @@
   }
   .searchBarContainer {
     padding: 10px;
-    
   }
 }

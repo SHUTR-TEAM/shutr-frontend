@@ -9,7 +9,7 @@ export default function CategorySection() {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  // Local filter state before applying
+  // Local state to temporarily hold selected filter values before applying
   const [filters, setLocalFilters] = useState({
     style: "",
     minPrice: "",
@@ -18,11 +18,10 @@ export default function CategorySection() {
     experienceLevel: "",
   });
 
+  // Generic handler to toggle or set filter values based on button/input
   const handleButtonClick = (name: keyof typeof filters, value: string) => {
     setLocalFilters((preFilters) => ({
       ...preFilters,   // Keep existing filter values
-      //If the current filter value (prevFilters[name]) is already equal to the value, it sets it to "" (empty string), meaning the filter value removed.
-      //Otherwise, it updates the filter with the value.
       [name]: preFilters[name] === value ? "" : value,  
     }));
   };
@@ -32,7 +31,7 @@ export default function CategorySection() {
     dispatch(fetchFilteredResults()); // Fetch results based on applied filters
   };
 
-  // **CLEAR FILTERS**: Reset local state and Redux state
+  //clear filters
   const handleClearFilters = () => {
     setLocalFilters({
       style: "",
@@ -51,6 +50,8 @@ export default function CategorySection() {
 
       <aside className={styles.filters}>
         <h3>Filters</h3>
+
+        {/* Style */}
         <div className={styles.filterGroup}>
           <h4>Style</h4>
 
@@ -59,7 +60,6 @@ export default function CategorySection() {
               <button
                 key={element}
                 onClick={() => handleButtonClick("style", element)}
-                // If the current filter value for 'style' matches the button's element, apply the 'activeButton' class; otherwise, apply no additional class
                 className={filters.style === element ? styles.activeButton : ""}
               >
                 {element}
@@ -68,6 +68,7 @@ export default function CategorySection() {
           </div>
         </div>
 
+        {/* Price Range */}
         <div className={styles.filterGroup}>
           <h4>Price Range</h4>
           <div className={styles.priceRange}>
@@ -87,6 +88,7 @@ export default function CategorySection() {
           </div>
         </div>
 
+        {/* Availability */}    
         <div className={styles.filterGroup}>
           <h4>Availability</h4>
           <input type="date"
@@ -95,7 +97,7 @@ export default function CategorySection() {
           />
         </div>
 
-        {/* Experience Level Filter */}
+        {/* Experience Level */}    
         <div className={styles.filterGroup}>
           <h4>Experience Level</h4>
           <div className={styles.filterButtonsLong}>

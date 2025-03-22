@@ -4,6 +4,7 @@ import { MdLibraryBooks } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
 import { BsFillChatTextFill } from "react-icons/bs";
 
+//Defining type
 interface Item {
   id?: number;
   images: string[];
@@ -15,9 +16,11 @@ interface Item {
   reviews: number;
   rating: number;
 }
+
 interface CardsProps {
   data: Item[];
 }
+
 const Card = ({ data }: CardsProps) => {
   return (
     <div className={styles.cards}>
