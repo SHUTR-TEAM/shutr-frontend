@@ -6,9 +6,7 @@ import Cropper from "react-easy-crop";
 import getCroppedImg from "../../../utils/cropImage";
 import { useState, useCallback, useEffect } from "react";
 import { Pencil, Plus, Star } from "lucide-react";
-
 import styles from "./index.module.css";
-
 
 interface ProfileHeaderProps {
   id: string;
@@ -18,25 +16,23 @@ interface ProfileHeaderProps {
 }
 
 export default function ProfileHeader({ 
-  // id,
   name, 
   coverImageUrl, 
   profileImageUrl 
-}: ProfileHeaderProps) {
+  }: ProfileHeaderProps) {
 
   const dispatch = useDispatch<AppDispatch>();
   const participantId = "67ab65b24cb48a7c886d0dfa";
-
+  
   const [showModal, setShowModal] = useState(false);
   const [uploadType, setUploadType] = useState<"profile" | "background">();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-  // const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<CroppedArea | null>(null) ;
 
-  const [updatedProfileImageUrl, setUpdatedProfileImageUrl] = useState(profileImageUrl || "/pro.png");
-  const [updatedCoverImageUrl, setUpdatedCoverImageUrl] = useState(coverImageUrl || "/pbg.png");
+  const [updatedProfileImageUrl, setUpdatedProfileImageUrl] = useState(profileImageUrl );
+  const [updatedCoverImageUrl, setUpdatedCoverImageUrl] = useState(coverImageUrl );
 
   const handleOpenModal = (type: "profile" | "background") => {
     setUploadType(type);
@@ -54,10 +50,6 @@ export default function ProfileHeader({
     x: number;
     y: number;
   };
-  
-  // const onCropComplete = useCallback((_: any, croppedAreaPixels: CroppedArea) => {
-  //   setCroppedAreaPixels(croppedAreaPixels);
-  // }, []);
 
   const onCropComplete = useCallback((_croppedArea: { x: number; y: number; width: number ; height: number},croppedAreaPixels: CroppedArea) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -88,8 +80,6 @@ export default function ProfileHeader({
 
     console.log("Cropping Image..." );
 
-    
-
     const croppedImage = await getCroppedImg(selectedImage, croppedAreaPixels);
     if (!croppedImage) {
       console.error("Cropped image is null!");
@@ -102,41 +92,27 @@ export default function ProfileHeader({
 
     
 
-    // ✅ Convert Blob to File
+    // Convert Blob to File
     const file = new File([croppedImage], "cropped-image.png", { type: "image/png" });
 
-    console.log("Checking uploaded file:", file); // ✅ Debug log to check if the file is valid
+    console.log("Checking uploaded file:", file); // Debug log to check if the file is valid
 
     const formData = new FormData();
-    // formData.append(uploadType === "profile" ? "profile_image" : "Background_image", croppedImage);
     formData.append(uploadType === "profile" ? "profile_image" : "Background_image", file);
 
-
     console.log("FormData entries:", Array.from(formData.entries()));
-
-        // ✅ Log what is actually sent
-      // console.log("FormData entries:");
-      //console.log("FormData entries:", Array.from(formData.entries()));
-      // for (let [key, value] of formData.entries()) {
-      //   console.log(key, value);
-      // }
-
 
     console.log("Uploading image...");
 
     try {
       // Fetch the latest portfolio data before updating
       console.log("Fetching current portfolio data...");
-      // await dispatch(getByIdportfolio({ participantId: id })).unwrap();
       await dispatch(getByIdportfolio({ participantId })).unwrap();
 
-
-      console.log("Uploading image..." )
       const response = await dispatch(updateByIdportfolio({ formData })).unwrap();
 
       console.log("Uplaod response :", response);
       
-
       if (uploadType === "profile") {
         setUpdatedProfileImageUrl((prev) => {
           console.log("Previous Profile Image:", prev, "New:", response.profile_image_url);
@@ -151,9 +127,7 @@ export default function ProfileHeader({
 
       setShowModal(false);
 
-      // Fetch updated portfolio data after updating
       console.log("Fetching updated portfolio data...");
-      // await dispatch(getByIdportfolio({ participantId: id })).unwrap();
       await dispatch(getByIdportfolio({ participantId })).unwrap();
 
     } catch (error) {
@@ -161,14 +135,10 @@ export default function ProfileHeader({
     }
   };
 
-  const [totalReviews/*,setTotalReviews*/] = useState(1); 
+  const [totalReviews] = useState(1); 
 
- 
-
-  const //rating = 4,
-  fullStarColor = 'yellow', // Customizable full star color
-  emptyStarColor = 'gray',  // Customizable empty star color
-    //reviewCountColor = 'yellow', // Customizable review count color
+  const fullStarColor = 'yellow', 
+  emptyStarColor = 'gray', 
   colour= 'yellow'
 
   const fullStars = /*Math.floor(rating) */3;
@@ -191,9 +161,8 @@ export default function ProfileHeader({
         alt="Profile image" 
         height={250} 
         width={240} 
-        // className="rounded-full object-cover w-full h-full" 
         className={styles.profileImage}  />
-       
+    
         <button onClick={() => handleOpenModal("profile")} className={styles.profile_editor}>
           <Plus size={40} color="black" />
         </button>
@@ -280,12 +249,8 @@ export default function ProfileHeader({
         </span>
 
     )}
-        
-
         </li>
-
       </ul>
-      
     </div>
     </div>
   );

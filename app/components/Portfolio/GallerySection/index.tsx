@@ -1,61 +1,65 @@
-
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, {useMemo, useEffect, useState } from "react";
 import styles from "./index.module.css";
-import {X, Plus, Trash2, Upload , ChevronLeft, ChevronRight } from "lucide-react";
-import { useDispatch} from "react-redux";
-
-
-import { AppDispatch } from "@/app/redux/store";
-import { getByIdgallery, updateByIdgallery, deleteImage } from "@/app/redux/features/portfolio";
-
-// import things.....Categories-based button nav
+import {X, Plus, Trash2, Upload , ChevronLeft, ChevronRight , ImageOff} from "lucide-react";
+import { useDispatch, useSelector} from "react-redux";
+import { RootState, AppDispatch } from "@/app/redux/store";
+import { getByIdgallery, postGallery, deleteImage } from "@/app/redux/features/portfolio";
 import {useRef} from "react";
 import { cn } from "../../../utils/Category-basedNav";
+import { LoadingSpinner } from "../LoadingSpinner";
 
-interface Photo {
-  url: string;
-  category: string;
-}
 
-interface GallerySectionProps {
-  Gallery: Photo[];
-  
-}
-
-export default function GallerySection({ Gallery = [],  }: GallerySectionProps) {
+export default function GallerySection() {
 
   const dispatch = useDispatch<AppDispatch>();
-  const participantId = "67bb771b7ca1638d20e4023f"; 
-   const galleryId = "67bb771b7ca1638d20e4023f";
- 
 
-  console.log("show Gallery : " , Gallery);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isUpLoading, setIsUpLoading] =useState(false);
+
+  useEffect(() => {
+      setIsLoading(true); // Show loading before fetching
+      dispatch(getByIdgallery({ participantId: "67db026680a585e2d2cd7439" }))
+        .unwrap()
+        .then(() => setIsLoading(false))
+        .catch(() => setIsLoading(false)); // Stop loading on error too
+  }, [dispatch]);
+
+  const activeGallery = useSelector((state: RootState) => state.portfolio.activeGallery) || { results: [] };
+  
+  const Gallery = useMemo(() => activeGallery?.data ?? [], [activeGallery?.data]);
+
+  const participantId = "67db026680a585e2d2cd7439"; 
 
   const imagesPerPage = 9;
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  // new Added states
   const [isModalOpen , setIsModalOpen ] = useState(false)
   const [activeTab, setActiveTab] = useState("add");
   const [newImageUrl, setNewImageUrl] = useState("");
   const [newImageCategory, setNewImageCategory] = useState("");
-  // const [previewImages, setPreviewImages] = useState<{ url: string; file?: File }[]>([]);
   const [previewImages, setPreviewImages] = useState<{ url: string; file?: File; category?: string }[]>([]);
   
   const [localGallery, setLocalGallery] = useState(Gallery);
 
+  const isInitialized = useRef(false); // tracks initialization
 
-   // Image viewer state
-   const [viewerOpen, setViewerOpen] = useState(false);
-   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  useEffect(() => {
+    if (!isInitialized.current && Gallery && Gallery.length > 0) {
+      setLocalGallery(Gallery);
+      isInitialized.current = true; // prevent future resets
+    }
+  }, [Gallery]);
+  
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-
-  const filteredPhotos = selectedCategory === "All"
-    ? Gallery
-    // : Gallery.filter(photo => photo.category.toLowerCase() === selectedCategory.toLowerCase());
-    : Gallery.filter(photo => photo.category.toLowerCase() === selectedCategory.toLowerCase());
+  const filteredPhotos = !Gallery
+  ? []
+  : selectedCategory === "All"
+  ? Gallery
+  : Gallery.filter(photo => photo.category?.toLowerCase() === selectedCategory.toLowerCase());
 
   const totalPages = Math.ceil(filteredPhotos.length / imagesPerPage);
 
@@ -73,12 +77,9 @@ export default function GallerySection({ Gallery = [],  }: GallerySectionProps) 
     setCurrentPage(0);
   };
 
-  
-  
-
-  const uniqueCategories = ["All", ...Array.from(new Set(Gallery.map(photo => photo.category)))];
-
-  // console.log("uniqueCategories" , uniqueCategories);
+  const uniqueCategories = Gallery.length > 0 
+  ? ["All", ...Array.from(new Set(Gallery.map(photo => photo.category).filter(Boolean)))] 
+  : [];
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -150,52 +151,32 @@ export default function GallerySection({ Gallery = [],  }: GallerySectionProps) 
   
     // Append each image and its category to FormData
     previewImages.forEach(({ file, category }) => {
+    
+      
       if (file) {
-        formData.append("Gallery", file);
+        formData.append("image", file);
         formData.append("category", category || "Uncategorized"); // Default category if empty
-
-        console.log("gallery_images", file);
-        console.log("image_categories", category);
+        formData.append("photographerID", "67db026680a585e2d2cd7439");
+        formData.append("portfolioID","67ab65b24cb48a7c886d0dfa");
       }
     });
   
-    try {
+    try {  
 
-      // console.log("Uploading images...");
-      // const response = await dispatch(updateByIdportfolio({ formData })).unwrap();
-      //await dispatch(getByIdgallery({ participantId })).unwrap();
+      setIsUpLoading(true); // Start upload loading
+      const response = await dispatch(postGallery({ formData })).unwrap();
 
-      console.log("Uploading image..." )
-      const response = await dispatch(updateByIdgallery({ formData })).unwrap();
+      setSelectedCategory('All');
+      isInitialized.current = false;
+
+      closeModal();
       
-      console.log("Upload response:", response);
-
-      // ✅ Access the correct array inside response.Gallery
-      if (response.Gallery && Array.isArray(response.Gallery.Gallery)){
-
-        // const updatedGallery = [...Gallery,...response.Gallery.Gallery];
-
-        // onUpdateGallery([...Gallery,...response.Gallery.Gallery]);
-        /*onUpdateGallery(updatedGallery);*/
-
-
-        setSelectedCategory('All');
-
-        closeModal();
-      }else{
-        console.log("Invalid Gallery response format", response);
-      }
       await dispatch(getByIdgallery({ participantId })).unwrap();
-  
-      //const newGallery = response.updated_gallery || [];
-  
-      // Merge new gallery images with existing ones
-      //onUpdateGallery([...Gallery, ...newGallery]);
-  
       
     } catch (error) {
-      // console.error("Upload failed:", error);
       console.log("Upload failed:", error);
+    } finally{
+      setIsUpLoading(false);
     }
   };
   
@@ -204,20 +185,19 @@ export default function GallerySection({ Gallery = [],  }: GallerySectionProps) 
   const handleDeleteImage = async (indices: number | number[]) => {
     // Ensure indices is always an array
     const indexArray = Array.isArray(indices) ? indices : [indices];
-
     const imagesToDelete = indexArray
         .map(index => localGallery[index]?.url)
         .filter(Boolean);
 
     for (const imageUrl of imagesToDelete) {
         try {
-            await dispatch(deleteImage({ galleryId, imageUrl })).unwrap();
+            await dispatch(deleteImage({ participantId , imageUrl })).unwrap();
             setLocalGallery(prevGallery => prevGallery.filter(img => img.url !== imageUrl));
         } catch (error) {
             console.error("Error deleting image:", error);
         }
     }
-};
+  };
 
 
 
@@ -297,13 +277,8 @@ export default function GallerySection({ Gallery = [],  }: GallerySectionProps) 
     }
   };
 
-
-
-
   return (
 
-
-    
     <section className={styles.gallery}>
       <div className= {styles.gallery_edit_container} >
         <h2>Gallery</h2>
@@ -318,88 +293,106 @@ export default function GallerySection({ Gallery = [],  }: GallerySectionProps) 
       {/* this is where button nav is located */}
       
       <div className={styles.mainContainer}>
-      <div className={styles.wrapper}>
-        <div className={styles.scrollWrapper}>
-          
-
-          {showLeftArrow && (
-            <div className={styles.arrowLeft}>
-              <button
-                onClick={() => scroll("left")}
-                className={styles.arrowButton}
-                aria-label="Scroll left"
-              >
-                <ChevronLeft className={styles.icon} />
-              </button>
-            </div>
-          )}
-
-
-
-
-          <div ref={scrollContainerRef} className={styles.scrollContainer}>
-            <div className={styles.buttonContainer}>
-              {uniqueCategories.map((category) => (
+        <div className={styles.wrapper}>
+          <div className={styles.scrollWrapper}>
+            
+            {showLeftArrow && (
+              <div className={styles.arrowLeft}>
                 <button
-                  key={category}
-                  className={cn(
-                    styles.button,
-                    selectedCategory === category ? styles.activeButton : styles.notActiveButton
-                  )}
-                  onClick={() => handleCategoryChange(category)}
+                  onClick={() => scroll("left")}
+                  className={styles.arrowButton}
+                  aria-label="Scroll left"
                 >
-                  {category}
+                  <ChevronLeft className={styles.icon} />
                 </button>
-              ))}
+              </div>
+            )}
+
+            <div ref={scrollContainerRef} className={styles.scrollContainer}>
+              <div className={styles.buttonContainer}>
+              {uniqueCategories && uniqueCategories.length > 0 ? (
+                uniqueCategories.map((category) => (
+                  <button
+                    key={category}
+                    className={cn(
+                      styles.button,
+                      selectedCategory === category ? styles.activeButton : styles.notActiveButton
+                    )}
+                    onClick={() => handleCategoryChange(category)}
+                  >
+                    {category}
+                  </button>
+                ))
+                ) : (
+                  <br/>       
+                )}
+              </div>
             </div>
+
+            {showRightArrow && (
+              <div className={styles.arrowRight}>
+                <button
+                  onClick={() => scroll("right")}
+                  className={styles.arrowButton}
+                  aria-label="Scroll right"
+                >
+                  <ChevronRight className={styles.icon} />
+                </button>
+              </div>
+            )}
+
           </div>
-
-          
-
-          {showRightArrow && (
-            <div className={styles.arrowRight}>
-              <button
-                onClick={() => scroll("right")}
-                className={styles.arrowButton}
-                aria-label="Scroll right"
-              >
-                <ChevronRight className={styles.icon} />
-              </button>
-            </div>
-          )}
-
         </div>
       </div>
-    </div>
           
 
       
       <div className= {styles.gallery_grid}>
-        {currentImages.map((photo, index) => (
-          <div 
-            key={index} 
-            
-            className= {styles.imageView}
-            onClick={() => openImageViewer(currentPage * imagesPerPage + index)}
-          >
-            <Image
-              src={photo.url}
-              alt={`Gallery item ${index + 1}`}
-              // width={140}
-              // height={140}
-              width={390}
-              height={390}
-              className={styles.image}
-            />
-            <div className= {styles.imageOverlay}>
-                <div className = {styles.imageOpacity}>
-                <span className= {styles.imageBadge}>
-                  {photo.category}
-                </span>
+        {isLoading || isUpLoading ? (
+          <div className = {styles.loading}>
+             <LoadingSpinner />
+          </div>
+        ) :  
+        currentImages && currentImages.length > 0 ? (
+          currentImages.map((photo, index) => (
+            <div 
+              key={index} 
+              className= {styles.imageView}
+              onClick={() => openImageViewer(currentPage * imagesPerPage + index)}
+            >
+              <Image
+                src={photo.url}
+                alt={`Gallery item ${index + 1}`}
+                width={390}
+                height={390}
+                className={styles.image}
+              />
+              <div className= {styles.imageOverlay}>
+                  <div className = {styles.imageOpacity}>
+                  <span className= {styles.imageBadge}>
+                    {photo.category}
+                  </span>
+                </div>
               </div>
             </div>
+          ))
+        ) : (
+        
+          <div>
+            <div className={styles.container}>
+                  <div className={styles.innerContainer}>
+                    <div className={styles.imageWrapper}>
+                      <div className={styles.iconContainer}>
+                        <ImageOff size={190}/>
+                      </div>
+                      <div className={styles.gradientOverlay} />
+                    </div>
+                    <h3 className={styles.heading}>No photos available yet</h3>
+                  </div>
+              </div>
+
           </div>
-        ))}
+        )}
       </div>
 
       {totalPages > 1 && (
@@ -408,9 +401,8 @@ export default function GallerySection({ Gallery = [],  }: GallerySectionProps) 
             <button
               key={index}
               className={
-                
                 index === currentPage ? styles.activeDot : styles.dot 
-              /*}` */}
+              }
               onClick={() => handlePageChange(index)}
               aria-label={`Go to page ${index + 1}`}
             ></button>
@@ -422,14 +414,11 @@ export default function GallerySection({ Gallery = [],  }: GallerySectionProps) 
       {isModalOpen && (
        
         <div className={styles.modalOverlay}>
-          
           <div className={styles.modalContainer}>
-           
             <div className={styles.modalHeader}>
               <h3 >Edit Gallery</h3>
               <button 
                 onClick={closeModal}
-               
                 className={styles.modelCloseButton}
               >
                 <X size={24} />
@@ -458,10 +447,6 @@ export default function GallerySection({ Gallery = [],  }: GallerySectionProps) 
             <div className = {styles.activeTab}>
               {activeTab === 'add' && (
                 <div>
-                 
-        
-                  
-                  
                   <div className={styles.imageUploadSection}>  
                     
                     <label className={styles.imageUploadLabel}>
@@ -526,7 +511,6 @@ export default function GallerySection({ Gallery = [],  }: GallerySectionProps) 
                       type="text"
                       value={newImageCategory}
                        onChange={(e) => setNewImageCategory(e.target.value)}
-                      // onChange={ handleCategoryChange}
                       placeholder="Enter category (e.g., Nature, Wedding)"
                       className = {styles.categoryInput}
                     />
@@ -536,7 +520,6 @@ export default function GallerySection({ Gallery = [],  }: GallerySectionProps) 
                   <div className = {styles.categoryInputButtonContainer}>
                     <button
                       onClick={handleAddImages}
-                      
                       className = {styles.categoryInputButton}
                       disabled={(!newImageUrl && previewImages.length === 0) || !newImageCategory}
                     >
@@ -549,14 +532,14 @@ export default function GallerySection({ Gallery = [],  }: GallerySectionProps) 
               {activeTab === 'delete' && (
                 <div>
                   
-                  <h4 className= {styles.deleteLabelSelect}>Select images to delete</h4>
-                  {Gallery.length === 0 ? (
-                    
+                  
+                  {localGallery.length === 0 ? (
                     <p className= {styles.emptyImageLabel}>No images in the gallery</p>
                   ) : (
-                    
+                    <div>
+                    <h4 className= {styles.deleteLabelSelect}>Select images to delete</h4>
                     <div className = {styles.deleteGrid}>
-                      {/* {Gallery.map((photo, index) => ( */}
+                      
                       {localGallery.map((photo, index) => (
                         
                         <div key={index} className= {styles.group}>
@@ -585,6 +568,7 @@ export default function GallerySection({ Gallery = [],  }: GallerySectionProps) 
                         </div>
                       ))}
                     </div>
+                    </div>
                   )}
                 </div>
               )}
@@ -603,13 +587,11 @@ export default function GallerySection({ Gallery = [],  }: GallerySectionProps) 
           tabIndex={0}
         >
           <div 
-          
             className = {styles.imageViewerContainer}
             onClick={(e) => e.stopPropagation()}
           >
             <button 
               onClick={closeImageViewer}
-              
               className = {styles.imageViewerClose}
               aria-label="Close image viewer"
             >
@@ -650,10 +632,8 @@ export default function GallerySection({ Gallery = [],  }: GallerySectionProps) 
                 <ChevronRight size={24} />
               </button>
             </div>
-            
            
             <div className = {styles.imageViewerCaption}>
-              
               <p className = {styles.imageViewerCaptionPTag}>
                 {filteredPhotos[currentImageIndex].category} • Image {currentImageIndex + 1} of {filteredPhotos.length}
               </p>

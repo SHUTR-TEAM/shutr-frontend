@@ -1,28 +1,18 @@
 "use client";
 
-
-import { FaFacebook, FaInstagram,   FaTwitter, FaLinkedin } from 'react-icons/fa';
-
-
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/app/redux/store";
-import { /*getAllportfolio ,*/ getByIdportfolio,updateByIdportfolio, getByIdgallery, getByIdreview/*, updateByIdportfolio */} from "@/app/redux/features/portfolio";
-
-
-
-//import Image from 'next/image'
+import { getByIdportfolio,updateByIdportfolio} from "@/app/redux/features/portfolio";
 import styles from './index.module.css'
-import Link from 'next/link'
-
 import GallerySection from './GallerySection';
-import CustomerReviews from "./CustomerReviews/customerReviews";
-
+import CustomerReviews from "./CustomerReviews/index";
 import Calendar from './Calendar/calendar';
 import { useState,useEffect } from "react";
 import ProfileHeader from './ProfileHeader';
-import { /*Heading, */ Pencil } from "lucide-react";
-
+import { Edit2} from "lucide-react";
 import Packages from './Packages/packages';
+import SocialLinks from './SocialLinks';
+import { LoadingSpinner } from "./LoadingSpinner";
 
 const Portfolio= () => {
 
@@ -49,52 +39,19 @@ const Portfolio= () => {
 
 
   const dispatch: AppDispatch = useDispatch();
-    
-      /*useEffect(() => {
-        // fetch all portfolio
-        dispatch(getAllportfolio({ participantId: "" }));
-      }, [dispatch]);
-      */
 
-      useEffect(() => {
-        // fetch by id portfolio
-        dispatch(getByIdportfolio({ participantId: "" }));
-      }, [dispatch]);
+  useEffect(() => {
+    // fetch by id portfolio
+    dispatch(getByIdportfolio({ participantId: "" }));
+  }, [dispatch]);
 
-      // useEffect(() => {
-      //   // fetch by id portfolio
-      //   dispatch(updateByIdportfolio({ participantId: "" }));
-      // }, [dispatch]);
+  const activePortfolio = useSelector((state: RootState) => state.portfolio.activePortfolio) || { results: [] };
+  const activeReview = useSelector((state: RootState) => state.portfolio.activeReview) || { results: [] };
 
+  console.log("active portfolio : ",activePortfolio)
 
-      useEffect(() => {
-        // fetch by id gallery
-        dispatch(getByIdgallery({ participantId: "" }));
-      }, [dispatch]);
-
-      useEffect(() => {
-        //fetch by id review
-        dispatch(getByIdreview({ participantId: ""}));
-      }, [dispatch]);
-
-
-
-    
-      //const allPortfolio = useSelector((state: RootState) => state.portfolio.allPortfolio);
-      //const allPortfolio = useSelector((state: RootState) => state.portfolio.allPortfolio) || { data: [] };
-      
-      //const allPortfolio = useSelector((state: RootState) => state.portfolio.allPortfolio) || { results: [] };
-      const activePortfolio = useSelector((state: RootState) => state.portfolio.activePortfolio) || { results: [] };
-      const activeGallery = useSelector((state: RootState) => state.portfolio.activeGallery) || { results: [] };
-      const activeReview = useSelector((state: RootState) => state.portfolio.activeReview) || { results: [] };
-
-      console.log("active portfolio : ",activePortfolio)
-
-
-      //const Profile = allPortfolio?.data?.results?.find(profile => profile.id === "67acf4d1ce9e81d9345dc6ee");
-      const Profile = activePortfolio?.data ;
-      const Gallery = activeGallery?.data;
-      const Review = activeReview?.data;
+  const Profile = activePortfolio?.data ;
+  const Review = activeReview?.data;
 
 
   const [updatedName, setUpdatedName] = useState(Profile?.name || "");
@@ -105,18 +62,6 @@ const Portfolio= () => {
 
   
   const [showEditModal, setShowEditModal] = useState(false);
-
-  /* Show edit modal with temporary values */
-// const handleOpenEditModal = () => {
-//   setTempName(updatedName);  // Initialize with the current values
-//   setTempDescription(updatedDescription);
-//   setShowEditModal(true);
-// };
-
-  useEffect(() => {
-    // Fetch portfolio data on mount
-    dispatch(getByIdportfolio({ participantId: "" }));
-  }, [dispatch]);
 
   useEffect(() => {
     // Update state when Profile data changes
@@ -129,10 +74,8 @@ const Portfolio= () => {
   const handleSaveChanges = async () => {
     try {
       const formData = new FormData();
-      // formData.append("name", updatedName);
-      formData.append("name", tempName);
-      // formData.append("description", updatedDescription);
-      formData.append("description", tempDescription);
+      formData.append("name", tempName || updatedName);
+      formData.append("description", tempDescription || updatedDescription);
 
       // Dispatch update action
       await dispatch(updateByIdportfolio({ formData })).unwrap();
@@ -141,8 +84,8 @@ const Portfolio= () => {
       dispatch(getByIdportfolio({ participantId: "" }));
 
       // Update the main state after saving
-      setUpdatedName(tempName);
-      setUpdatedDescription(tempDescription);
+      setUpdatedName(tempName || updatedName);
+      setUpdatedDescription(tempDescription || updatedDescription);
 
 
       // Close modal
@@ -154,70 +97,27 @@ const Portfolio= () => {
   };
 
 
-      //console.log("Redux State:", useSelector((state: RootState) => state.portfolio));
-      
-
-
-      //console.log("allPortfolio:", allPortfolio);
-      //console.log("allPortfolio.data:", allPortfolio?.data);
-      
-      //console.log("allPortfolio.data.results:", allPortfolio?.data?.results);
-      //console.log("allPortfolio.data:", allPortfolio?.data);
-      //console.log("allPortfolio.data.results:", activePortfolio?.data?.results);
-      //////////////////////////////console.log("allPortfolio.data:",activePortfolio?.data);
-      //console.log("allPortfolio.data.portfolio:",activePortfolio?.data);
-      //////////////////////////////////console.log("allPortfolio.data.gallery", activeGallery?.data);
-      ///////////////////////////////////console.log("activeGallery object:", activeGallery);
-
-      //console.log("id :",activePortfolio?.data);
-      //console.log('name', Profile.portfolio?.name );
-      
-      ///////////////////////////////////console.log("portfolio.data.review", activeReview.data);
-      console.log("updatedDescription", updatedDescription);  
-      console.log("updatedName", updatedName);
-
-
   return (
     <>
+      <main className={styles.portfolio}>
+        <div className= {styles.banner}>
+
+          <div>
+            {Profile ? (
+              <div key={Profile.id}>
+                <ProfileHeader 
+                id={Profile.id} 
+                name={updatedName}
+                coverImageUrl={Profile.Background_image_url }
+                profileImageUrl={Profile.profile_image_url }
+              />
+          </div>
+            ) : (
+              <LoadingSpinner />
+            )}
+        </div>
     
-    <main className={styles.portfolio}>
-      <div className= {styles.banner}>
-        
-
-
-
-      <div>
-        {Profile ? (
-          <div key={Profile.id}>
-            <ProfileHeader 
-            id={Profile.id} 
-            //name={Profile.name } 
-            name={updatedName}
-            coverImageUrl={Profile.Background_image_url }
-
-            profileImageUrl={Profile.profile_image_url }
-            
-          />
-          {/* Photographer Info with Edit Button */}
-     
-
-
-       
-      </div>
-    ) : (
-      <p>Loading...</p>
-    )}
-  </div>
-  
-
-     
-      
-       
-        
-      </div>
-
-      
-
+        </div>
         {/* Popup Edit Modal */}
         {showEditModal && (
           <div className={styles.modal_overlay}>
@@ -225,20 +125,11 @@ const Portfolio= () => {
               <h2>Edit Profile</h2>
               <input
                 type="text"
-                // value={editedName}
-                // value={updatedName}
-                // value={tempName}
-                // onChange={(e) => setEditedName(e.target.value)}
-                // onChange={(e) => setUpdatedName(e.target.value)}
                 onChange={(e) => setTempName(e.target.value)}
                 placeholder="Enter new name"
                 className={styles.input}
               />
               <textarea
-                // value={editedDescription}
-                // value={updatedDescription}
-                // onChange={(e) => setEditedDescription(e.target.value)}
-                // onChange={(e) => setUpdatedDescription(e.target.value)}
                 onChange={(e) => setTempDescription(e.target.value)}
                 placeholder="Enter new description"
                 className={styles.textarea}
@@ -251,149 +142,59 @@ const Portfolio= () => {
           </div>
         )}
 
-      
-          
-
-          <div className={styles.descriptionAndCalendar}>
-            <div>
-            
-       
-            
-              <div className={styles.description}>
-                
-                
-
-
-
-              {/* <button > <p>Edit Profile</p></button>     */}
-                  <div>
-                    {/* {Profile ? ( */}
-                      
-                      {/* <div key={Profile.id}> */}
-                        <div className={styles.container}>
-                            <h2>Description</h2>
-                            <div>
-                              {/* <button onClick={() => setShowEditModal(true)} className={styles.edit_button}> */}
-                              {/* <button onClick={() => setShowEditModal(true)} className={styles.edit_button}>
-                                <Pencil size={20} color="black" />
-                              </button> */}
-                              <button onClick={() => setShowEditModal(true)} className={styles.edit_button}>
-                                <Pencil size={20} color="black" />
-                              </button>
-                            </div>
-                          </div>
-                        
-                        
-                        
-                        <br></br>
-                        <p>
-                           {/* {Profile.description} */}
-                           {updatedDescription}
-                                 
-                        </p>
-                      
-                      </div>
-                    {/* ) : (
-                      <p>Loading...</p>
-                    )}
-                  </div> */}
-
-
-
-
-                
-              </div>
-              <section className={styles.connect}>
-                <h2>Connect with me</h2>
         
-                <div className={styles.social_icon}>
-                  
-                    <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                      <FaFacebook />
-                    </Link>
+            
 
-                    <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                      <FaInstagram />
-                    </Link>
+        <div className={styles.descriptionAndCalendar}>
+          <div>
+            <div className={styles.description}>
 
-                    <Link href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                      <FaTwitter />
-                    </Link>
-
-                    <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                      <FaLinkedin />
-                    </Link>
-
+            {/* <button > <p>Edit Profile</p></button>     */}
+            <div>
+                <div className={styles.container}>
+                  <h2>Description</h2>
+                  <div>
+                    <button onClick={() => setShowEditModal(true)} className={styles.edit_button}>
+                      <Edit2 size={20} color="black" />
+                    </button>
                   </div>
-              </section>
+                </div>
 
+                <br />
 
-              <div>
-                {Gallery ? (
-                  //<div key={Gallery.id}>
-                    < GallerySection
-                      Gallery = {Gallery.Gallery}
-                    />
-                  //</div>
-                    ) : (
-                      <p>Loading...</p>
-                    )}
-               </div>
-
-
-
-
-              {/* <div>
-                {Gallery ? (
-                  <div key={Gallery.id}>
-                    < GallerySection
-                      photo_collection = {Gallery.photo_collection}
-                    />
-                  </div>
-                    ) : (
-                      <p>Loading...</p>
-                    )}
-              </div> */}
-              
-              {/*<div className={styles.tags}>
-                <span>Wedding Photography</span>
-                <span>Portrait Photography</span>
-                <span>Corporate Photography</span>
-              </div>
-              */}
+                <p className={styles.iconContainer}>
+                  {updatedDescription?.trim() ? updatedDescription : "No description available"}
+                </p>
+              </div>               
             </div>
+            
+            <section>
+              <SocialLinks/>
+            </section>
 
-                         
-            <div className={styles.calendar}>
-              <Calendar
-                currentMonth={currentMonth}
-                currentYear={currentYear}
-                onPrevMonth={handlePrevMonth}
-                onNextMonth={handleNextMonth}
-              />
-              <Packages/>
-            </div>
+            <div>
+              < GallerySection/>
+            </div>  
           </div>
 
+                      
+          <div className={styles.calendar}>
+            <Calendar
+              currentMonth={currentMonth}
+              currentYear={currentYear}
+              onPrevMonth={handlePrevMonth}
+              onNextMonth={handleNextMonth}
+            />
+            <Packages/>
+          </div>
+        </div>
 
-        
         <div>
-          {Review ? (
-            <div key={Review.id}>
-              <CustomerReviews 
-
-              reviews = {Review.reviews}
-              />
-            </div>  
-          ) : (
-            <p>Loading...</p>
-          )}
+          < CustomerReviews />
         </div>
         
-    </main>
-
+      </main>
     </>
-   
   )
 }
 

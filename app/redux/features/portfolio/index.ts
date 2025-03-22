@@ -1,12 +1,6 @@
-import { PortfolioState } from './../../types/portfolio.types';
+import { PortfolioState, SocialLinks } from './../../types/portfolio.types';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
-//import build from "next/dist/build";
-
-//const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL ;
-//const ROUTE_URL = `${BACKEND_BASE_URL}/portfolio/....`
-
-
 
 const initialState: PortfolioState = {
     allPortfolio: {
@@ -20,7 +14,6 @@ const initialState: PortfolioState = {
       isSuccessful: false,
       serverPortfolio: "",
       data:  null,
-      
     },
     
     activeGallery: {
@@ -37,8 +30,12 @@ const initialState: PortfolioState = {
       data: null,
     },
 
-
-
+    activeSocialLinks: {
+      isLoading: false,
+      isSuccessful: false,
+      serverPortfolio: "",
+      data: null,
+    },
 
     createPortfolio: {
       isLoading: false,
@@ -60,10 +57,9 @@ const initialState: PortfolioState = {
           participantId,
         },
       };
-      console.log(config);  // should delete
+      console.log(config);
   
       try {
-       // return await axios.get("http://127.0.0.1:8000/api/headers").then((res) => res.data);
        return await axios.get("http://127.0.0.1:8000/api/headers").then((res) => res.data);
       } catch (error) {
         const e = error as AxiosError;
@@ -83,50 +79,15 @@ const initialState: PortfolioState = {
           participantId,
         },
       };
-      console.log(config);  // should delete
+      console.log(config);
       try {
-
        return await axios.get("http://127.0.0.1:8000/api/headers/67ab65b24cb48a7c886d0dfa").then((res) => res.data);
-
-      //  const [portfolioResponse, galleryResponse] = await Promise.all([
-      //   axios.get("http://127.0.0.1:8000/api/headers/67ab65b24cb48a7c886d0dfa"),
-      //   axios.get("http://127.0.0.1:8000/api/galleries/67aecc532071993d23e91175"),
-      //  ])
-
-
-      
       } catch (error) {
         const e = error as AxiosError;
         return rejectWithValue(e.message);
       }
     }
   );
-
-
-
-  // export const updateByIdportfolio = createAsyncThunk(
-  //   "portfolio/update-by-id",
-  //   async ({ participantId }: { participantId: string }, { rejectWithValue }) => {
-  //     const config = {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       },
-  //       params: {
-  //         participantId,
-  //       },
-  //     };
-  //     console.log(config);  // should delete
-  //     try {
-         
-  //        return  await axios.get("http://127.0.0.1:8000/api/headers/67ab65b24cb48a7c886d0dfa/update").then((res) => res.data);
-  //     } catch (error) {
-  //         const e = error as AxiosError;
-  //         return rejectWithValue(e.message);
-  //     }
-          
-  //   }
-        
-  // );
 
 
   export const updateByIdportfolio = createAsyncThunk(
@@ -147,45 +108,53 @@ const initialState: PortfolioState = {
       }
     }
   );
-  
-
-
-  
-
-
-
-
 
 
   export const getByIdgallery = createAsyncThunk(
     "gallery/get-by-id",
-      async ({ participantId }: { participantId: string }, { rejectWithValue }) => {
-        const config = {
-          galleries: {
-            "Content-Type": "application/json",
-          },
-          params: {
-            participantId,
-          },
-        };
-        console.log(config);  // should delete
-    
-        try {
-  
-         return await axios.get("http://127.0.0.1:8000/api/galleries/67bb771b7ca1638d20e4023f").then((res) => res.data);
-  
-        //  const [portfolioResponse, galleryResponse] = await Promise.all([
-        //   axios.get("http://127.0.0.1:8000/api/headers/67ab65b24cb48a7c886d0dfa"),
-        //   axios.get("http://127.0.0.1:8000/api/galleries/67aecc532071993d23e91175"),
-        //  ])
-  
-  
-        
-        } catch (error) {
-          const e = error as AxiosError;
-          return rejectWithValue(e.message);
-        }
+    async ({ participantId }: { participantId: string }, { rejectWithValue }) => {
+      try {
+        // Use the participantId dynamically in the URL like in review
+        console.log("came to get method");
+        const response = await axios.get(
+          
+          `http://127.0.0.1:8000/api/galleries/photographer/${participantId}`
+        );
+        return response.data; // Return the data from the response
+      } catch (error) {
+        const e = error as AxiosError;
+        return rejectWithValue(e.message); // Reject with error message if request fails
       }
+    }
+  );
+
+
+
+  export const postGallery = createAsyncThunk(
+    "gallery/post",
+    async (
+      {
+        formData, // formData is passed containing images and other gallery details
+      }: { formData: FormData },
+      { rejectWithValue }
+    ) => {
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:8000/api/galleries/create", // Backend endpoint for gallery creation
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data", // Handle file uploads
+            },
+          }
+        );
+  
+        return response.data; // Return the response data (the created gallery)
+      } catch (error) {
+        const e = error as AxiosError;
+        return rejectWithValue(e.message); // Handle errors and return the error message
+      }
+    }
   );
 
   export const updateByIdgallery = createAsyncThunk(
@@ -193,7 +162,6 @@ const initialState: PortfolioState = {
     async ({ /*participantId,*/ formData }: { /*participantId: "67ab65b24cb48a7c886d0dfa ";*/ formData: FormData }, { rejectWithValue }) => {
       try {
         const response = await axios.post(
-          // `http://127.0.0.1:8000/api/headers/${participantId}/update/`, 
           `http://127.0.0.1:8000/api/galleries/67bb771b7ca1638d20e4023f/update`,
           
           formData,
@@ -208,73 +176,184 @@ const initialState: PortfolioState = {
   );
 
 
+  
+
+  // Updated deleteImage function to use participantId
   export const deleteImage = createAsyncThunk(
     "gallery/delete-image",
-    async ({ galleryId, imageUrl }: { galleryId: string; imageUrl: string }, { rejectWithValue }) => {
+    async (
+      { participantId, imageUrl }: { participantId: string; imageUrl: string },
+      { rejectWithValue }
+    ) => {
       try {
-        // Make the POST request to your API to delete the image by URL
         const response = await axios.post(
-          `http://127.0.0.1:8000/api/galleries/${galleryId}/delete_photo`,
-          // `http://127.0.0.1:8000/api/galleries/67bb771b7ca1638d20e4023f/delete_photo`,
-          { image_url: imageUrl } // Send the image URL in the body
+          // `http://127.0.0.1:8000/api/gallery/delete-photo/${participantId}/`,
+          `http://127.0.0.1:8000/api/galleries/${participantId}/delete_photo`,
+          { image_url: imageUrl }, // Send the image URL in the request body
+          {
+            headers: {
+              "Content-Type": "application/json",
+              // Add Authorization here if required:
+              // Authorization: `Bearer ${yourAuthToken}`
+            },
+          }
         );
-        return response.data; // Assuming the response contains the deleted image info
+
+        return response.data; // Assuming backend returns success message or updated gallery info
       } catch (error) {
         const e = error as AxiosError;
         return rejectWithValue(e.message);
       }
     }
   );
-  
-
-  
-  // export const deleteByidGallery = createAsyncThunk(
-  //    "gallery/delete-by-id",
-  //   async ({ /*participantId,*/ formData }: { /*participantId: "67ab65b24cb48a7c886d0dfa ";*/ formData: FormData }, { rejectWithValue }) => {
-  //     try {
-  //       const response = await axios.post(
-  //         // `http://127.0.0.1:8000/api/headers/${participantId}/update/`, 
-  //         `http://127.0.0.1:8000/api/galleries/67bb771b7ca1638d20e4023f/update`,
-          
-  //         formData,
-  //         { headers: { "Content-Type": "multipart/form-data" } }
-  //       );
-  //       return response.data;
-  //     } catch (error) {
-  //       const e = error as AxiosError;
-  //       return rejectWithValue(e.message);
-  //     }
-  //   }
-  // );
 
 
+  /* Review */
 
-  
-  export const getByIdreview = createAsyncThunk(
-   "review/get-by-id",
-     async ({ participantId }: { participantId: string }, { rejectWithValue }) => {       
-      const config = {
-        reviews: {
-          "Content-Type": "application/json",
-        },
-        params: {
-          participantId,
-        },
-      };
-      console.log(config);   // should delete
-
+  export const postReview = createAsyncThunk(
+    "review/post",
+    async (
+      { userID, photographerID, rating, reviewText }: { 
+        userID: string; 
+        photographerID: string; 
+        rating: number; 
+        reviewText: string; 
+      }, 
+      { rejectWithValue }
+    ) => {
       try {
-        return await axios.get("http://127.0.0.1:8000/api/reviews/67bb3b00d0d8e5f2985929ba").then((res) => res.data);
-
+        const response = await axios.post("http://127.0.0.1:8000/api/reviews/create", {
+          userID,
+          photographerID,
+          rating,
+          reviewText
+        });
+  
+        return response.data;
       } catch (error) {
         const e = error as AxiosError;
         return rejectWithValue(e.message);
       }
     }
-
   );
 
 
+  export const getByIdreview = createAsyncThunk(
+    "review/get-by-id",
+    async ({ participantId }: { participantId: string }, { rejectWithValue }) => {
+      try {
+        // Use the participantId dynamically in the URL
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/reviews/photographer/${participantId}`
+        );
+        return response.data; // Return the data from the response
+      } catch (error) {
+        const e = error as AxiosError;
+        return rejectWithValue(e.message); // Reject with error message if request fails
+      }
+    }
+  );
+
+
+  export const deleteReview = createAsyncThunk(
+    "reviews/delete",
+    async (reviewId: string, { rejectWithValue }) => {
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/reviews/delete/${reviewId}`
+        );
+        return response.data; // Return success message
+      } catch (error) {
+        const e = error as AxiosError;
+        return rejectWithValue(e.response?.data || e.message); // Handle error response
+      }
+    }
+  );
+  
+
+
+
+  /* Social links  */
+
+  export const createSocialLinks = createAsyncThunk(
+    "socialLinks/create",
+    async (
+      {userID,facebook,instagram,twitter,linkedin,
+      }: {
+        userID: string;
+        facebook?: string;
+        instagram?: string;
+        twitter?: string;
+        linkedin?: string;
+      },
+      { rejectWithValue }
+    ) => {
+      try {
+        const response = await axios.post("http://127.0.0.1:8000/api/SocialLinks/create", {
+          userID,facebook,instagram,twitter,linkedin,
+        });
+  
+        return response.data; // Return response data on success
+      } catch (error) {
+        const e = error as AxiosError;
+        return rejectWithValue(e.response?.data || e.message); // Reject with API error message
+      }
+    }
+  );
+  
+
+
+  export const getSocialLinksByPhotographer = createAsyncThunk(
+    "socialLinks/get-by-photographer",
+    async ({ photographerId }: { photographerId: string }, { rejectWithValue }) => {
+      try {
+        // Use the photographerId dynamically in the API endpoint
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/SocialLinks/photographer/${photographerId}`
+        );
+        return response.data; // Return the data from the response
+      } catch (error) {
+        const e = error as AxiosError;
+        return rejectWithValue(e.message); // Reject with error message if request fails
+      }
+    }
+  );
+
+
+
+  export const updateSocialLinks = createAsyncThunk(
+    "socialLinks/update",
+    async ({ photographerId, socialLinks }: { photographerId: string, socialLinks: SocialLinks }, { rejectWithValue }) => {
+      try {
+        // Send the updated social links to the backend
+        const response = await axios.post(
+          `http://127.0.0.1:8000/api/SocialLinks/photographer/update/${photographerId}`,
+          socialLinks
+        );
+        return response.data; // Return the response data (you can modify this if needed)
+      } catch (error) {
+        const e = error as AxiosError;
+        return rejectWithValue(e.message); // Reject with error message if request fails
+      }
+    }
+  );
+
+
+  export const deleteSocialLinks = createAsyncThunk(
+    "socialLinks/delete",
+    async (photographerId: string, { rejectWithValue }) => {
+      try {
+        const response = await axios.delete(
+          `http://127.0.0.1:8000/api/SocialLinks/delete/${photographerId}`
+        );
+        return response.data; // Return success message
+      } catch (error) {
+        const e = error as AxiosError;
+        return rejectWithValue(e.response?.data || e.message); // Reject with error message
+      }
+    }
+  );
+  
 
 
 
@@ -303,7 +382,6 @@ const initialState: PortfolioState = {
               isLoading: true,
               isSuccessful: false,
               serverPortfolio: "",
-              //data : null;
               data: null,
           };
           });
@@ -317,8 +395,6 @@ const initialState: PortfolioState = {
             data: null,
           }
         });
-
-          
         
         // Get by id  gallery
         // Pending
@@ -327,11 +403,9 @@ const initialState: PortfolioState = {
               isLoading: true,
               isSuccessful: false,
               serverPortfolio: "",
-              //data : null;
               data: null,
           };
         });  
-
 
         //Get by id review
         //Pending
@@ -344,9 +418,16 @@ const initialState: PortfolioState = {
           };
         });
 
-
-
-
+        //Get by id SocialLinks
+        //Pending
+        builder.addCase(getSocialLinksByPhotographer.pending, (state) => {
+          state.activeSocialLinks = {
+            isLoading: true,
+            isSuccessful: false,
+            serverPortfolio:"",
+            data : null,
+          };
+        });
 
         // Fulfilled
             builder.addCase(getAllportfolio.fulfilled, (state, action) => {
@@ -369,23 +450,6 @@ const initialState: PortfolioState = {
               };
             });
 
-            //fulfilled
-            // builder.addCase(updateByIdportfolio.fulfilled, (state, action) => {
-            //   state.activePortfolio = {
-            //     isLoading: false,
-            //     isSuccessful: true,
-            //     serverPortfolio: "",
-            //     data: action.payload,
-            //   };
-            // });
-
-            // builder.addCase(updateByIdportfolio.fulfilled, (state, action) => {
-            //   state.activePortfolio = {
-            //     ...state.activePortfolio,
-            //     data: action.payload, // Update state with new portfolio data
-            //   };
-            // });
-
             builder.addCase(updateByIdportfolio.fulfilled, (state, action) => {
               state.activePortfolio = {
                 ...state.activePortfolio,
@@ -396,10 +460,6 @@ const initialState: PortfolioState = {
               };
             });
             
-            
-
-
-
             // Fulfilled
             builder.addCase(getByIdgallery.fulfilled, (state, action) => {
               state.activeGallery = {
@@ -421,6 +481,15 @@ const initialState: PortfolioState = {
               };
             });
 
+            // Fulfilled
+            builder.addCase(getSocialLinksByPhotographer.fulfilled, (state, action) => {
+              state.activeSocialLinks = {
+                isLoading: false,
+                isSuccessful: true,
+                serverPortfolio: "",
+                data: action.payload,
+              };
+            });
 
 
         
@@ -454,8 +523,6 @@ const initialState: PortfolioState = {
               };
             });
             
-
-
             // Rejected
             builder.addCase(getByIdgallery.rejected, (state, action) => {
               state.activeGallery = {
@@ -476,8 +543,15 @@ const initialState: PortfolioState = {
               }
             })
 
-
-        
+            // Rejected
+            builder.addCase(getSocialLinksByPhotographer.rejected, (state, action) => {
+              state.activeSocialLinks = {
+                isLoading: false,
+                isSuccessful: false,
+                serverPortfolio: action.payload as string,
+                data:  null,
+              }
+            })
     },
   });
 

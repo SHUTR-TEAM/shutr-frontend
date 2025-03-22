@@ -51,18 +51,28 @@
 }
   
  .edit_button{
-   margin-left: 700px ; 
+   /* margin-left: 700px ; 
    
     background-color: lightgrey ; 
     padding: 10px; 
     border-radius: 5px; 
-    border-color: rgb(0, 0, 0);
+    border-color: rgb(0, 0, 0); */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    color: #666;
+    transition: color 0.3s ease;
+    /* padding-left: 70px; */
+    margin-left: 700px;
  }  
   
  
   .container {
     display: flex;
     align-items: center; 
+
+    
   }
  
 
@@ -132,16 +142,40 @@
   .description { 
     margin-top: 60px;
     margin-right: 490px; 
-    font-size: 0.95rem;
+    flex: 1; 
+    margin-right: 0; 
+    font-size: 1rem;
+
+    padding: 2rem;
+    text-align: center;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border-radius: 20px;
+    box-shadow: 20px 20px 60px #d9d9d9,
+                -20px -20px 60px #ffffff;
+    margin: 2rem 0;
     
   }
 
-  .description {
+  /* .description {
     flex: 1; 
     margin-right: 0; 
     font-size: 1rem;
     
-  }
+  } */
+
+
+  /* .description { 
+    margin-top: 60px;
+    margin-right: 490px; 
+    font-size: 0.95rem;
+    min-height: 100px;  Adjust based on desired minimum height 
+    display: flex;
+    align-items: center;
+} */
+
+.description p {
+    min-height: 200px; /* Ensures the text area maintains a height */
+}
   
   
   
@@ -203,3 +237,14 @@
     }
   }
   
+
+  .iconContainer {
+    /* position: absolute; */
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e9e7e748;
+    height: 270px;
+    border-radius: 15px;
+  }
