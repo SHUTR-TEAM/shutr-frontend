@@ -7,7 +7,6 @@ import Card from "../Card";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import {
   fetchDefaultResults,
-  fetchSearchResults,
   setSearchTerm,
   clearSearchResults,
   setSortBy,
@@ -36,7 +35,7 @@ export default function SearchBox() {
       dispatch(fetchFilteredResults());
     } else {
       dispatch(clearSearchResults());
-      dispatch(fetchDefaultResults(selectedSort));
+      dispatch(fetchDefaultResults({ sortBy: selectedSort, limit: 10 }));
     }
   };
 
@@ -47,7 +46,7 @@ export default function SearchBox() {
       dispatch(fetchFilteredResults());
     } else {
       dispatch(clearSearchResults());
-      dispatch(fetchDefaultResults(selectedSort));
+      dispatch(fetchDefaultResults({ sortBy: selectedSort, limit: 10 }));
     }
   };
 
@@ -70,7 +69,7 @@ export default function SearchBox() {
   // Fetch default results on first load
   useEffect(() => {
     dispatch(fetchFilteredResults());
-  }, [dispatch, selectedSort, filters, searchTerm]); 
+  }, [dispatch, selectedSort, filters, searchTerm]); 
   
 
   return (
@@ -114,20 +113,24 @@ export default function SearchBox() {
           </div>
         </div>
 
-      </div>     
-
-       
+      </div>   
+   
       <div className={styles.cardSection}>
 
-         {!loading && !error && results.length === 0 && (searchTerm.trim() !== "" || Object.values(filters).some((value) => value !== "")) && (
-           <ErrorSection />
-         )}
-
-        {!loading && !error && results.length > 0 && <Card data={results} />}
-
-        {!loading && !error && results.length === 0 && (searchTerm.trim() === "" &&  Object.values(filters).some((value) => value == "")) && (
-          <Card data={defaultResults} />
+        {!loading && !error && Array.isArray(results) && results.length === 0 &&
+          (searchTerm.trim() !== "" || Object.values(filters || {}).some(value => value !== "")) && (
+          <ErrorSection />
         )}
+
+        {!loading && !error && Array.isArray(results) && results.length > 0 && (
+          <Card data={results} />
+        )}
+
+        {!loading && !error && Array.isArray(results) && results.length === 0 &&
+          searchTerm.trim() === "" &&
+          Object.values(filters || {}).every((value) => value === "") && (
+            <Card data={defaultResults} />
+        )}        
         
       </div>
       
