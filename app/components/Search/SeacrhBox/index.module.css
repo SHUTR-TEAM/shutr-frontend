@@ -229,6 +229,7 @@
   }
   .cardSection {
     margin-top: 20px;
+    margin-left: 0;
   }
 }
 @media (max-width: 480px) {
