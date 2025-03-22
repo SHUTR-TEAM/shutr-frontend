@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect ,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./index.module.css";
 import { IoSearch } from "react-icons/io5";
@@ -7,92 +7,134 @@ import Card from "../Card";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import {
   fetchDefaultResults,
-  fetchSearchResults,
   setSearchTerm,
   clearSearchResults,
+  setSortBy,
+  fetchFilteredResults,
 } from "@/app/redux/features/searchSlice";
+import ErrorSection from "../ErrorSection";
+import Pagination from "../Pagination/Pagination";
 
 export default function SearchBox() {
-  //Setting Up Redux Dispatch and State
-  const dispatch = useDispatch<AppDispatch>(); //Allows us to send actions to Redux.
-  /*  useSelector(state => state.search) → Gets the search state from Redux.
-        searchTerm → The text typed by the user.
-        results → The search results from the API.
-        defaultResults → Results when no search is made.
-        loading → Shows if an API request is in progress.
-        error → Stores any error messages.*/
-  const { searchTerm, results, defaultResults, loading, error } = useSelector(
-    (state: RootState) => state.search
+
+  //Allows us to send actions to Redux.
+  const dispatch = useDispatch<AppDispatch>(); 
+
+  const { searchTerm, results, defaultResults, loading, error ,sortBy,filters} = useSelector(
+    (state: RootState) => state.search //get the search state from the redux 
   );
 
-  //const [sortBy, setSortBy] = useState("relevant");
+  const [selectedSort, setSelectedSort] = useState("relevant");
 
-  // Function to handle input changes (on typing)
-  //Dispatches an action (setSearchTerm) to the Redux store instead of updating a local state.
-  //Updates searchTerm in Redux whenever the user types in the search box
+  // Handle input changes and dispatch search term
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSearchTerm(event.target.value));
-  };
+    const value = event.target.value;
+    dispatch(setSearchTerm(value));
 
-  // Function to handle search action (Enter key or button click)
-  //pass the serach term to the serachSlice(action)'s function called fetchSearchResults
-  const handleSearch = () => {
-    if (searchTerm.trim() !== "") {
-      dispatch(fetchSearchResults(searchTerm));
+    //user enter a search term
+    if (value.trim() !== "") {
+      dispatch(fetchFilteredResults());
     } else {
       dispatch(clearSearchResults());
-      dispatch(fetchDefaultResults());
+      dispatch(fetchDefaultResults({ sortBy: selectedSort, limit: 10 }));
     }
   };
 
-  // Function to detect Enter key press
+  //if user click the button
+  const handleSearch = () => {
+    if (searchTerm.trim() !== "") {
+      dispatch(setSearchTerm(searchTerm));
+      dispatch(fetchFilteredResults());
+    } else {
+      dispatch(clearSearchResults());
+      dispatch(fetchDefaultResults({ sortBy: selectedSort, limit: 10 }));
+    }
+  };
+
+  //user press the Enter Key
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleSearch();
     }
   };
 
+  // Handle sorting selection
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const sortValue = event.target.value;
+    setSelectedSort(sortValue);
+    dispatch(setSortBy(sortValue));
+  
+    dispatch(fetchFilteredResults()); // Fetch sorted results with the search term
+  };  
+  
+  // Fetch default results on first load
   useEffect(() => {
-    dispatch(fetchDefaultResults());
-  }, [dispatch]);
+    dispatch(fetchFilteredResults());
+  }, [dispatch, selectedSort, filters,searchTerm]); 
+  
 
   return (
     <div>
       <div className={styles["search-bar-container"]}>
-        <div className={styles["search-box"]}>
-          <IoSearch className={styles["search-icon"]} />
-          <input
-            type="text"
-            className={styles["search-input"]}
-            placeholder="Search"
-            value={searchTerm}
-            onChange={handleInputChange} // Update state on typing
-            onKeyDown={handleKeyDown} // Listen for Enter key
-          />
-        </div>
-        <div>
-          <button className={styles["search-btn"]} onClick={handleSearch}>
-            Search
-          </button>
+
+        <div className={styles["searchSection"]}>
+          <div className={styles["search-box"]}>
+            <IoSearch className={styles["search-icon"]} />
+            <input
+              type="text"
+              className={styles["search-input"]}
+              placeholder="Search"
+              value={searchTerm}
+              onChange={handleInputChange} 
+              onKeyDown={handleKeyDown} 
+            />
+          </div>
+          <div>
+            <button className={styles["search-btn"]} onClick={handleSearch}>
+              Search
+            </button>
+          </div>
+        </div>  
+
+        <div className={styles["filterSection"]}>
+          <div className={styles["sort-by-container"]}>
+            <label htmlFor="sort-by" className={styles["sort-by-label"]}>
+              Sort By:
+            </label>
+            <select
+              id="sort-by"
+              className={styles["search-dropdown"]}
+              value={selectedSort}
+              onChange={handleSortChange}
+            >
+              <option value="relevant">Most relevant</option>
+              <option value="recent">Most recent</option>
+              <option value="popular">Top rated</option>
+            </select>
+          </div>
         </div>
 
-        <div className={styles["sort-by-container"]}>
-          <label htmlFor="sort-by" className={styles["sort-by-label"]}>
-            Sort By :
-          </label>
-          <select id="sort-by" className={styles["search-dropdown"]}>
-            <option value="relevant">Most relevant</option>
-            <option value="recent">Most recent</option>
-            <option value="popular">Most popular</option>
-          </select>
-        </div>
+      </div>   
+   
+      <div className={styles.cardSection}>
+
+        {!loading && !error && Array.isArray(results) && results.length === 0 &&
+          (searchTerm.trim() !== "" || Object.values(filters || {}).some(value => value !== "")) && (
+          <ErrorSection />
+        )}
+
+        {!loading && !error && Array.isArray(results) && results.length > 0 && (
+          <><Card data={results} /><Pagination /></>
+        )}
+
+        {!loading && !error && Array.isArray(results) && results.length === 0 &&
+          searchTerm.trim() === "" &&
+          Object.values(filters || {}).every((value) => value === "") && (
+            <><Card data={defaultResults} /><Pagination /></>
+        )}        
+        
       </div>
-      <div>
-        {/*if loading true display loading, if error true display the error */}
-        {loading && <p>Loading...</p>}
-        {error && <p>Error : {error}</p>}
-        <Card data={results.length > 0 ? results : defaultResults} />
-      </div>
+      
     </div>
   );
 }

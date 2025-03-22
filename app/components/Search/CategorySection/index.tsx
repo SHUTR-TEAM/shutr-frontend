@@ -3,23 +3,13 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styles from "./index.module.css";
 import { AppDispatch } from "@/app/redux/store";
-import { setFilters, fetchFilteredResults } from "@/app/redux/features/searchSlice";
+import { setFilters,clearFilters, fetchFilteredResults } from "@/app/redux/features/searchSlice";
 
 export default function CategorySection() {
 
-  //to get the user input (filter)
-  //key-value pair structure used to store related data.
-  // const [filters,setFilters] = useState({
-  //   style:"",
-  //   minPrice:"",
-  //   maxPrice:"",
-  //   availability:"",
-  //   experienceLevel:"",
-  // });
-
   const dispatch = useDispatch<AppDispatch>();
 
-  // Local filter state before applying
+  // Local state to temporarily hold selected filter values before applying
   const [filters, setLocalFilters] = useState({
     style: "",
     minPrice: "",
@@ -28,11 +18,10 @@ export default function CategorySection() {
     experienceLevel: "",
   });
 
+  // Generic handler to toggle or set filter values based on button/input
   const handleButtonClick = (name: keyof typeof filters, value: string) => {
     setLocalFilters((preFilters) => ({
       ...preFilters,   // Keep existing filter values
-      //If the current filter value (prevFilters[name]) is already equal to the value, it sets it to "" (empty string), meaning the filter value removed.
-      //Otherwise, it updates the filter with the value.
       [name]: preFilters[name] === value ? "" : value,  
     }));
   };
@@ -42,30 +31,27 @@ export default function CategorySection() {
     dispatch(fetchFilteredResults()); // Fetch results based on applied filters
   };
 
+  //clear filters
+  const handleClearFilters = () => {
+    setLocalFilters({
+      style: "",
+      minPrice: "",
+      maxPrice: "",
+      availability: "",
+      experienceLevel: "",
+    });
 
-  /*
-  const handleButtonClick = (name,value) =>{
-    // Update the filters state while preserving existing values
-    // 1. 'prevFilters' holds the current state before the update.
-    // 2. '...prevFilters' ensures all previous filter values remain unchanged.
-    // 3. '[name]: value' dynamically updates only the specified filter.
-    // This prevents overwriting the entire state and ensures only the intended property is modified.
-    setFilters((preFilters)=>({
-      ...preFilters,   // Keep existing filter values
-      //If the current filter value (prevFilters[name]) is already equal to the value, it sets it to "" (empty string), meaning the filter value removed.
-      //Otherwise, it updates the filter with the value.
-      [name]: preFilters[name] === value ? "" : value,   
-    }));
-
-  };*/
-
- 
+    dispatch(clearFilters()); 
+    dispatch(fetchFilteredResults()); 
+  };
 
   return (
     <div className={styles.container}>
 
       <aside className={styles.filters}>
         <h3>Filters</h3>
+
+        {/* Style */}
         <div className={styles.filterGroup}>
           <h4>Style</h4>
 
@@ -74,7 +60,6 @@ export default function CategorySection() {
               <button
                 key={element}
                 onClick={() => handleButtonClick("style", element)}
-                // If the current filter value for 'style' matches the button's element, apply the 'activeButton' class; otherwise, apply no additional class
                 className={filters.style === element ? styles.activeButton : ""}
               >
                 {element}
@@ -83,6 +68,7 @@ export default function CategorySection() {
           </div>
         </div>
 
+        {/* Price Range */}
         <div className={styles.filterGroup}>
           <h4>Price Range</h4>
           <div className={styles.priceRange}>
@@ -102,6 +88,7 @@ export default function CategorySection() {
           </div>
         </div>
 
+        {/* Availability */}    
         <div className={styles.filterGroup}>
           <h4>Availability</h4>
           <input type="date"
@@ -110,7 +97,7 @@ export default function CategorySection() {
           />
         </div>
 
-        {/* Experience Level Filter */}
+        {/* Experience Level */}    
         <div className={styles.filterGroup}>
           <h4>Experience Level</h4>
           <div className={styles.filterButtonsLong}>
@@ -126,7 +113,15 @@ export default function CategorySection() {
           </div>
         </div>
 
-        <button onClick={applyFilters} className={styles.applyBtn} >Apply Filters</button>
+        <div className={styles.buttonGroup}>
+          <button onClick={applyFilters} className={styles.applyBtn}>
+            Apply Filters
+          </button>
+          <button onClick={handleClearFilters} className={styles.clearBtn}>
+            Clear Filters
+          </button>
+        </div>
+        
       </aside>
     </div>
   );    
