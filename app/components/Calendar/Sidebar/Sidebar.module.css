@@ -46,3 +46,14 @@
     color: #000; 
   }
   
+
+  @media (max-width: 1023px) {
+    
+    .sidebar {
+      display: none; /* Hide Sidebar */
+    }
+  
+   
+   
+  }
+  
