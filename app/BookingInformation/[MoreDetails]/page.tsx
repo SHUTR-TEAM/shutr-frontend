@@ -11,6 +11,7 @@ import EventTimeline from "@/app/components/BookingDetails/eventTimeline";
 import { FaArrowLeft } from "react-icons/fa";
 import LoadingSection from "@/app/components/BookingDetails/loadingComponent";
 import ErrorSection from "@/app/components/BookingDetails/errorComponent";
+import { acceptBooking } from "@/app/redux/features/booking";
 
 const MoreDetails = () => {
   const router = useRouter();
@@ -18,7 +19,7 @@ const MoreDetails = () => {
 
   // Extract relevant data from Redux store
   const { selectedBooking, loading, error } = useSelector(
-    (state: RootState) => state.booking
+    (state: RootState) => state.bookingInformation
   );
 
   // State to store the booking ID extracted from the URL
@@ -80,7 +81,12 @@ const MoreDetails = () => {
       <div className={styles.btnContainer}>
         <button className={styles.btn1}>Mark as Completed</button>
         <button className={styles.btn2}>Message Client</button>
-        <button className={styles.btn2}>Accept Booking</button>
+        <button
+          className={styles.btn2}
+          onClick={() => bookingId && dispatch(acceptBooking(bookingId))}
+        >
+          Accept Booking
+        </button>
       </div>
     </div>
   );

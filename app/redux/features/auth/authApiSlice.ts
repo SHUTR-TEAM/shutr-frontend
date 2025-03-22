@@ -94,6 +94,12 @@ const authApiSlice = apiSlice.injectEndpoints({
         body: { uid, token, new_password, re_new_password },
       }),
     }),
+    googleCalendarInit: builder.mutation({
+      query: () => ({
+        url: "/connect-google-calendar",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -107,4 +113,5 @@ export const {
   useActivationMutation,
   useResetPasswordMutation,
   useResetPasswordConfirmMutation,
+  useGoogleCalendarInitMutation,
 } = authApiSlice;

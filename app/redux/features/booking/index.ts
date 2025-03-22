@@ -24,18 +24,16 @@ const initialState: BookingState = {
     serverMessage: "",
     data: null,
   },
+  acceptBooking: {
+    isLoading: false,
+    isSuccessful: false,
+    serverMessage: "",
+  },
 };
 
 export const createBooking = createAsyncThunk(
   "booking/create",
   async (booking: Booking, { rejectWithValue }) => {
-    // const config = {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-
-    // };
-
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -59,12 +57,34 @@ export const createBooking = createAsyncThunk(
   }
 );
 
+export const acceptBooking = createAsyncThunk(
+  "booking/accept",
+  async (bookingId: string, { rejectWithValue }) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: ``,
+      },
+      withCredentials: true,
+    };
+
+    try {
+      return await axios
+        .post(`${ROUTE_URL}/accept/${bookingId}`, config)
+        .then((res) => res.data);
+    } catch (error) {
+      const e = error as AxiosError;
+      return rejectWithValue(e.message);
+    }
+  }
+);
+
 const bookingSlice = createSlice({
   name: "booking",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // Get all chats
+    // Get all Bookings
     // Pending
     builder.addCase(createBooking.pending, (state) => {
       state.createBooking = {
@@ -92,6 +112,34 @@ const bookingSlice = createSlice({
         isSuccessful: false,
         serverMessage: action.payload as string,
         data: null,
+      };
+    });
+
+    // Accept Booking
+    // Pending
+    builder.addCase(acceptBooking.pending, (state) => {
+      state.acceptBooking = {
+        isLoading: true,
+        isSuccessful: false,
+        serverMessage: "",
+      };
+    });
+
+    // Fulfilled
+    builder.addCase(acceptBooking.fulfilled, (state) => {
+      state.acceptBooking = {
+        isLoading: false,
+        isSuccessful: true,
+        serverMessage: "",
+      };
+    });
+
+    // Rejected
+    builder.addCase(acceptBooking.rejected, (state, action) => {
+      state.acceptBooking = {
+        isLoading: false,
+        isSuccessful: false,
+        serverMessage: action.payload as string,
       };
     });
   },
