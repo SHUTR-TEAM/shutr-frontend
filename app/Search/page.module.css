@@ -12,7 +12,8 @@
   position: sticky;
   top: 80px; 
   height: calc(100vh - 80px);
-  overflow-y: auto;  
+  overflow-y: auto; 
+  background-color: #f3f4f4; 
 }  
 .searchBarContainer {
   margin: 0;
