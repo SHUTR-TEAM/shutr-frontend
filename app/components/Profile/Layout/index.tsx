@@ -4,13 +4,13 @@ import React from "react";
 import {
   AiOutlineHome,
   AiOutlineMessage,
-  AiOutlineCalendar,
+  // AiOutlineCalendar,
   AiOutlineUser,
-  AiOutlineSetting,
 } from "react-icons/ai";
 import styles from "./index.module.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BsBook } from "react-icons/bs";
 
 const ProfileSidebarLayout: React.FC = () => {
   const fullPath = usePathname();
@@ -22,33 +22,39 @@ const ProfileSidebarLayout: React.FC = () => {
         <li className={path === "dashboard" ? styles.active : ""}>
           <Link href="/dashboard">
             <AiOutlineHome className={styles.icon} />
-            <span>Home</span>
+            <span>Dashboard</span>
           </Link>
         </li>
-        <li className={path === "messages" ? styles.active : ""}>
-          <Link href="/messages">
+        <li className={path === "chat" ? styles.active : ""}>
+          <Link href="/chat">
             <AiOutlineMessage className={styles.icon} />
             <span>Messages</span>
           </Link>
         </li>
-        <li className={path === "calendar" ? styles.active : ""}>
+        {/* <li className={path === "calendar" ? styles.active : ""}>
           <Link href="/calendar">
             <AiOutlineCalendar className={styles.icon} />
             <span>Calendar</span>
           </Link>
-        </li>
+        </li> */}
         <li className={path === "profile" ? styles.active : ""}>
           <Link href="/profile">
             <AiOutlineUser className={styles.icon} />
             <span>Profile</span>
           </Link>
         </li>
-        <li className={path === "settings" ? styles.active : ""}>
+        <li className={path === "booking-information" ? styles.active : ""}>
+          <Link href="/booking-information">
+            <BsBook className={styles.icon} />
+            <span>My Bookings</span>
+          </Link>
+        </li>
+        {/* <li className={path === "settings" ? styles.active : ""}>
           <Link href="/settings">
             <AiOutlineSetting className={styles.icon} />
             <span>Settings</span>
           </Link>
-        </li>
+        </li> */}
       </ul>
     </nav>
   );

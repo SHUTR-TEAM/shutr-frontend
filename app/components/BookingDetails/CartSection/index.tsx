@@ -37,7 +37,7 @@ const CartSection: React.FC = () => {
       return;
     }
     dispatch(fetchBookingDetails(id));
-    router.push(`/BookingInformation/${id}`);
+    router.push(`/booking-information/${id}`);
   };
 
   return (

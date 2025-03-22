@@ -78,7 +78,6 @@ export default function Calendar() {
         );
         if (response.ok) {
           const data = await response.json();
-          console.log;
           setBookings(data);
         }
       } catch (error) {

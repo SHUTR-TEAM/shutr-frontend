@@ -4,10 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllBookings } from "@/app/redux/features/bookingInformation";
 import { RootState, AppDispatch } from "@/app/redux/store";
 import styles from "./page.module.css";
-import SearchBar from "@/app/components/BookingDetails/SearchBar";
 import CartSection from "@/app/components/BookingDetails/CartSection";
 import ErrorSection from "@/app/components/BookingDetails/errorComponent";
-import LoadingSection from "../components/BookingDetails/loadingComponent";
+import LoadingSection from "@/app/components/BookingDetails/loadingComponent";
 
 const BookingDetails = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,12 +16,14 @@ const BookingDetails = () => {
     (state: RootState) => state.bookingInformation
   );
 
+  const user = useSelector((state: RootState) => state.auth.user);
+
   // Fetch all bookings when the component mounts if the list is empty
   useEffect(() => {
     if (bookings.length === 0) {
-      dispatch(fetchAllBookings());
+      dispatch(fetchAllBookings({ photographerId: user?.id }));
     }
-  }, [dispatch, bookings.length]); //Dependencies ensure it runs only when bookings.length changes
+  }, [dispatch, bookings.length, user]);
 
   return (
     <div className={styles.container}>

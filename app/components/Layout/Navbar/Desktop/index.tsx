@@ -16,7 +16,7 @@ const DesktopNavbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const user = useSelector((state: RootState) => state.auth.user);
-  const [logoutApi, { isLoading }] = useLogoutMutation();
+  const [logoutApi] = useLogoutMutation();
 
   const dispatch = useDispatch();
 

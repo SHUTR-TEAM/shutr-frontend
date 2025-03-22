@@ -17,3 +17,8 @@
   color: #6b6b6b;
   font-size: 14px;
 }
+
+.calendarConnected {
+  background-color: #000000;
+  color: white;
+}

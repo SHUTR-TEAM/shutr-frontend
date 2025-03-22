@@ -1,6 +1,6 @@
 // import Calendar from "../components/Calendar/CalendarWidgetContainer"
 
-import Calendar from "../components/NewCalendar/Calendar";
+import Calendar from "../../components/NewCalendar/Calendar";
 
 function CalendarPage() {
   return (
