@@ -82,15 +82,12 @@
         padding: 25px;
         max-width: 95%;
     }
-
     .errorMsg {
         padding: 15px;
     }
-
     .errorMsg p {
         font-size: 16px;
     }
-
     .errorMsg::before {
         font-size: 35px;
     }

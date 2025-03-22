@@ -13,6 +13,7 @@ import {
   fetchFilteredResults,
 } from "@/app/redux/features/searchSlice";
 import ErrorSection from "../ErrorSection";
+import Pagination from "../Pagination/Pagination";
 
 export default function SearchBox() {
 
@@ -69,7 +70,7 @@ export default function SearchBox() {
   // Fetch default results on first load
   useEffect(() => {
     dispatch(fetchFilteredResults());
-  }, [dispatch, selectedSort, filters, searchTerm]); 
+  }, [dispatch, selectedSort, filters,searchTerm]); 
   
 
   return (
@@ -123,13 +124,13 @@ export default function SearchBox() {
         )}
 
         {!loading && !error && Array.isArray(results) && results.length > 0 && (
-          <Card data={results} />
+          <><Card data={results} /><Pagination /></>
         )}
 
         {!loading && !error && Array.isArray(results) && results.length === 0 &&
           searchTerm.trim() === "" &&
           Object.values(filters || {}).every((value) => value === "") && (
-            <Card data={defaultResults} />
+            <><Card data={defaultResults} /><Pagination /></>
         )}        
         
       </div>

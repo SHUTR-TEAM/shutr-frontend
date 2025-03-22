@@ -6,7 +6,6 @@ import styles from "./page.module.css";
 import StoreProvider from "@/app/redux/storeProvider";
 import { IoFilter } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";
-import Pagination from '../components/Search/Pagination/Pagination';
 
 export default function Search() {
   const [showFilters, setShowFilters] = useState(false);
@@ -53,7 +52,6 @@ export default function Search() {
           </div>
           <div className={styles.searchBarContainer}>
             <SearchBox />
-            <Pagination/>
           </div>
         </div>
       </StoreProvider>
