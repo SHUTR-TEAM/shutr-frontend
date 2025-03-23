@@ -118,3 +118,242 @@
     height: 240px;
   }
   
+
+  /* .imageSelectButton{
+    background-color: white;
+    padding: 10px;
+  } */
+
+
+  
+  
+  .modal_content h2 {
+    margin-bottom: 10px;
+    font-size: 22px;
+    font-weight: bold;
+  }
+  
+  .imageSelectButton {
+    background: grey;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 10px 0;
+  }
+  
+  .imageSelectButton:hover {
+    background: black;
+  }
+  
+  /* .crop_container {
+    margin: 10px 0;
+  } */
+
+  .crop_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 250px; /* Adjust height based on your needs */
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+    padding: 10px;
+    margin: 15px 0;
+    overflow: hidden; /* Prevents overflow issues */
+  }
+
+  .notSelected{
+    margin: 10px;
+    color: #dc3545;
+  }
+
+  .zoomIndicator{
+    margin-right: 20px;
+  }
+  
+
+  .saveButton{
+    margin: 10px;
+    border: none;
+    background-color: white;
+    color: white;
+    background-color:  grey ;
+    padding: 5px 5px;
+    border-radius: 6px;
+  }
+
+  .closeButton{
+    margin: 10px;
+    border: none;
+    background-color: white;
+    color: white;
+    background-color:  grey ;
+    padding: 5px 5px;
+    border-radius: 6px;
+  }
+
+  .saveButton:hover{
+    background-color: black;
+  }
+  
+  /* p {
+    color: red;
+    font-weight: bold;
+  } */
+  
+  /* input[type="range"] {
+    width: 80%;
+    margin: 10px 0;
+  } */
+  
+  .button {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+  .button:hover {
+    background: #218838;
+  }
+  
+  .button:last-child {
+    background: #dc3545;
+  }
+  
+  .button:last-child:hover {
+    background: #c82333;
+  }
+  
+
+
+
+  /* Modal Background Overlay */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  /* backdrop-filter: blur(5px); Adds a blurred effect */
+  backdrop-filter: blur(8px);
+}
+
+/* Modal Content Box */
+.modal_content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 400px;
+  max-width: 90%;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Modal Title */
+.modal_content h2 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Select Image Button */
+.imageSelectButton {
+  background: black;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.imageSelectButton:hover {
+  background: black;
+}
+
+/* Crop Container */
+.crop_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 250px;
+  border: 2px dashed #bbb;
+  border-radius: 10px;
+  background: #f9f9f9;
+  padding: 10px;
+  margin: 15px 0;
+  overflow: hidden;
+}
+
+/* No Image Selected Text */
+.notSelected {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Zoom Slider */
+.zoomIndicator {
+  width: 80%;
+  margin: 10px auto;
+  display: block;
+  accent-color: grey; /* Modern slider color */
+}
+
+/* Save & Close Buttons */
+.saveButton, .closeButton {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 8px;
+  transition: transform 0.2s ease-in-out, background 0.3s ease-in-out;
+}
+
+.saveButton {
+  background: black;
+  color: white;
+}
+
+.saveButton:hover {
+  background: black;
+  transform: scale(1.05);
+}
+
+.closeButton {
+  background: black;
+  color: white;
+}
+
+.closeButton:hover {
+  background: black;
+  transform: scale(1.05);
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
