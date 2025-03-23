@@ -91,7 +91,7 @@ export const getAllMessages = createAsyncThunk(
 
     try {
       return await axios
-        .get(`${BACKEND_BASE_URL}/chat/messages`, config)
+        .get(`${BACKEND_BASE_URL}/api/chat/messages`, config)
         .then((res) => res.data);
     } catch (error) {
       const e = error as AxiosError;

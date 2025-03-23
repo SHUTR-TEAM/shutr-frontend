@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import styles from "./index.module.css";
 import ClientInformation from "../ClientInformation";
@@ -9,10 +9,11 @@ import EventDetails from "../EventDetails";
 import PackageSelection from "../PackageSelection";
 import Agreements from "../Agreements";
 import ConfirmationDetails from "../ConfirmationDetails";
-import { AppDispatch } from "@/app/redux/store";
-import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "@/app/redux/store";
+import { useDispatch, useSelector } from "react-redux";
 import { createBooking } from "@/app/redux/features/booking";
 import { Booking } from "@/app/redux/types/booking.types";
+import { useSearchParams } from "next/navigation";
 
 const steps = [
   "Client Info",
@@ -24,8 +25,42 @@ const steps = [
 
 export default function BookingForm() {
   const [currentStep, setCurrentStep] = useState(1);
-  const methods = useForm<Booking>();
   const dispatch: AppDispatch = useDispatch();
+  const searchParams = useSearchParams();
+  const photographerId = searchParams.get("photographerId");
+
+  const user = useSelector((state: RootState) => state.auth.user);
+
+  const methods = useForm<Booking>({
+    defaultValues: {
+      client: {
+        first_name: "",
+        last_name: "",
+        phone: "",
+        email: "",
+        address: "",
+        nic: "",
+      },
+    },
+  });
+
+  const { reset } = methods;
+
+  // Update default values once the user is loaded
+  useEffect(() => {
+    if (user) {
+      reset({
+        client: {
+          first_name: user.first_name || "",
+          last_name: user.last_name || "",
+          phone: user.phone_num || "",
+          email: user.email || "",
+          address: user.address || "",
+          nic: user.nic || "",
+        },
+      });
+    }
+  }, [user, reset]);
 
   const handleNext = async () => {
     const isValid = await methods.trigger();
@@ -43,8 +78,13 @@ export default function BookingForm() {
   };
 
   const onSubmit = (data: Booking) => {
-    data.photographer_id = "67d6760dcc8251d8cc092e8f";
-    data.client_id = "67d6760dcc8251d8cc092e8f";
+    if (photographerId) {
+      data.photographer_id = photographerId;
+    }
+
+    if (user?.id) {
+      data.client_id = user?.id;
+    }
 
     console.log("Form submitted:", data);
     dispatch(createBooking(data));

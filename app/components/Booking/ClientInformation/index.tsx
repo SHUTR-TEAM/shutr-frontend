@@ -5,10 +5,14 @@ import styles from "./index.module.css";
 import { useFormState } from "react-hook-form";
 
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/redux/store";
 
 const ClientInformation = () => {
   const { register } = useFormContext();
   const { errors } = useFormState();
+
+  const user = useSelector((state: RootState) => state.auth.user);
 
   return (
     <div className={styles.container}>
@@ -23,6 +27,7 @@ const ClientInformation = () => {
               required: "Field is required",
             })}
             onClick={() => console.log(errors)}
+            defaultValue={user?.first_name}
           />
           {errors.client &&
             (errors.client as Record<string, { message: string }>).first_name
@@ -42,6 +47,7 @@ const ClientInformation = () => {
             id="lastName"
             placeholder="Enter your last name"
             {...register("client.last_name", { required: "Field is required" })}
+            defaultValue={user?.last_name}
           />
           {errors.client &&
             (errors.client as Record<string, { message: string }>).last_name
@@ -61,6 +67,7 @@ const ClientInformation = () => {
             id="contactNumber"
             placeholder="Enter your phone number"
             {...register("client.phone", { required: "Field is required" })}
+            defaultValue={user?.phone_num}
           />
           {errors.client &&
             (errors.client as Record<string, { message: string }>).phone
@@ -87,6 +94,7 @@ const ClientInformation = () => {
                 message: "Invalid email address",
               },
             })}
+            defaultValue={user?.email}
           />
           {errors.client &&
             (errors.client as Record<string, { message: string }>).email
@@ -106,6 +114,7 @@ const ClientInformation = () => {
             id="address"
             placeholder="Enter your address"
             {...register("client.address")}
+            defaultValue={user?.address}
           />
         </div>
 
@@ -115,6 +124,7 @@ const ClientInformation = () => {
             id="nic"
             placeholder="Enter your NIC number"
             {...register("client.nic", { required: "Field is required" })}
+            defaultValue={user?.nic}
           />
           {errors.client &&
             (errors.client as Record<string, { message: string }>).nic

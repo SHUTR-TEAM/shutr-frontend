@@ -9,44 +9,57 @@ import {
 import styles from "./index.module.css";
 
 import GallerySection from "./GallerySection";
-import CustomerReviews from "./CustomerReviews/customerReviews";
+import "react-calendar/dist/Calendar.css";
+import "./calendar.css";
 
-import Calendar from "./Calendar/calendar";
+// import Calendar from "./Calendar/calendar";
 import { useState, useEffect } from "react";
 import ProfileHeader from "./ProfileHeader";
 import { Edit2 } from "lucide-react";
 import Packages from "./Packages/packages";
 import SocialLinks from "./SocialLinks";
 import { LoadingSpinner } from "./LoadingSpinner";
+import CustomerReviews from "./CustomerReviews";
+import { usePathname } from "next/navigation";
+import Calendar from "react-calendar";
 
 const Portfolio = () => {
-  const [currentMonth, setCurrentMonth] = useState(0);
-  const [currentYear, setCurrentYear] = useState(2025);
-
-  const handlePrevMonth = () => {
-    if (currentMonth === 0) {
-      setCurrentMonth(11);
-      setCurrentYear(currentYear - 1);
-    } else {
-      setCurrentMonth(currentMonth - 1);
-    }
-  };
-
-  const handleNextMonth = () => {
-    if (currentMonth === 11) {
-      setCurrentMonth(0);
-      setCurrentYear(currentYear + 1);
-    } else {
-      setCurrentMonth(currentMonth + 1);
-    }
-  };
-
   const dispatch: AppDispatch = useDispatch();
+  const pathname = usePathname();
+  const portfolioId = pathname.split("/").pop();
 
   useEffect(() => {
     // fetch by id portfolio
-    dispatch(getByIdportfolio({ participantId: "" }));
-  }, [dispatch]);
+    if (portfolioId) {
+      dispatch(getByIdportfolio({ participantId: portfolioId }));
+    }
+  }, [dispatch, portfolioId]);
+
+  // const [currentMonth, setCurrentMonth] = useState(0);
+  // const [currentYear, setCurrentYear] = useState(2025);
+
+  // const handlePrevMonth = () => {
+  //   if (currentMonth === 0) {
+  //     setCurrentMonth(11);
+  //     setCurrentYear(currentYear - 1);
+  //   } else {
+  //     setCurrentMonth(currentMonth - 1);
+  //   }
+  // };
+
+  // const handleNextMonth = () => {
+  //   if (currentMonth === 11) {
+  //     setCurrentMonth(0);
+  //     setCurrentYear(currentYear + 1);
+  //   } else {
+  //     setCurrentMonth(currentMonth + 1);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   // fetch by id portfolio
+  //   dispatch(getByIdportfolio({ participantId: "" }));
+  // }, [dispatch]);
 
   const activePortfolio = useSelector(
     (state: RootState) => state.portfolio.activePortfolio
@@ -58,7 +71,11 @@ const Portfolio = () => {
   const Profile = activePortfolio?.data;
   // const Review = activeReview?.data;
 
-  const [updatedName, setUpdatedName] = useState(Profile?.name || "");
+  const [updatedName, setUpdatedName] = useState(
+    Profile?.photographer?.first_name +
+      " " +
+      Profile?.photographer?.last_name || ""
+  );
   const [updatedDescription, setUpdatedDescription] = useState(
     Profile?.description || ""
   );
@@ -71,8 +88,12 @@ const Portfolio = () => {
   useEffect(() => {
     // Update state when Profile data changes
     if (Profile) {
-      setUpdatedName(Profile.name);
-      setUpdatedDescription(Profile.description);
+      setUpdatedName(
+        Profile?.photographer?.first_name +
+          " " +
+          Profile?.photographer?.last_name
+      );
+      setUpdatedDescription(Profile?.description);
     }
   }, [Profile]);
 
@@ -83,10 +104,16 @@ const Portfolio = () => {
       formData.append("description", tempDescription || updatedDescription);
 
       // Dispatch update action
-      await dispatch(updateByIdportfolio({ formData })).unwrap();
+      if (portfolioId) {
+        dispatch(
+          updateByIdportfolio({ formData, participantId: portfolioId })
+        ).unwrap();
+      }
 
       // Fetch updated portfolio data
-      dispatch(getByIdportfolio({ participantId: "" }));
+      if (portfolioId) {
+        dispatch(getByIdportfolio({ participantId: portfolioId }));
+      }
 
       // Update the main state after saving
       setUpdatedName(tempName || updatedName);
@@ -100,18 +127,28 @@ const Portfolio = () => {
     }
   };
 
+  const disabledDates = [new Date(2025, 2, 15), new Date(2025, 2, 20)];
+
   return (
     <>
       <main className={styles.portfolio}>
         <div className={styles.banner}>
           <div>
             {Profile ? (
-              <div key={Profile.id}>
+              <div key={Profile?.id}>
                 <ProfileHeader
-                  id={Profile.id}
+                  id={Profile?.id}
                   name={updatedName}
-                  coverImageUrl={Profile.Background_image_url}
-                  profileImageUrl={Profile.profile_image_url}
+                  coverImageUrl={
+                    Profile?.Background_image_url
+                      ? Profile?.Background_image_url
+                      : "/aboutUs.jpeg"
+                  }
+                  profileImageUrl={
+                    Profile?.profile_image_url
+                      ? Profile?.profile_image_url
+                      : "/avatar.jpeg"
+                  }
                 />
               </div>
             ) : (
@@ -157,27 +194,25 @@ const Portfolio = () => {
           <div>
             <div className={styles.description}>
               {/* <button > <p>Edit Profile</p></button>     */}
-              <div>
-                <div className={styles.container}>
-                  <h2>Description</h2>
-                  <div>
-                    <button
-                      onClick={() => setShowEditModal(true)}
-                      className={styles.edit_button}
-                    >
-                      <Edit2 size={20} color="black" />
-                    </button>
-                  </div>
+              <div className={styles.container}>
+                <h3>Description</h3>
+                <div>
+                  <button
+                    onClick={() => setShowEditModal(true)}
+                    className={styles.edit_button}
+                  >
+                    <Edit2 size={20} color="black" />
+                  </button>
                 </div>
-
-                <br />
-
-                <p className={styles.iconContainer}>
-                  {updatedDescription?.trim()
-                    ? updatedDescription
-                    : "No description available"}
-                </p>
               </div>
+
+              <br />
+
+              <p className={styles.iconContainer}>
+                {updatedDescription?.trim()
+                  ? updatedDescription
+                  : "No description available"}
+              </p>
             </div>
 
             <section>
@@ -185,23 +220,42 @@ const Portfolio = () => {
             </section>
 
             <div>
-              <GallerySection />
+              <GallerySection
+                photographerId={
+                  Profile?.photographer?.id ? Profile?.photographer?.id : ""
+                }
+              />
             </div>
           </div>
 
           <div className={styles.calendar}>
-            <Calendar
+            {/* <Calendar
               currentMonth={currentMonth}
               currentYear={currentYear}
               onPrevMonth={handlePrevMonth}
               onNextMonth={handleNextMonth}
+            /> */}
+
+            <Calendar
+              tileDisabled={({ date }) =>
+                disabledDates.some(
+                  (disabledDate) =>
+                    date.getFullYear() === disabledDate.getFullYear() &&
+                    date.getMonth() === disabledDate.getMonth() &&
+                    date.getDate() === disabledDate.getDate()
+                )
+              }
             />
             <Packages />
           </div>
         </div>
 
         <div>
-          <CustomerReviews />
+          <CustomerReviews
+            photographerId={
+              Profile?.photographer?.id ? Profile?.photographer?.id : ""
+            }
+          />
         </div>
       </main>
     </>

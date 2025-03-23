@@ -51,7 +51,7 @@ const DesktopNavbar = () => {
         <Link href="/" className={styles.navLink}>
           Home
         </Link>
-        <Link href="/maintenance" className={styles.navLink}>
+        <Link href="/Search" className={styles.navLink}>
           Find a Photographer
         </Link>
         <Link href="/#about" className={styles.navLink}>

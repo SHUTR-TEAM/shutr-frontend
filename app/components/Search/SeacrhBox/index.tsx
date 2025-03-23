@@ -1,5 +1,5 @@
 "use client";
-import { useEffect ,useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./index.module.css";
 import { IoSearch } from "react-icons/io5";
@@ -16,12 +16,19 @@ import ErrorSection from "../ErrorSection";
 import Pagination from "../Pagination/Pagination";
 
 export default function SearchBox() {
-
   //Allows us to send actions to Redux.
-  const dispatch = useDispatch<AppDispatch>(); 
+  const dispatch = useDispatch<AppDispatch>();
 
-  const { searchTerm, results, defaultResults, loading, error ,sortBy,filters} = useSelector(
-    (state: RootState) => state.search //get the search state from the redux 
+  const {
+    searchTerm,
+    results,
+    defaultResults,
+    loading,
+    error,
+    sortBy,
+    filters,
+  } = useSelector(
+    (state: RootState) => state.search //get the search state from the redux
   );
 
   const [selectedSort, setSelectedSort] = useState("relevant");
@@ -63,20 +70,18 @@ export default function SearchBox() {
     const sortValue = event.target.value;
     setSelectedSort(sortValue);
     dispatch(setSortBy(sortValue));
-  
+
     dispatch(fetchFilteredResults()); // Fetch sorted results with the search term
-  };  
-  
+  };
+
   // Fetch default results on first load
   useEffect(() => {
     dispatch(fetchFilteredResults());
-  }, [dispatch, selectedSort, filters,searchTerm]); 
-  
+  }, [dispatch, selectedSort, filters, searchTerm]);
 
   return (
     <div>
       <div className={styles["search-bar-container"]}>
-
         <div className={styles["searchSection"]}>
           <div className={styles["search-box"]}>
             <IoSearch className={styles["search-icon"]} />
@@ -85,8 +90,8 @@ export default function SearchBox() {
               className={styles["search-input"]}
               placeholder="Search"
               value={searchTerm}
-              onChange={handleInputChange} 
-              onKeyDown={handleKeyDown} 
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
             />
           </div>
           <div>
@@ -94,7 +99,7 @@ export default function SearchBox() {
               Search
             </button>
           </div>
-        </div>  
+        </div>
 
         <div className={styles["filterSection"]}>
           <div className={styles["sort-by-container"]}>
@@ -113,28 +118,37 @@ export default function SearchBox() {
             </select>
           </div>
         </div>
+      </div>
 
-      </div>   
-   
       <div className={styles.cardSection}>
-
-        {!loading && !error && Array.isArray(results) && results.length === 0 &&
-          (searchTerm.trim() !== "" || Object.values(filters || {}).some(value => value !== "")) && (
-          <ErrorSection />
-        )}
+        {!loading &&
+          !error &&
+          Array.isArray(results) &&
+          results.length === 0 &&
+          (searchTerm.trim() !== "" ||
+            Object.values(filters || {}).some((value) => value !== "")) && (
+            <ErrorSection />
+          )}
 
         {!loading && !error && Array.isArray(results) && results.length > 0 && (
-          <><Card data={results} /><Pagination /></>
+          <>
+            <Card data={results} />
+            <Pagination />
+          </>
         )}
 
-        {!loading && !error && Array.isArray(results) && results.length === 0 &&
+        {!loading &&
+          !error &&
+          Array.isArray(results) &&
+          results.length === 0 &&
           searchTerm.trim() === "" &&
           Object.values(filters || {}).every((value) => value === "") && (
-            <><Card data={defaultResults} /><Pagination /></>
-        )}        
-        
+            <>
+              <Card data={defaultResults} />
+              <Pagination />
+            </>
+          )}
       </div>
-      
     </div>
   );
 }

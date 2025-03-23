@@ -83,20 +83,15 @@ export const getByIdportfolio = createAsyncThunk(
       headers: {
         "Content-Type": "application/json",
       },
-      params: {
-        participantId,
-      },
     };
     console.log(config);
     try {
       return await axios
-        .get("http://127.0.0.1:8000/api/headers/67ab65b24cb48a7c886d0dfa")
+        .get(`http://127.0.0.1:8000/api/headers/${participantId}`)
         .then((res) => res.data);
     } catch (error) {
       const e = error as AxiosError;
-      return rejectWithValue(
-        e.message
-      ); /*67ab65b24cb48a7c886d0dfa         67acf4d1ce9e81d9345dc6ee*/
+      return rejectWithValue(e.message);
     }
   }
 );
@@ -118,15 +113,13 @@ export const getByIdportfolio = createAsyncThunk(
 export const updateByIdportfolio = createAsyncThunk(
   "portfolio/update-by-id",
   async (
-    {
-      /*participantId,*/ formData,
-    }: { /*participantId: "67ab65b24cb48a7c886d0dfa ";*/ formData: FormData },
+    { formData, participantId }: { formData: FormData; participantId: string },
     { rejectWithValue }
   ) => {
     try {
       const response = await axios.post(
         // `http://127.0.0.1:8000/api/headers/${participantId}/update/`,
-        `http://127.0.0.1:8000/api/headers/67ab65b24cb48a7c886d0dfa/update`,
+        `http://127.0.0.1:8000/api/headers/${participantId}/update`,
 
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
@@ -241,14 +234,13 @@ export const postReview = createAsyncThunk(
   "review/post",
   async (
     {
-      userID,
-      /*photographerID*/ portfolioID,
+      user_id,
+      photographer_id,
       rating,
       reviewText,
     }: {
-      userID: string;
-      // photographerID: string;
-      portfolioID: string;
+      user_id: string;
+      photographer_id: string;
       rating: number;
       reviewText: string;
     },
@@ -258,9 +250,8 @@ export const postReview = createAsyncThunk(
       const response = await axios.post(
         "http://127.0.0.1:8000/api/reviews/create",
         {
-          userID,
-          // photographerID,
-          portfolioID,
+          user_id,
+          photographer_id,
           rating,
           reviewText,
         }

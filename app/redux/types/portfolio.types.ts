@@ -1,5 +1,3 @@
-//import { User } from "./user.types";
-
 import { User } from "./user.types";
 
 export interface PortfolioState {
@@ -51,7 +49,7 @@ export interface ActivePackages {
   isLoading: boolean;
   isSuccessful: boolean;
   serverPortfolio: string;
-  data: Packages | null;
+  data: Package | null;
 }
 
 export interface CreatePortfolio {
@@ -64,10 +62,19 @@ export interface CreatePortfolio {
 export interface Portfolio {
   id: string;
   name: string;
+  description: string;
+  photographer: User;
   Background_image_url: string;
   profile_image_url: string;
-  results: string[];
-  description: string;
+  images: Gallery[];
+  social_links: SocialLinks;
+  packages: Package[];
+  reviews: number;
+  rating: number;
+  min_price: number | null;
+  max_price: number | null;
+  created_at: number | null;
+  updated_at: number | null;
 }
 
 export interface Gallery {
@@ -91,20 +98,7 @@ export interface SocialLinks {
   linkedin: string;
 }
 
-// export interface PackageDetail {
-//   id: string;
-//   text: string;
-// }
-
-// export interface Packages{
-//     id : string;
-//     title : string;
-//     description : string;
-//     details : PackageDetail[];
-//     price : string;
-// }
-
-export interface Packages {
+export interface Package {
   id: string;
   title: string;
   description: string;
