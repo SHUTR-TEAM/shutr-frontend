@@ -18,7 +18,7 @@ import { RootState, AppDispatch } from "@/app/redux/store";
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
-      dispatch(getByIdreview({ participantId: "67db026680a585e2d2cd7439" }));
+      dispatch(getByIdreview({ /*participantId: "67db026680a585e2d2cd7439"*/ portfolioID: "67ab65b24cb48a7c886d0dfa" }));
     }, [dispatch]);
 
     const activeReview = useSelector((state: RootState) => state.portfolio.activeReview) ;
@@ -34,14 +34,15 @@ import { RootState, AppDispatch } from "@/app/redux/store";
 
       const reviewData = {
         userID: "67db026680a585e2d2cd7439", // Replace with dynamic user ID
-        photographerID: "67db026680a585e2d2cd7439", // Replace with dynamic photographer ID
+        // photographerID: "67db026680a585e2d2cd7439", // Replace with dynamic photographer ID
+        portfolioID: "67ab65b24cb48a7c886d0dfa",
         rating: newReview.rating,
         reviewText: newReview.reviewText,
       };
 
       try {
         await dispatch(postReview(reviewData));
-        await dispatch(getByIdreview({ participantId: "67db026680a585e2d2cd7439" }));
+        await dispatch(getByIdreview({ portfolioID: "67ab65b24cb48a7c886d0dfa" }));
       } catch (error) {
         console.error("Error submitting review:", error);
       } finally {
@@ -67,7 +68,7 @@ import { RootState, AppDispatch } from "@/app/redux/store";
         .catch((err) => {
           console.error("Error deleting review:", err);
         });
-        await dispatch(getByIdreview({ participantId: "67db026680a585e2d2cd7439" }));
+        await dispatch(getByIdreview({ portfolioID: "67ab65b24cb48a7c886d0dfa" }));
 
     };
 

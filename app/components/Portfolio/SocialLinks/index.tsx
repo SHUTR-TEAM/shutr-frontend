@@ -20,7 +20,7 @@ const SocialLinks = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-        dispatch(getSocialLinksByPhotographer({ photographerId: "67db026680a585e2d2cd7439" }));
+        dispatch(getSocialLinksByPhotographer({ portfolioID: "67ab65b24cb48a7c886d0dfa" }));
       }, [dispatch]);
 
   const activeSocialLinks = useSelector((state: RootState) => state.portfolio.activeSocialLinks) ;
@@ -47,10 +47,10 @@ useEffect(() => {
 
 const handleSaveChanges = async () => {
     // Dispatch Redux action to save updated social links to backend
-    await dispatch(updateSocialLinks({ photographerId: "67db026680a585e2d2cd7439", socialLinks: tempLinks }));
+    await dispatch(updateSocialLinks({ portfolioID: "67ab65b24cb48a7c886d0dfa", socialLinks: tempLinks }));
 
     // After saving the changes, fetch the updated social links from the backend
-    dispatch(getSocialLinksByPhotographer({ photographerId: "67db026680a585e2d2cd7439" }));
+    dispatch(getSocialLinksByPhotographer({ portfolioID: "67ab65b24cb48a7c886d0dfa" }));
 
     setShowEditModal(false); // Close the modal
   };

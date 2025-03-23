@@ -131,7 +131,9 @@ export default function ProfileHeader({
       await dispatch(getByIdportfolio({ participantId })).unwrap();
 
     } catch (error) {
-      console.error("Upload failed:", error);
+      // console.error("Upload failed:", error);
+      console.log("Upload failed:", error);
+
     }
   };
 

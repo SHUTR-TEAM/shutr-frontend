@@ -46,12 +46,12 @@ const Portfolio= () => {
   }, [dispatch]);
 
   const activePortfolio = useSelector((state: RootState) => state.portfolio.activePortfolio) || { results: [] };
-  const activeReview = useSelector((state: RootState) => state.portfolio.activeReview) || { results: [] };
+  // const activeReview = useSelector((state: RootState) => state.portfolio.activeReview) || { results: [] };
 
   console.log("active portfolio : ",activePortfolio)
 
   const Profile = activePortfolio?.data ;
-  const Review = activeReview?.data;
+  // const Review = activeReview?.data;
 
 
   const [updatedName, setUpdatedName] = useState(Profile?.name || "");

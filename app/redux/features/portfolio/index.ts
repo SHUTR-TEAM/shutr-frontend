@@ -37,6 +37,13 @@ const initialState: PortfolioState = {
       data: null,
     },
 
+    activePackages: {
+      isLoading: false,
+      isSuccessful: false,
+      serverPortfolio: "",
+      data: null,
+    },
+
     createPortfolio: {
       isLoading: false,
       isSuccessful: false,
@@ -84,7 +91,7 @@ const initialState: PortfolioState = {
        return await axios.get("http://127.0.0.1:8000/api/headers/67ab65b24cb48a7c886d0dfa").then((res) => res.data);
       } catch (error) {
         const e = error as AxiosError;
-        return rejectWithValue(e.message);
+        return rejectWithValue(e.message);    /*67ab65b24cb48a7c886d0dfa         67acf4d1ce9e81d9345dc6ee*/
       }
     }
   );
@@ -213,9 +220,10 @@ const initialState: PortfolioState = {
   export const postReview = createAsyncThunk(
     "review/post",
     async (
-      { userID, photographerID, rating, reviewText }: { 
+      { userID, /*photographerID*/ portfolioID, rating, reviewText }: { 
         userID: string; 
-        photographerID: string; 
+        // photographerID: string; 
+        portfolioID: string
         rating: number; 
         reviewText: string; 
       }, 
@@ -224,7 +232,8 @@ const initialState: PortfolioState = {
       try {
         const response = await axios.post("http://127.0.0.1:8000/api/reviews/create", {
           userID,
-          photographerID,
+          // photographerID,
+          portfolioID,
           rating,
           reviewText
         });
@@ -240,11 +249,11 @@ const initialState: PortfolioState = {
 
   export const getByIdreview = createAsyncThunk(
     "review/get-by-id",
-    async ({ participantId }: { participantId: string }, { rejectWithValue }) => {
+    async ({ portfolioID }: { portfolioID: string }, { rejectWithValue }) => {
       try {
         // Use the participantId dynamically in the URL
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/reviews/photographer/${participantId}`
+          `http://127.0.0.1:8000/api/reviews/photographer/${portfolioID}`
         );
         return response.data; // Return the data from the response
       } catch (error) {
@@ -305,11 +314,11 @@ const initialState: PortfolioState = {
 
   export const getSocialLinksByPhotographer = createAsyncThunk(
     "socialLinks/get-by-photographer",
-    async ({ photographerId }: { photographerId: string }, { rejectWithValue }) => {
+    async ({ portfolioID }: { portfolioID: string }, { rejectWithValue }) => {
       try {
         // Use the photographerId dynamically in the API endpoint
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/SocialLinks/photographer/${photographerId}`
+          `http://127.0.0.1:8000/api/SocialLinks/photographer/${portfolioID}`
         );
         return response.data; // Return the data from the response
       } catch (error) {
@@ -323,11 +332,11 @@ const initialState: PortfolioState = {
 
   export const updateSocialLinks = createAsyncThunk(
     "socialLinks/update",
-    async ({ photographerId, socialLinks }: { photographerId: string, socialLinks: SocialLinks }, { rejectWithValue }) => {
+    async ({ portfolioID, socialLinks }: { portfolioID: string, socialLinks: SocialLinks }, { rejectWithValue }) => {
       try {
         // Send the updated social links to the backend
         const response = await axios.post(
-          `http://127.0.0.1:8000/api/SocialLinks/photographer/update/${photographerId}`,
+          `http://127.0.0.1:8000/api/SocialLinks/photographer/update/${portfolioID}`,
           socialLinks
         );
         return response.data; // Return the response data (you can modify this if needed)
@@ -353,7 +362,108 @@ const initialState: PortfolioState = {
       }
     }
   );
-  
+
+
+
+/* Package */
+
+
+
+// export const postPackage = createAsyncThunk(
+//   "portfolio/postPackage",
+//   async (
+//     {
+//       title,
+//       description,
+//       price,
+//       details,
+//     }: { title: string; description: string; price: string; details: string[] },
+//     { rejectWithValue }
+//   ) => {
+//     try {
+//       const response = await axios.post("http://127.0.0.1:8000/api/packages/create", {
+//         title,
+//         description,
+//         price,
+//         details,
+//       });
+
+//       return response.data; // This will contain the "message" and "package_id" from the backend
+//     } catch (error) {
+//       const e = error as AxiosError;
+//       return rejectWithValue(e.response?.data || e.message);
+//     }
+//   }
+// );
+
+export const postPackage = createAsyncThunk(
+  "portfolio/postPackage",
+  async (
+    {
+      //  userID, // Include userID
+      portfolio_id,
+      title,
+      description,
+      price,
+      details,
+    }: { portfolio_id  /*userID*/: string; title: string; description: string; price: string; details: string[] },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/api/packages/create", {
+        // userID, // Add userID to request body
+        portfolio_id,
+        title,
+        description,
+        price,
+        details,
+      });
+
+      return response.data; // Backend response (message + package_id)
+    } catch (error) {
+      const e = error as AxiosError;
+      return rejectWithValue(e.response?.data || e.message);
+    }
+  }
+);
+
+
+
+
+export const getPackagesByPhotographer = createAsyncThunk(
+  "packages/getByPhotographer",
+  async ({ participantId }: { participantId: string }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/packages/photographer/${participantId}`
+      );
+      return response.data; // Return the retrieved package data
+    } catch (error) {
+      const e = error as AxiosError;
+      return rejectWithValue(e.message); // Handle errors properly
+    }
+  }
+);
+
+
+
+
+export const getPackagesByPortfolio = createAsyncThunk(
+  "packages/getByPortfolio",
+  async ({ portfolioId }: { portfolioId: string }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/packages/portfolio/${portfolioId}`
+      );
+      return response.data; // Return the retrieved package data
+    } catch (error) {
+      const e = error as AxiosError;
+      return rejectWithValue(e.response?.data || e.message); // Handle errors properly
+    }
+  }
+);
+
+
 
 
 
@@ -429,6 +539,40 @@ const initialState: PortfolioState = {
           };
         });
 
+        // Pending
+        builder.addCase(createSocialLinks.pending, (state) => {
+          state.activeSocialLinks = {
+            isLoading: true,
+            isSuccessful: false,
+            serverPortfolio:"",
+            data : null,
+          };
+        });
+
+
+        // Pending
+        builder.addCase(updateSocialLinks.pending, (state) => {
+          state.activeSocialLinks = {
+            isLoading: true,
+            isSuccessful: false,
+            serverPortfolio:"",
+            data : null,
+          };
+        });
+        
+
+        // Pending
+        builder.addCase(getPackagesByPortfolio.pending, (state) => {
+          state.activePackages = {
+            isLoading: true,
+            isSuccessful: false,
+            serverPortfolio:"",
+            data : null,
+          };
+        });
+
+
+
         // Fulfilled
             builder.addCase(getAllportfolio.fulfilled, (state, action) => {
               state.allPortfolio = {
@@ -484,6 +628,16 @@ const initialState: PortfolioState = {
             // Fulfilled
             builder.addCase(getSocialLinksByPhotographer.fulfilled, (state, action) => {
               state.activeSocialLinks = {
+                isLoading: false,
+                isSuccessful: true,
+                serverPortfolio: "",
+                data: action.payload,
+              };
+            });
+
+             // Fulfilled
+            builder.addCase(getPackagesByPortfolio.fulfilled, (state, action) => {
+              state.activePackages = {
                 isLoading: false,
                 isSuccessful: true,
                 serverPortfolio: "",
@@ -552,6 +706,8 @@ const initialState: PortfolioState = {
                 data:  null,
               }
             })
+
+            
     },
   });
 

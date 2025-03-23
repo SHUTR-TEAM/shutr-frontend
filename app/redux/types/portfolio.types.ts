@@ -9,6 +9,7 @@ export interface PortfolioState {
   activeGallery : ActiveGallery;
   activeReview : ActiveReview ;
   activeSocialLinks : ActiveSocialLinks;
+  activePackages : ActivePackages;
 }
 
 export interface AllPortfolio {
@@ -46,12 +47,21 @@ export interface ActiveSocialLinks{
   data : SocialLinks | null;
 }
 
+export interface ActivePackages{
+  isLoading : boolean ;
+  isSuccessful : boolean ;
+  serverPortfolio : string;
+  data : Packages | null;
+}
+
 export interface CreatePortfolio {
   isLoading: boolean;
   isSuccessful: boolean;
   serverPortfolio: string;
   data: Portfolio | null;
 }
+
+
 
 
 
@@ -83,4 +93,28 @@ export interface SocialLinks {
     instagram: string;
     twitter: string;
     linkedin: string;
+}
+
+
+// export interface PackageDetail {
+//   id: string;
+//   text: string;
+// }
+
+
+// export interface Packages{
+//     id : string;
+//     title : string;
+//     description : string;
+//     details : PackageDetail[];
+//     price : string;
+// }
+
+
+export interface Packages {
+  id: string;
+  title: string;
+  description: string;
+  details: string[]; // Array of strings, matching backend
+  price: string;
 }
