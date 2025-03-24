@@ -9,27 +9,28 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
+import { User } from "@/app/redux/types/user.types";
 
 //Defining type
-interface Item {
-  id?: number;
-  images: string[];
-  name: string;
-  price: number;
-  description: string;
-  tags: string[];
-  location: string;
-  reviews: number;
-  rating: number;
-}
+// interface Item {
+//   id?: number;
+//   images: string[];
+//   name: string;
+//   price: number;
+//   description: string;
+//   tags: string[];
+//   location: string;
+//   reviews: number;
+//   rating: number;
+// }
 
 interface CardsProps {
-  data: Item[];
+  data: User[];
 }
 
 const Card = ({ data }: CardsProps) => {
   const router = useRouter();
-  const handleCardClick = (id: number | undefined) => {
+  const handleCardClick = (id: string | undefined) => {
     if (id) {
       router.push(`/portfolio/${id}`);
     }
@@ -61,16 +62,16 @@ const Card = ({ data }: CardsProps) => {
       {data.map((item, index) => (
         <div
           key={item.id ?? index}
-          onClick={() => handleCardClick(item.id)}
+          onClick={() => handleCardClick(item.portfolio.id)}
           className={styles.card}
         >
           <div className={styles.cardImages}>
-            {Array.isArray(item.images) &&
-              item.images.slice(0, 3).map((image, index) => (
+            {Array.isArray(item.portfolio.images) &&
+              item.portfolio.images.slice(0, 3).map((image, index) => (
                 <div key={index} className={styles.imageWrapper}>
                   <Image
-                    src={image}
-                    alt={item.name}
+                    src={image.url}
+                    alt={item.first_name}
                     width={100}
                     height={80}
                     layout="responsive"
@@ -81,25 +82,28 @@ const Card = ({ data }: CardsProps) => {
           </div>
 
           <div className={styles.cardContent}>
-            <h4 className={styles.price}>From {item.price} LKR</h4>
-            <p className={styles.description}>{item.description}</p>
-            <div className={styles.tags}>
-              {item.tags.map((tag, index) => (
+            <h4 className={styles.price}>
+              From {item.portfolio.min_price ? item.portfolio.min_price : 10000}{" "}
+              LKR
+            </h4>
+            <p className={styles.description}>{item.portfolio.description}</p>
+            {/* <div className={styles.tags}>
+              {item.portfolio.tags.map((tag, index) => (
                 <span key={index} className={styles.tag}>
                   {tag}
                 </span>
               ))}
-            </div>
+            </div> */}
 
             <div className={styles.info}>
               <div>
-                <p className={styles.name}>{item.name}</p>
-                <p className={styles.location}>{item.location}</p>
+                <p className={styles.name}>{item.first_name}</p>
+                <p className={styles.location}>{item.address}</p>
               </div>
 
               <div className={styles.review}>
                 <p className={styles.reviews}>
-                  ({item.reviews}) {item.rating}
+                  ({item.portfolio.reviews}) {item.portfolio.rating}
                 </p>
                 <div className={styles.starIcon}>
                   <FaStar />

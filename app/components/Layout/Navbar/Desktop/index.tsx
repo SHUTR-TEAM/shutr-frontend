@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import { useLogoutMutation } from "@/app/redux/features/auth/authApiSlice";
 import { logout } from "@/app/redux/features/auth/authSlice";
+import { MdDashboard } from "react-icons/md";
 
 const DesktopNavbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -88,7 +89,11 @@ const DesktopNavbar = () => {
           >
             <li>
               <LuUser className={styles.icon} />
-              <Link href="/profile">Profile</Link>
+              <Link href={`/portfolio/${user.portfolio.id}`}>Profile</Link>
+            </li>
+            <li>
+              <MdDashboard className={styles.icon} />
+              <Link href={"/dashboard"}>Dashboard</Link>
             </li>
             <li>
               <LuCalendarRange className={styles.icon} />

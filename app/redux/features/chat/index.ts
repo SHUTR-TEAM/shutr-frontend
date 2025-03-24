@@ -5,7 +5,7 @@ import { webSocketManager } from "@/app/services/webSocketManager";
 import { Message } from "../../types/message.types";
 
 const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL;
-const ROUTE_URL = `${BACKEND_BASE_URL}/chat/rooms`;
+const ROUTE_URL = `${BACKEND_BASE_URL}/api/chat/rooms`;
 
 const initialState: ChatState = {
   allChats: {

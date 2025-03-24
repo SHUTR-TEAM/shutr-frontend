@@ -1,17 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { User } from "../types/user.types";
 
-interface Item {
-  id?: number;
-  images: string[];
-  name: string;
-  price: number;
-  description: string;
-  tags: string[];
-  location: string;
-  reviews: number;
-  rating: number;
-}
+// interface Item {
+//   id?: number;
+//   images: string[];
+//   name: string;
+//   price: number;
+//   description: string;
+//   tags: string[];
+//   location: string;
+//   reviews: number;
+//   rating: number;
+// }
 
 interface SearchState {
   searchTerm: string;
@@ -22,8 +23,8 @@ interface SearchState {
     availability: string;
     experienceLevel: string;
   };
-  results: Item[];           // Filtered results
-  defaultResults: Item[];    // Default homepage results
+  results: User[]; // Filtered results
+  defaultResults: User[]; // Default homepage results
   loading: boolean;
   error: string | null;
   sortBy: string;
@@ -32,7 +33,7 @@ interface SearchState {
   total: number;
 }
 
-//default values of the state when the application starts or when the Redux store is first created. 
+//default values of the state when the application starts or when the Redux store is first created.
 const initialState: SearchState = {
   searchTerm: "",
   filters: {
@@ -71,6 +72,7 @@ export const fetchFilteredResults = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
+      console.log(error);
       return rejectWithValue("Failed to fetch filtered results");
     }
   }
@@ -79,20 +81,24 @@ export const fetchFilteredResults = createAsyncThunk(
 // Async thunk to fetch default results
 export const fetchDefaultResults = createAsyncThunk(
   "search/fetchDefaultResults",
-  async ({ sortBy, limit }: { sortBy: string; limit: number }, { rejectWithValue }) => {
+  async (
+    { sortBy, limit }: { sortBy: string; limit: number },
+    { rejectWithValue }
+  ) => {
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/users", {
         params: { sortBy, page: 1, limit },
       });
       return response.data;
     } catch (error) {
+      console.log(error);
       return rejectWithValue("Failed to fetch default results");
     }
   }
 );
 
 const searchSlice = createSlice({
-  name: "search",  
+  name: "search",
   //This ensures the Redux store starts with default values.
   initialState,
 
@@ -100,7 +106,7 @@ const searchSlice = createSlice({
     // Update the search term with the user's input
     setSearchTerm: (state, action) => {
       state.searchTerm = action.payload;
-      state.page = 1;    // Reset to page 1
+      state.page = 1; // Reset to page 1
     },
     //Resets results to an empty array.
     clearSearchResults: (state) => {
@@ -126,42 +132,42 @@ const searchSlice = createSlice({
     },
   },
 
-   // Handle state updates based on async thunk actions
+  // Handle state updates based on async thunk actions
   extraReducers: (builder) => {
     builder
 
-    //Filtered Results
-    .addCase(fetchFilteredResults.pending, (state) => {
-      state.loading = true;
-      state.error = null;
-    })
-    .addCase(fetchFilteredResults.fulfilled, (state, action) => {
-      state.loading = false;
-      state.results = action.payload.results;
-      state.total = action.payload.total;
-      state.page = action.payload.page;
-      state.limit = action.payload.limit;
-    })
-    .addCase(fetchFilteredResults.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload as string;
-    })
+      //Filtered Results
+      .addCase(fetchFilteredResults.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchFilteredResults.fulfilled, (state, action) => {
+        state.loading = false;
+        state.results = action.payload.results;
+        state.total = action.payload.total;
+        state.page = action.payload.page;
+        state.limit = action.payload.limit;
+      })
+      .addCase(fetchFilteredResults.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
 
-    // Default Results
-    .addCase(fetchDefaultResults.pending, (state) => {
-      state.loading = true;
-    })
-    .addCase(fetchDefaultResults.fulfilled, (state, action) => {
-      state.loading = false;
-      state.defaultResults = action.payload.results;
-      state.total = action.payload.total;
-      state.page = action.payload.page;
-      state.limit = action.payload.limit;
-    })
-    .addCase(fetchDefaultResults.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload as string;
-    });    
+      // Default Results
+      .addCase(fetchDefaultResults.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchDefaultResults.fulfilled, (state, action) => {
+        state.loading = false;
+        state.defaultResults = action.payload.results;
+        state.total = action.payload.total;
+        state.page = action.payload.page;
+        state.limit = action.payload.limit;
+      })
+      .addCase(fetchDefaultResults.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
   },
 });
 
@@ -175,4 +181,4 @@ export const {
   setLimit,
 } = searchSlice.actions;
 
-export default searchSlice.reducer;  //searchSlice.reducer=searchReducer
+export default searchSlice.reducer; //searchSlice.reducer=searchReducer

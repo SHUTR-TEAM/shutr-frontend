@@ -1,6 +1,6 @@
-'use client';
-import { FC } from 'react';
-import styles from './index.module.css';
+"use client";
+import { FC } from "react";
+import styles from "./index.module.css";
 
 // Define Booking Type
 interface Booking {
@@ -23,7 +23,8 @@ const BookingDetailsCom: FC<{ booking: Booking }> = ({ booking }) => {
   // Destructure event details from the booking object
   const { type, date, address } = booking.event;
   const packageType = booking.package_id || "N/A";
-  const price = `$${booking.payment?.total_amount.toFixed(2)}`;
+  // const price = `$${booking.payment?.total_amount.toFixed(2)}`;
+  const price = "100000 LKR";
 
   return (
     <div className={styles.bookingDetails}>
@@ -55,4 +56,4 @@ const BookingDetailsCom: FC<{ booking: Booking }> = ({ booking }) => {
   );
 };
 
-export default BookingDetailsCom
+export default BookingDetailsCom;
