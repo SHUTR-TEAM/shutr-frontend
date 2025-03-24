@@ -1,0 +1,100 @@
+.mainContainer {
+    min-height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+    width: 100%;
+    padding: 20px;
+    border-radius: 18px;
+}
+.container {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: center;
+    width: 90%;
+    animation: fadeIn 0.4s ease-in-out;
+}
+.errorMsgContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.errorMsg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+    border-radius: 10px;
+    background: #f2eded;
+    box-shadow: 0px 2px 8px rgba(255, 0, 0, 0.1);
+    width: 90%;
+    transition: all 0.3s ease-in-out;
+}
+.errorMsg p {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2a2a2a;
+    margin-top: 20px;
+    text-align: center;
+}
+.errorImage{
+    animation: bounce 1.5s infinite;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+@media (max-width: 768px) {
+    .mainContainer{
+        margin-top: 100px;
+    }
+    .container {
+        padding: 30px;
+        max-width: 90%;
+    }
+
+    .errorMsg {
+        padding: 20px;
+        max-width: 100%;
+    }
+
+    .errorMsg p {
+        font-size: 18px;
+    }
+}    
+@media (max-width: 480px) {
+    .mainContainer{
+        margin-top: 100px;
+    }
+    .container {
+        padding: 25px;
+        max-width: 95%;
+    }
+    .errorMsg {
+        padding: 15px;
+    }
+    .errorMsg p {
+        font-size: 16px;
+    }
+    .errorMsg::before {
+        font-size: 35px;
+    }
+}

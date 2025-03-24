@@ -1,184 +1,149 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styles from "./packages.module.css";
+import { AppDispatch, RootState } from "@/app/redux/store";
+import {
+  /*getPackagesByPhotographer,*/ getPackagesByPortfolio,
+  postPackage,
+} from "@/app/redux/features/portfolio";
+import PackageCard from "./PackageCard";
+import PackageEditModal from "./PackageEditModal";
+import router from "next/router";
+import { Edit2 } from "lucide-react";
+import { usePathname } from "next/navigation";
 
-import styles from './Packages.module.css';
+interface Package {
+  id: string;
+  title: string;
+  price: string;
+  description: string;
+  details: string[];
+}
 
+const hardcodedPackages: Package[] = [
+  {
+    id: "1",
+    title: "Basic Session",
+    price: "150",
+    description: "1-hour photo session with 10 edited photos",
+    details: ["1 hour of coverage", "10 edited photos", "Digital delivery"],
+  },
+];
 
+const Packages = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const pathname = usePathname();
+  const participantId = pathname.split("/").pop();
 
-  interface Package {
-    id: number;
-    title: string;
-    price: string;
-    description: string;
-    details: string[];
-    packageType: string;
-  }
-  
-  const Packages = () => {
-    const router = useRouter();
-  
-    const packages: Package[] = [
-      {
-        id: 1,
-        title: "Basic Session",
-        price: "$150",
-        description: "1-hour photo session with 10 edited photos",
-        details: ["1 hour of coverage", "10 edited photos", "Digital delivery"],
-        packageType: "basic",
-      },
-      {
-        id: 2,
-        title: "Premium Package",
-        price: "$300",
-        description: "2-hour photo session with 25 edited photos",
-        details: [
-          "2 hours of coverage",
-          "25 edited photos",
-          "Digital delivery",
-          "Print release",
-        ],
-        packageType: "premium",
-      },
-      {
-        id: 3,
-        title: "Premium Package",
-        price: "$300",
-        description: "2-hour photo session with 25 edited photos",
-        details: [
-          "2 hours of coverage",
-          "25 edited photos",
-          "Digital delivery",
-          "Print release",
-        ],
-        packageType: "premium",
-      },
-    ];
-  
-    const handleBookNow = (pkg: Package) => {
-      // Use query params instead of React Router's 'state'
-      router.push(`/booking?package=${pkg.packageType}`);
-    };
+  // Fetch packages from Redux on mount
+  useEffect(() => {
+    if (participantId) {
+      dispatch(getPackagesByPortfolio({ portfolioId: participantId }));
+    }
+  }, [dispatch, participantId]);
+
+  // Get Redux state
+  const activePackages = useSelector(
+    (state: RootState) => state.portfolio.activePackages
+  );
+
+  // Use Redux data if available; otherwise, use hardcoded data
+  const packagesData = Array.isArray(activePackages?.data)
+    ? activePackages.data
+    : hardcodedPackages;
+
+  // Local state for packages
+  const [packagesState, setPackagesState] = useState<Package[]>(packagesData);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingPackage, setEditingPackage] = useState<Package | null>(null);
+
+  // Update local state when Redux data updates
+  useEffect(() => {
+    setPackagesState(packagesData);
+  }, [packagesData]);
+
+  // Handlers
+  const handleEdit = (pkg: Package) => {
+    setEditingPackage(pkg);
+    setIsModalOpen(true);
+  };
+
+  const handleAdd = () => {
+    setEditingPackage(null);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = (id: string) => {
+    setPackagesState((prev) => prev.filter((pkg) => pkg.id !== id));
+  };
+
+  const handleSave = async (pkg: Package) => {
+    try {
+      if (participantId) {
+        const result = await dispatch(
+          postPackage({
+            portfolio_id: participantId,
+            title: pkg.title,
+            description: pkg.description,
+            price: pkg.price,
+            details: pkg.details,
+          })
+        ).unwrap();
+
+        console.log("Package created:", result);
+
+        // Update local state with new package
+        setPackagesState((prev) => [
+          ...prev,
+          { ...pkg, id: result.package_id },
+        ]);
+      }
+      setIsModalOpen(false);
+    } catch (error) {
+      console.log("Error creating package:", error);
+    }
+  };
+
+  const handleBookNow = () => {
+    router.push(`/booking`);
+  };
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.heading}>Packages</h2>
-      
-      
+      <div className={styles.header}>
+        <h2>Packages</h2>
+        <button className={styles.addButton} onClick={handleAdd}>
+          <Edit2 size={20} />
 
-      {packages.map((pkg) => (
-        <div key={pkg.id} className={styles.packageCard}>
-          <div className={styles.packageHeader}>
-            <h3 className={styles.packageTitle}>{pkg.title}</h3>
-            <span className={styles.packagePrice}>{pkg.price}</span>
-          </div>
-          <p className={styles.packageDescription}>{pkg.description}</p>
-          <ul className={styles.packageList}>
-            {pkg.details.map((detail, index) => (
-              <li key={index}>{detail}</li>
-            ))}
-          </ul>
-          <button
-            className={styles.bookButton}
-            onClick={() => handleBookNow(pkg)}
-          >
-            Book Now
-          </button>
-        </div>
-        
-      ))}
+          {/* Add Package */}
+        </button>
+      </div>
+      <div className={styles.packageGrid}>
+        {packagesState.map((pkg) => (
+          <PackageCard
+            key={pkg.id}
+            package={pkg}
+            onEdit={() => handleEdit(pkg)}
+            onDelete={() => handleDelete(pkg.id)}
+          />
+        ))}
+      </div>
+      <PackageEditModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSave={handleSave}
+        package={editingPackage}
+      />
 
-      <button className={styles.messageButton}>
-        <span className={styles.icon}>&#128172;</span> Message Photographer
-      </button>
+      {packagesState.length > 0 && (
+        <button className={styles.bookButton} onClick={handleBookNow}>
+          Book Now
+        </button>
+      )}
     </div>
   );
 };
+
 export default Packages;
-
-
-
-// "use client";
-
-// import { useEffect, useState } from "react";
-// import { useRouter } from "next/navigation";
-// import styles from "./Packages.module.css";
-
-// interface Package {
-//   _id: string;  // MongoDB uses `_id` instead of `id`
-//   title: string;
-//   price: string;
-//   description: string;
-//   details: string[];  // Keep details as an array
-//   package_type: string;
-// }
-
-// const Packages = () => {
-//   const router = useRouter();
-//   const [packages, setPackages] = useState<Package[]>([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState<string | null>(null);
-
-//   useEffect(() => {
-//     const fetchPackages = async () => {
-//       try {
-//         // const response = await fetch("http://localhost:8000/packages/"); // Update with your API URL
-//         const response = await fetch("http://127.0.0.1:8000/packages/");
-//         if (!response.ok) throw new Error("Failed to fetch packages");
-        
-//         const data: Package[] = await response.json();
-//         setPackages(data);
-//       } catch (err) {
-//         setError(err instanceof Error ? err.message : "Something went wrong");
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchPackages();
-//   }, []);
-
-//   const handleBookNow = (pkg: Package) => {
-//     router.push(`/booking?package=${pkg.package_type}`);
-//   };
-
-//   if (loading) return <p>Loading packages...</p>;
-//   if (error) return <p className={styles.error}>Error: {error}</p>;
-
-//   return (
-//     <div className={styles.container}>
-//       <h2 className={styles.heading}>Packages</h2>
-
-//       {packages.length > 0 ? (
-//         packages.map((pkg) => (
-//           <div key={pkg._id} className={styles.packageCard}>
-//             <div className={styles.packageHeader}>
-//               <h3 className={styles.packageTitle}>{pkg.title}</h3>
-//               <span className={styles.packagePrice}>{pkg.price}</span>
-//             </div>
-//             <p className={styles.packageDescription}>{pkg.description}</p>
-//             <ul className={styles.packageList}>
-//               {pkg.details.map((detail, index) => (
-//                 <li key={index}>{detail}</li>
-//               ))}
-//             </ul>
-//             <button
-//               className={styles.bookButton}
-//               onClick={() => handleBookNow(pkg)}
-//             >
-//               Book Now
-//             </button>
-//           </div>
-//         ))
-//       ) : (
-//         <p>No packages available</p>
-//       )}
-
-//       <button className={styles.messageButton}>
-//         <span className={styles.icon}>&#128172;</span> Message Photographer
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default Packages;

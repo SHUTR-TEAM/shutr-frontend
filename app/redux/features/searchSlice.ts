@@ -1,19 +1,19 @@
-//purpos - State Management, Fetching Search Data from the API, Handling Search Actions
-//search functionality with API requests using axios and manages search results in the Redux store.
-//createSlice: Helps create a Redux slice     / createAsyncThunk: Used to handle asynchronous API calls in Redux  
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { User } from "../types/user.types";
 
-interface FilterState {
-  category?: string;
-  minPrice?: number;
-  maxPrice?: number;
-  rating?: number;
-  sortBy?: string;
-}
+// interface Item {
+//   id?: number;
+//   images: string[];
+//   name: string;
+//   price: number;
+//   description: string;
+//   tags: string[];
+//   location: string;
+//   reviews: number;
+//   rating: number;
+// }
 
-//loading: Indicates if the data is loading (true/false).
-//why ? - TypeScript enforces strict type checking,
 interface SearchState {
   searchTerm: string;
   filters: {
@@ -23,28 +23,17 @@ interface SearchState {
     availability: string;
     experienceLevel: string;
   };
-  results: Item[]; // Array of search results
-  defaultResults: Item[]; // Default data when no search query
+  results: User[]; // Filtered results
+  defaultResults: User[]; // Default homepage results
   loading: boolean;
   error: string | null;
- 
+  sortBy: string;
+  page: number;
+  limit: number;
+  total: number;
 }
 
-//Defining the Item Interface
-interface Item {
-  id?: number;
-  images: string[];
-  name: string;
-  price: number;
-  description: string;
-  tags: string[];
-  location: string;
-  reviews: number;
-  rating: number;
-}
-
-// Initial state
-//default values of the state when the application starts or when the Redux store is first created. 
+//default values of the state when the application starts or when the Redux store is first created.
 const initialState: SearchState = {
   searchTerm: "",
   filters: {
@@ -58,44 +47,33 @@ const initialState: SearchState = {
   defaultResults: [],
   loading: false,
   error: null,
-  
+  sortBy: "relevant",
+  page: 1,
+  limit: 10,
+  total: 0,
 };
 
-
-
+//Fetch filtered results search, filters, sort, pagination
 export const fetchFilteredResults = createAsyncThunk(
   "search/fetchFilteredResults",
   async (_, { getState, rejectWithValue }) => {
     try {
       const state = getState() as { search: SearchState };
-      const { filters } = state.search;
+      const { searchTerm, filters, sortBy, page, limit } = state.search;
 
-      const response = await axios.get("http://127.0.0.1:8000/search/filter/", {
-        params: filters,
+      const response = await axios.get("http://127.0.0.1:8000/api/users", {
+        params: {
+          q: searchTerm,
+          ...filters,
+          sortBy,
+          page,
+          limit,
+        },
       });
-
       return response.data;
     } catch (error) {
+      console.log(error);
       return rejectWithValue("Failed to fetch filtered results");
-    }
-  }
-);
-
-
-//This function is triggered when the user performs a search.
-// Async thunk to fetch search results
-export const fetchSearchResults = createAsyncThunk(
-    // unique name for this action in Redux.
-  "search/fetchResults",
-  async (query: string, { rejectWithValue }) => {
-    //send the data to the api endpoint
-    try {
-      const response = await axios.get(`http://127.0.0.1:8000/search/users/`, {
-        params: { q: query },                                                       //query??  fetchSearchResults(searchTerm))  searchTerm=query
-      });
-      return response.data; // Returns fetched data as payload (action)
-    } catch (error) {
-      return rejectWithValue("Failed to fetch search results");
     }
   }
 );
@@ -103,29 +81,32 @@ export const fetchSearchResults = createAsyncThunk(
 // Async thunk to fetch default results
 export const fetchDefaultResults = createAsyncThunk(
   "search/fetchDefaultResults",
-  async (_, { rejectWithValue }) => {
+  async (
+    { sortBy, limit }: { sortBy: string; limit: number },
+    { rejectWithValue }
+  ) => {
     try {
-      const response = await axios.post("http://127.0.0.1:8000/search/usersDefault/");
-      return response.data;    // Returns fetched data as payload (action)
+      const response = await axios.get("http://127.0.0.1:8000/api/users", {
+        params: { sortBy, page: 1, limit },
+      });
+      return response.data;
     } catch (error) {
+      console.log(error);
       return rejectWithValue("Failed to fetch default results");
     }
   }
 );
 
-// Redux slice
-/*createSlice() automatically creates a reducer function inside searchSlice.
-It combines both the reducers (synchronous actions) and extraReducers (async actions).
-It does this without requiring a function named searchReducer.*/
 const searchSlice = createSlice({
-  name: "search",  //alos act like a prefix
+  name: "search",
   //This ensures the Redux store starts with default values.
   initialState,
 
   reducers: {
-    //Updates searchTerm with the user's input.  /  action.payload contains the new search query.
+    // Update the search term with the user's input
     setSearchTerm: (state, action) => {
       state.searchTerm = action.payload;
+      state.page = 1; // Reset to page 1
     },
     //Resets results to an empty array.
     clearSearchResults: (state) => {
@@ -133,83 +114,71 @@ const searchSlice = createSlice({
     },
     setFilters: (state, action) => {
       state.filters = { ...state.filters, ...action.payload };
+      state.page = 1;
     },
     clearFilters: (state) => {
       state.filters = initialState.filters;
+      state.page = 1;
+    },
+    setSortBy: (state, action) => {
+      state.sortBy = action.payload;
+      state.page = 1;
+    },
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
+    setLimit: (state, action) => {
+      state.limit = action.payload;
     },
   },
 
-  //It listens for actions created by createAsyncThunk (like fetchSearchResults and fetchDefaultResults).
+  // Handle state updates based on async thunk actions
   extraReducers: (builder) => {
     builder
-      //For search results 
-      //When a search starts (pending state)
-      //builder - It is used to define how the state should be updated when handling asynchronous actions (pending,fulfilled,rejected)
-      .addCase(fetchSearchResults.pending, (state) => {
+
+      //Filtered Results
+      .addCase(fetchFilteredResults.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      //When search results are successfully fetched (fulfilled state)
-      .addCase(fetchSearchResults.fulfilled, (state, action) => {
+      .addCase(fetchFilteredResults.fulfilled, (state, action) => {
         state.loading = false;
-        state.results = action.payload;
+        state.results = action.payload.results;
+        state.total = action.payload.total;
+        state.page = action.payload.page;
+        state.limit = action.payload.limit;
       })
-      //If the search request fails (rejected state):
-      .addCase(fetchSearchResults.rejected, (state, action) => {
+      .addCase(fetchFilteredResults.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
-      //For Default results 
+
+      // Default Results
       .addCase(fetchDefaultResults.pending, (state) => {
         state.loading = true;
       })
       .addCase(fetchDefaultResults.fulfilled, (state, action) => {
         state.loading = false;
-        state.defaultResults = action.payload;
+        state.defaultResults = action.payload.results;
+        state.total = action.payload.total;
+        state.page = action.payload.page;
+        state.limit = action.payload.limit;
       })
       .addCase(fetchDefaultResults.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      })
-      .addCase(fetchFilteredResults.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchFilteredResults.fulfilled, (state, action) => {
-        state.loading = false;
-        state.results = action.payload;
-      })
-      .addCase(fetchFilteredResults.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
       });
-      
   },
 });
 
-// Export actions and reducer
-// exports actions and the reducer from the searchSlice so that they can be used in other parts of the application.
-//These functions are action creators that will be used to update the Redux state.
-export const { setSearchTerm, clearSearchResults,setFilters ,clearFilters } = searchSlice.actions;
-//Exports the reducer so that it can be added to the Redux store.
-export default searchSlice.reducer;  //searchSlice.reducer=searchReducer
+export const {
+  setSearchTerm,
+  clearSearchResults,
+  setFilters,
+  clearFilters,
+  setSortBy,
+  setPage,
+  setLimit,
+} = searchSlice.actions;
 
-
-/*
- {
-  "type": "search/fetchResults/fulfilled",
-  "payload": [
-    {
-      "id": 1,
-      "name": "Laptop",
-      "price": 1200,
-      "rating": 4.5
-    },
-    {
-      "id": 2,
-      "name": "Mouse",
-      "price": 25,
-      "rating": 4.8
-    }
-  ]
-}
-*/
+export default searchSlice.reducer; //searchSlice.reducer=searchReducer

@@ -1,0 +1,37 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.header > h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.header > p {
+  font-size: 14px;
+  color: #6b6b6b;
+}
+
+.formContainer {
+  background-color: white;
+  width: 40%;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.elseText {
+  font-size: 14px;
+  color: #6b6b6b;
+  width: 100%;
+  text-align: center;
+}
+
+.elseText > a {
+  color: #000000;
+  font-weight: 600;
+}

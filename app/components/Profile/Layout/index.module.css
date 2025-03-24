@@ -41,6 +41,10 @@
   font-size: 20px;
 }
 
+.sidebar ul li {
+  border-radius: 8px;
+}
+
 .sidebar ul li:hover {
   background-color: #e9ecef;
   color: #495057;

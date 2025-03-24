@@ -45,9 +45,11 @@ const ChatList = () => {
 
   const dispatch: AppDispatch = useDispatch();
 
+  // const user = useSelector((state: RootState) => state.auth.user);
+
   useEffect(() => {
     // fetch all chats
-    dispatch(getAllChats({ participantId: "" }));
+    dispatch(getAllChats({ participantId: "67df3099ba2f2efe27e384be" }));
   }, [dispatch]);
 
   const allChats = useSelector((state: RootState) => state.chat.allChats);

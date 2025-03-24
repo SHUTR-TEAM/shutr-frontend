@@ -1,34 +1,52 @@
 "use client";
 
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useFormState } from "react-hook-form";
 import styles from "./index.module.css";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import "./calendar.css";
+// import { useState } from "react";
+// import { Value } from "react-calendar/dist/esm/shared/types.js";
 
 export default function EventDetails() {
-  const { register } = useFormContext();
+  const { register, setValue } = useFormContext();
+  const { errors } = useFormState();
+  const disabledDates = [new Date(2025, 2, 15), new Date(2025, 2, 20)];
 
   return (
     <div className={styles.container}>
       <h3 className={styles.sectionTitle}>Event Details</h3>
+
       <div className={styles.formGrid}>
         <div className={styles.formGroup}>
           <label htmlFor="eventType">Event Type *</label>
           <input
             id="eventType"
             placeholder="Wedding, Portrait, Corporate, etc."
-            {...register("eventType", { required: true })}
+            {...register("event.type", { required: "Field is required" })}
           />
+          {errors.event &&
+            (errors.event as Record<string, { message: string }>).type
+              ?.message && (
+              <p className={styles.error}>
+                {
+                  (errors.event as Record<string, { message: string }>).type
+                    .message
+                }
+              </p>
+            )}
         </div>
 
-        <div className={styles.formGroup}>
+        {/* <div className={styles.formGroup}>
           <label htmlFor="eventDate">Event Date *</label>
           <input
             id="eventDate"
             type="date"
             {...register("eventDate", { required: true })}
           />
-        </div>
+        </div> */}
 
-        <div className={styles.formGroup}>
+        {/* <div className={styles.formGroup}>
           <label htmlFor="startTime">Start Time *</label>
           <input
             id="startTime"
@@ -44,15 +62,25 @@ export default function EventDetails() {
             type="time"
             {...register("endTime", { required: true })}
           />
-        </div>
+        </div> */}
 
         <div className={styles.formGroup}>
           <label htmlFor="location">Event Location *</label>
           <input
             id="location"
             placeholder="Enter event location"
-            {...register("location", { required: true })}
+            {...register("event.address", { required: "Field is required" })}
           />
+          {errors.event &&
+            (errors.event as Record<string, { message: string }>).address
+              ?.message && (
+              <p className={styles.error}>
+                {
+                  (errors.event as Record<string, { message: string }>).address
+                    .message
+                }
+              </p>
+            )}
         </div>
 
         <div className={styles.formGroup}>
@@ -62,8 +90,21 @@ export default function EventDetails() {
             type="number"
             min="1"
             placeholder="Number of guests"
-            {...register("guestCount", { required: true, min: 1 })}
+            {...register("event.guest_count", {
+              required: "Field is required",
+              min: 1,
+            })}
           />
+          {errors.event &&
+            (errors.event as Record<string, { message: string }>).guest_count
+              ?.message && (
+              <p className={styles.error}>
+                {
+                  (errors.event as Record<string, { message: string }>)
+                    .guest_count.message
+                }
+              </p>
+            )}
         </div>
 
         <div className={styles.formGroupFull}>
@@ -85,7 +126,9 @@ export default function EventDetails() {
                 type="radio"
                 id="eventSetting"
                 value="outdoor"
-                {...register("eventSetting", { required: true })}
+                {...register("event.event_setting", {
+                  required: "Field is required",
+                })}
               />
               <label htmlFor="outdoor">Outdoor</label>
             </div>
@@ -94,12 +137,57 @@ export default function EventDetails() {
                 type="radio"
                 id="eventSetting"
                 value="indoor"
-                {...register("eventSetting", { required: true })}
+                {...register("event.event_setting", {
+                  required: "Field is required",
+                })}
               />
               <label htmlFor="indoor">Indoor</label>
             </div>
           </div>
+          {errors.event &&
+            (errors.event as Record<string, { message: string }>).event_setting
+              ?.message && (
+              <p className={styles.error}>
+                {
+                  (errors.event as Record<string, { message: string }>)
+                    .event_setting.message
+                }
+              </p>
+            )}
         </div>
+      </div>
+      <div className={styles.calendarContainer}>
+        <span>Select Date *</span>
+        <Calendar
+          onChange={(value) => {
+            setValue("event.date", value?.toString());
+          }}
+          tileDisabled={({ date }) =>
+            disabledDates.some(
+              (disabledDate) =>
+                date.getFullYear() === disabledDate.getFullYear() &&
+                date.getMonth() === disabledDate.getMonth() &&
+                date.getDate() === disabledDate.getDate()
+            )
+          }
+        />
+
+        {errors.event &&
+          (errors.event as Record<string, { message: string }>).date
+            ?.message && (
+            <p className={styles.error}>
+              {
+                (errors.event as Record<string, { message: string }>).date
+                  .message
+              }
+            </p>
+          )}
+        {/* <input
+          type="hidden"
+          id="eventDate"
+          value={selectedDate?.toLocaleString() || ""}
+          {...register("eventDate", { required: true })}
+        /> */}
       </div>
     </div>
   );

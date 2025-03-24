@@ -1,144 +1,57 @@
-.timeline {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 100%;
+.notes {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  background: linear-gradient(135deg, #ffffff, #f9f9f9);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  width: 100%;
+  max-width: 450px;
+  transition: all 0.3s ease-in-out;
+}
+
+.notes:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.topic {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.topic h2 {
+  font-size: 17px;
+  font-weight: bold;
+  color: #333;
+  /* text-transform: uppercase; */
+  letter-spacing: 0.8px;
+}
+
+.note {
+  padding: 15px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.list {
+  font-size: 15px;
+  color: #6a6a6a;
+  margin-bottom: 10px;
+  padding-left: 20px;
+}
+
+.list li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+  position: relative;
+  padding-left: 12px;
+  transition: color 0.3s ease-in-out;
+}
+@media (max-width: 768px) {
+  .notes {
     max-width: 400px;
-  }  
-  .topic {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 18px;
   }
-  
-  .topic h2 {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .plus {
-    cursor: pointer;
-    font-size: 20px;
-    color: #007bff;
-  }
-  
-  .events ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .events li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 14px;
-    color: #555;
-    background-color: #f8f9fa;
-    margin-bottom: 8px;
-  }
-  
-  .time {
-    font-weight: 500;
-    color: #666;
-  }
-  
-  .event {
-    font-weight: 500;
-  }
-  
-  .completed {
-    background-color: #e6f7e6;
-    color: #28a745;
-  }
-  
-  .pending {
-    background-color: #f8f9fa;
-    color: #555;
-  }
-  
-  .checkmark {
-    margin-left: 8px;
-    color: #28a745;
-  }
-  .inputContainer {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background: #ffffff;
-    padding: 12px 16px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin: 20px auto;
-    gap: 12px;
-  }
-  
-  .icon {
-    position: absolute;
-    right: 10px;    
-    font-size: 22px;
-    color: #ff4b5c;
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out;
-    
-  
-  }
-  
-  .icon:hover {
-    transform: scale(1.1);
-  }
-  
-  .box {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
-    flex-grow: 1;
-  }  
-  .inputBoxTime {
-    width: 50%;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 14px;
-    transition: all 0.3s ease-in-out;
-  }
-  .inputBoxOccasion{
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 14px;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .inputBox:focus {
-    border-color: #007bff;;
-    outline: none;
-    box-shadow: 0px 0px 6px rgba(76, 175, 80, 0.3);
-  }
-  
-  .btn button {
-    background: #007bff;;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    font-size: 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    margin-top: 5px;
-  }
-  
-  .btn button:hover {
-    background: #073c74;;
-    transform: translateY(-2px);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  }
+}

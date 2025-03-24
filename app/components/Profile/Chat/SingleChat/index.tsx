@@ -9,31 +9,33 @@ import { AppDispatch, RootState } from "@/app/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { webSocketManager } from "@/app/services/webSocketManager";
 import { getAllMessages, sendChatMessage } from "@/app/redux/features/chat";
+import { usePathname } from "next/navigation";
 
 const SingleChat = () => {
-  // const pathname = usePathname();
+  const pathname = usePathname();
   const dispatch = useDispatch<AppDispatch>();
   const activeChat = useSelector((state: RootState) => state.chat.activeChat);
 
   const [messageInput, setMessageInput] = useState("");
   // const [userId, setUserId] = useState<string>("");
-  const userId = "67486d75ae68256f9138068c";
+  // const userId = "67486d75ae68256f9138068c";
+  const user = useSelector((state: RootState) => state.auth.user);
 
   useEffect(() => {
-    webSocketManager.connect(
-      "chat",
-      "ws://localhost:8000/ws/chat/67a4fa3243112c57452c6392"
-    );
+    const id = pathname.split("/").pop();
+    if (id) {
+      webSocketManager.connect("chat", `ws://localhost:8000/ws/chat/${id}`);
 
-    webSocketManager.subscribe("chat", (incomingMessage) => {
-      console.log("New message received:", incomingMessage);
-      // You can dispatch an action to update Redux state here if needed
-    });
+      webSocketManager.subscribe("chat", (incomingMessage) => {
+        console.log("New message received:", incomingMessage);
+        // You can dispatch an action to update Redux state here if needed
+      });
 
-    return () => {
-      webSocketManager.disconnect("chat");
-    };
-  }, []);
+      return () => {
+        webSocketManager.disconnect("chat");
+      };
+    }
+  }, [pathname]);
 
   // useEffect(() => {
   //   const id = pathname.split("/").pop();
@@ -41,15 +43,19 @@ const SingleChat = () => {
   // }, [pathname]);
 
   useEffect(() => {
-    dispatch(getAllMessages({ chatId: "67a4fa3243112c57452c6392" }));
-  }, [dispatch]);
+    const id = pathname.split("/").pop();
+    if (id) {
+      dispatch(getAllMessages({ chatId: id }));
+    }
+  }, [dispatch, pathname]);
 
   const handleSendMessage = (e: FormEvent) => {
     e.preventDefault();
 
     // setMessageInput("");
-
-    dispatch(sendChatMessage({ text: messageInput, senderId: userId }));
+    if (user?.id) {
+      dispatch(sendChatMessage({ text: messageInput, senderId: user?.id }));
+    }
     setMessageInput("");
     console.log("Message sent");
   };
@@ -63,7 +69,7 @@ const SingleChat = () => {
 
       <div className={styles.messageList}>
         {activeChat.data.messages.map((message, index) =>
-          message.sender === userId ? (
+          message.sender === user?.id ? (
             <OutgoingMessage
               key={index}
               message={message.text}

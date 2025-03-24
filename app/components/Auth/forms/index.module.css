@@ -1,0 +1,120 @@
+.formContainer {
+  /* background-color: white; */
+  /* border-radius: 20px; */
+  width: 100%;
+  /* max-width: 600px; */
+  /* box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.12); */
+  /* padding: 30px; */
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* margin: 0 auto; */
+}
+
+.inputWrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.Grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Two per row */
+  gap: 15px; /* Space between inputs */
+}
+
+.ctaBtn {
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  padding: 12px 10px;
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  width: 100%;
+  margin-top: 30px;
+  font-weight: 500;
+}
+
+/* .inputLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inputLabel > input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #d1d1d1;
+  outline: none;
+} */
+
+.btnWrapper {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.linkBtn {
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  width: 200px;
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+}
+
+.elseText {
+  position: relative;
+}
+
+.elseText > hr {
+  border: none;
+  border-top: 1px solid rgb(214, 214, 214);
+}
+
+.elseText > span {
+  background-color: white;
+  padding: 0 10px;
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #a2a2a2;
+  font-size: 12px;
+}
+
+/* Input */
+.inputLabel {
+  font-size: 14px;
+  color: #6b6b6b;
+  margin-bottom: 8px;
+  display: flex;
+}
+
+.inputField {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #c5c5c5;
+  width: 100%;
+  transition: 0.2s ease;
+}
+
+.loginFormWrapper > form > div {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.linkWrapper {
+  font-size: 14px;
+  color: slateblue;
+  margin-top: 10px;
+}

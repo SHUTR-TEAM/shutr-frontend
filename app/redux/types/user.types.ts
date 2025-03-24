@@ -1,3 +1,5 @@
+import { Portfolio } from "./portfolio.types";
+
 export interface UserState {
   allUsers: AllUsers | null;
   activeUser: ActiveUser | null;
@@ -35,6 +37,12 @@ export interface User {
   phone_num: string;
   address: string;
   profile_image_url: string;
+  role: string;
+  is_active: string;
+  google_access_token: string;
+  refresh_token: string;
+  google_token_expiry: string;
+  portfolio: Portfolio;
   created_at: string;
   updated_at: string;
 }

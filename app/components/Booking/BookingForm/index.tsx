@@ -1,75 +1,66 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import styles from "./index.module.css";
 import ClientInformation from "../ClientInformation";
 import EventDetails from "../EventDetails";
-import PhotoRequirements from "../PhotoRequirements";
+// import PhotoRequirements from "../PhotoRequirements";
 import PackageSelection from "../PackageSelection";
 import Agreements from "../Agreements";
 import ConfirmationDetails from "../ConfirmationDetails";
+import { AppDispatch, RootState } from "@/app/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { createBooking } from "@/app/redux/features/booking";
+import { Booking } from "@/app/redux/types/booking.types";
+import { useSearchParams } from "next/navigation";
 
 const steps = [
   "Client Info",
   "Event Details",
-  "Photography",
+  // "Photography",
   "Package",
   "Agreement",
 ];
 
-type BookingFormData = {
-  // Client Information
-  fullName: string;
-  contactNumber: string;
-  email: string;
-  address?: string;
-
-  // Event Details
-  eventType: string;
-  eventDate: string;
-  startTime: string;
-  endTime: string;
-  location: string;
-  guestCount: number;
-  eventSetting: "indoor" | "outdoor";
-
-  // Photo Requirements
-  coverageDuration: string;
-  requiredShots: string[];
-  specialRequests?: string;
-
-  // Package Selection
-  package: "basic" | "premium" | "luxury";
-  addons: string[];
-
-  // Agreements
-  weatherPlan?: string;
-  permissions: boolean;
-  terms: boolean;
-  cancellation: boolean;
-};
-
-interface BookingFormProps {
-  selectedPackage?: {
-    id: number;
-    title: string;
-    price: string;
-    description: string;
-    packageType: "basic" | "premium" | "luxury";
-  };
-}
-
-export default function BookingForm({ selectedPackage }: BookingFormProps) {
+export default function BookingForm() {
   const [currentStep, setCurrentStep] = useState(1);
-  const methods = useForm<BookingFormData>();
+  const dispatch: AppDispatch = useDispatch();
+  const searchParams = useSearchParams();
+  const photographerId = searchParams.get("photographerId");
 
+  const user = useSelector((state: RootState) => state.auth.user);
 
+  const methods = useForm<Booking>({
+    defaultValues: {
+      client: {
+        first_name: "",
+        last_name: "",
+        phone: "",
+        email: "",
+        address: "",
+        nic: "",
+      },
+    },
+  });
+
+  const { reset } = methods;
+
+  // Update default values once the user is loaded
   useEffect(() => {
-    if (selectedPackage) {
-      methods.setValue("package", selectedPackage.packageType);
+    if (user) {
+      reset({
+        client: {
+          first_name: user.first_name || "",
+          last_name: user.last_name || "",
+          phone: user.phone_num || "",
+          email: user.email || "",
+          address: user.address || "",
+          nic: user.nic || "",
+        },
+      });
     }
-  }, [selectedPackage, methods]);
+  }, [user, reset]);
 
   const handleNext = async () => {
     const isValid = await methods.trigger();
@@ -86,10 +77,17 @@ export default function BookingForm({ selectedPackage }: BookingFormProps) {
     }
   };
 
-  const onSubmit = (data: BookingFormData) => {
+  const onSubmit = (data: Booking) => {
+    if (photographerId) {
+      data.photographer_id = photographerId;
+    }
+
+    if (user?.id) {
+      data.client_id = user?.id;
+    }
+
     console.log("Form submitted:", data);
-    // Here you would typically send the data to your backend
-    alert("Booking request submitted successfully!");
+    dispatch(createBooking(data));
   };
 
   const renderStep = () => {
@@ -99,10 +97,10 @@ export default function BookingForm({ selectedPackage }: BookingFormProps) {
       case 2:
         return <EventDetails />;
       case 3:
-        return <PhotoRequirements />;
-      case 4:
         return <PackageSelection />;
-      case 5:
+      // case 3:
+      //   return <PhotoRequirements />;
+      case 4:
         return <Agreements />;
       default:
         return null;

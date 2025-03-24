@@ -1,0 +1,24 @@
+.mainDiv {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.mainDiv > div {
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mainDiv > div > span {
+  color: #6b6b6b;
+  font-size: 14px;
+}
+
+.calendarConnected {
+  background-color: #000000;
+  color: white;
+}

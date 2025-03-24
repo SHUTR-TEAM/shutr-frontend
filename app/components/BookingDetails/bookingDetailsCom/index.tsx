@@ -1,40 +1,48 @@
-// components/BookingDetails.tsx
-import { FC } from 'react';
-import styles from './index.module.css';
+"use client";
+import { FC } from "react";
+import styles from "./index.module.css";
 
-interface BookingDetailsProps {
-  eventType: string;
-  dateTime: string;
-  duration: string;
-  location: string;
-  packageType: string;
-  price: string;
+// Define Booking Type
+interface Booking {
+  event: {
+    type: string;
+    date: string;
+    address: string;
+  };
+  package_id?: string;
+  payment: {
+    total_amount: number;
+  };
 }
 
-const BookingDetailsCom: FC<BookingDetailsProps> = ({ eventType, dateTime, duration, location, packageType, price }) => {
+const BookingDetailsCom: FC<{ booking: Booking }> = ({ booking }) => {
+  if (!booking || !booking.event) {
+    return <p>No booking details available.</p>;
+  }
+
+  // Destructure event details from the booking object
+  const { type, date, address } = booking.event;
+  const packageType = booking.package_id || "N/A";
+  // const price = `$${booking.payment?.total_amount.toFixed(2)}`;
+  const price = "100000 LKR";
+
   return (
-    <>
     <div className={styles.bookingDetails}>
-      
+      {/*Display the event details */}
       <div className={styles.topic}>
         <h2>Booking Details</h2>
       </div>
-
       <div className={styles.row}>
         <div className={styles.name}>Event Type</div>
-        <div className={styles.data}>{eventType}</div>
+        <div className={styles.data}>{type}</div>
       </div>
       <div className={styles.row}>
-        <div className={styles.name}>Date & Time</div>
-        <div className={styles.data}>{dateTime}</div>
-      </div>
-      <div className={styles.row}>
-        <div className={styles.name}>Duration</div>
-        <div className={styles.data}>{duration}</div>
+        <div className={styles.name}>Date</div>
+        <div className={styles.data}>{date}</div>
       </div>
       <div className={styles.row}>
         <div className={styles.name}>Location</div>
-        <div className={styles.data}>{location}</div>
+        <div className={styles.data}>{address}</div>
       </div>
       <div className={styles.row}>
         <div className={styles.name}>Package</div>
@@ -44,9 +52,7 @@ const BookingDetailsCom: FC<BookingDetailsProps> = ({ eventType, dateTime, durat
         <div className={styles.name}>Price</div>
         <div className={styles.data}>{price}</div>
       </div>
-
     </div>
-    </>
   );
 };
 

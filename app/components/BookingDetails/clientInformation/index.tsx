@@ -1,40 +1,39 @@
-// components/ClientInformation.tsx
+'use client';
 import { FC } from 'react';
 import { FaRegUser } from 'react-icons/fa';
-import { MdOutlineMailOutline, } from "react-icons/md";
+import { MdOutlineMailOutline } from "react-icons/md";
 import { IoCallOutline } from "react-icons/io5";
 import styles from './index.module.css';
 
-interface ClientInfo {
-  name: string;
-  email: string;
-  phone: string;
-}
-/**
- * Props interface for the ClientInformation component.
- * @interface ClientInformationProps
- * @property {ClientInfo[]} clients - An array of client information objects to be displayed in the component.
- */
-interface ClientInformationProps {
-  clients: ClientInfo[];
+// Define the Booking interface to ensure type safety
+interface Booking {
+  client: {
+    first_name: string;
+    last_name: string;
+    email: string;
+    phone: string;
+  };
 }
 
-const ClientInformation: FC<ClientInformationProps> = ({ clients }) => {
+const ClientInformation: FC<{ booking: Booking }> = ({ booking }) => {
+  if (!booking || !booking.client) {
+    return <p>No client information available.</p>;
+  }
+
+  // Destructure client details from the booking object
+  const { first_name, last_name, email, phone } = booking.client;
+
   return (
-    <>
-      <div className={styles.clientInfo}>
-        <div className={styles.topic}>
-          <h2>Client Information</h2>
-        </div>
-        {clients.map((client, index)=>(
-          <div  key={index} className={styles.userDetails}>
-            <p><FaRegUser className={styles.icon} />{client.name}</p>
-            <p><MdOutlineMailOutline className={styles.icon} />{client.email}</p>
-            <p><IoCallOutline className={styles.icon} />{client.phone}</p>
-          </div>
-        ))}
+    <div className={styles.clientInfo}>
+      <div className={styles.topic}>
+        <h2>Client Information</h2>
       </div>
-    </>
+      <div className={styles.userDetails}>
+        <p><FaRegUser className={styles.icon} /> {first_name} {last_name}</p>
+        <p><MdOutlineMailOutline className={styles.icon} /> {email}</p>
+        <p><IoCallOutline className={styles.icon} /> {phone}</p>
+      </div>
+    </div>
   );
 };
 

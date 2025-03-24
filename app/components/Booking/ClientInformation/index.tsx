@@ -2,11 +2,17 @@
 
 import { useFormContext } from "react-hook-form";
 import styles from "./index.module.css";
+import { useFormState } from "react-hook-form";
 
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/redux/store";
 
 const ClientInformation = () => {
   const { register } = useFormContext();
+  const { errors } = useFormState();
+
+  const user = useSelector((state: RootState) => state.auth.user);
 
   return (
     <div className={styles.container}>
@@ -17,8 +23,22 @@ const ClientInformation = () => {
           <input
             id="firstName"
             placeholder="Enter your first name"
-            {...register("firstName", { required: true })}
+            {...register("client.first_name", {
+              required: "Field is required",
+            })}
+            onClick={() => console.log(errors)}
+            defaultValue={user?.first_name}
           />
+          {errors.client &&
+            (errors.client as Record<string, { message: string }>).first_name
+              ?.message && (
+              <p className={styles.error}>
+                {
+                  (errors.client as Record<string, { message: string }>)
+                    .first_name.message
+                }
+              </p>
+            )}
         </div>
 
         <div className={styles.formGroup}>
@@ -26,8 +46,19 @@ const ClientInformation = () => {
           <input
             id="lastName"
             placeholder="Enter your last name"
-            {...register("lastName", { required: true })}
+            {...register("client.last_name", { required: "Field is required" })}
+            defaultValue={user?.last_name}
           />
+          {errors.client &&
+            (errors.client as Record<string, { message: string }>).last_name
+              ?.message && (
+              <p className={styles.error}>
+                {
+                  (errors.client as Record<string, { message: string }>)
+                    .last_name.message
+                }
+              </p>
+            )}
         </div>
 
         <div className={styles.formGroup}>
@@ -35,8 +66,19 @@ const ClientInformation = () => {
           <input
             id="contactNumber"
             placeholder="Enter your phone number"
-            {...register("contactNumber", { required: true })}
+            {...register("client.phone", { required: "Field is required" })}
+            defaultValue={user?.phone_num}
           />
+          {errors.client &&
+            (errors.client as Record<string, { message: string }>).phone
+              ?.message && (
+              <p className={styles.error}>
+                {
+                  (errors.client as Record<string, { message: string }>).phone
+                    .message
+                }
+              </p>
+            )}
         </div>
 
         <div className={styles.formGroup}>
@@ -45,8 +87,25 @@ const ClientInformation = () => {
             id="email"
             type="email"
             placeholder="Enter your email"
-            {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
+            {...register("client.email", {
+              required: "Field is required",
+              pattern: {
+                value: /^\S+@\S+$/i,
+                message: "Invalid email address",
+              },
+            })}
+            defaultValue={user?.email}
           />
+          {errors.client &&
+            (errors.client as Record<string, { message: string }>).email
+              ?.message && (
+              <p className={styles.error}>
+                {
+                  (errors.client as Record<string, { message: string }>).email
+                    .message
+                }
+              </p>
+            )}
         </div>
 
         <div className={styles.formGroup}>
@@ -54,7 +113,8 @@ const ClientInformation = () => {
           <input
             id="address"
             placeholder="Enter your address"
-            {...register("address")}
+            {...register("client.address")}
+            defaultValue={user?.address}
           />
         </div>
 
@@ -63,8 +123,19 @@ const ClientInformation = () => {
           <input
             id="nic"
             placeholder="Enter your NIC number"
-            {...register("nic")}
+            {...register("client.nic", { required: "Field is required" })}
+            defaultValue={user?.nic}
           />
+          {errors.client &&
+            (errors.client as Record<string, { message: string }>).nic
+              ?.message && (
+              <p className={styles.error}>
+                {
+                  (errors.client as Record<string, { message: string }>).nic
+                    .message
+                }
+              </p>
+            )}
         </div>
       </div>
     </div>
