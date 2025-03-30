@@ -74,7 +74,7 @@ const Card = ({ data }: CardsProps) => {
                     alt={item.first_name}
                     width={100}
                     height={80}
-                    layout="responsive"
+                    // layout="responsive"
                     className={styles.image}
                   />
                 </div>
@@ -82,10 +82,10 @@ const Card = ({ data }: CardsProps) => {
           </div>
 
           <div className={styles.cardContent}>
-            <h4 className={styles.price}>
+            <h2 className={styles.price}>
               From {item.portfolio.min_price ? item.portfolio.min_price : 10000}{" "}
               LKR
-            </h4>
+            </h2>
             <p className={styles.description}>{item.portfolio.description}</p>
             {/* <div className={styles.tags}>
               {item.portfolio.tags.map((tag, index) => (
@@ -130,9 +130,7 @@ const Card = ({ data }: CardsProps) => {
                 }}
                 className={styles.btnSecondary}
               >
-                <div>
-                  <BsFillChatTextFill className={styles.msgIcon} />
-                </div>
+                <BsFillChatTextFill className={styles.msgIcon} />
                 Message
               </div>
             </div>

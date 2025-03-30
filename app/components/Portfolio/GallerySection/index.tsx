@@ -311,13 +311,17 @@ export default function GallerySection({
     }
   };
 
+  const user = useSelector((state: RootState) => state.auth.user);
+
   return (
     <section className={styles.gallery}>
       <div className={styles.gallery_edit_container}>
         <h2>Gallery</h2>
-        <button onClick={openModal} className={styles.edit_button}>
-          <Plus size={18} /> Edit Gallery
-        </button>
+        {user?.role == "photographer" && user.portfolio.id == participantId && (
+          <button onClick={openModal} className={styles.edit_button}>
+            <Plus size={18} /> Edit Gallery
+          </button>
+        )}
       </div>
 
       {/* this is where button nav is located */}

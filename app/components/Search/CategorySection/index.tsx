@@ -1,12 +1,15 @@
-'use client'
+"use client";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styles from "./index.module.css";
 import { AppDispatch } from "@/app/redux/store";
-import { setFilters,clearFilters, fetchFilteredResults } from "@/app/redux/features/searchSlice";
+import {
+  setFilters,
+  clearFilters,
+  fetchFilteredResults,
+} from "@/app/redux/features/searchSlice";
 
 export default function CategorySection() {
-
   const dispatch = useDispatch<AppDispatch>();
 
   // Local state to temporarily hold selected filter values before applying
@@ -21,8 +24,8 @@ export default function CategorySection() {
   // Generic handler to toggle or set filter values based on button/input
   const handleButtonClick = (name: keyof typeof filters, value: string) => {
     setLocalFilters((preFilters) => ({
-      ...preFilters,   // Keep existing filter values
-      [name]: preFilters[name] === value ? "" : value,  
+      ...preFilters, // Keep existing filter values
+      [name]: preFilters[name] === value ? "" : value,
     }));
   };
 
@@ -41,13 +44,12 @@ export default function CategorySection() {
       experienceLevel: "",
     });
 
-    dispatch(clearFilters()); 
-    dispatch(fetchFilteredResults()); 
+    dispatch(clearFilters());
+    dispatch(fetchFilteredResults());
   };
 
   return (
     <div className={styles.container}>
-
       <aside className={styles.filters}>
         <h3>Filters</h3>
 
@@ -56,15 +58,19 @@ export default function CategorySection() {
           <h4>Style</h4>
 
           <div className={styles.filterButtons}>
-            {["Wedding", "Portrait", "Wildlife", "Videography"].map((element) => (
-              <button
-                key={element}
-                onClick={() => handleButtonClick("style", element)}
-                className={filters.style === element ? styles.activeButton : ""}
-              >
-                {element}
-              </button>
-            ))}
+            {["Wedding", "Portrait", "Wildlife", "Videography"].map(
+              (element) => (
+                <button
+                  key={element}
+                  onClick={() => handleButtonClick("style", element)}
+                  className={
+                    filters.style === element ? styles.activeButton : ""
+                  }
+                >
+                  {element}
+                </button>
+              )
+            )}
           </div>
         </div>
 
@@ -72,33 +78,36 @@ export default function CategorySection() {
         <div className={styles.filterGroup}>
           <h4>Price Range</h4>
           <div className={styles.priceRange}>
-            <input type="number"
-                   placeholder="Min"
-                   step="1000"
-                   value={filters.minPrice}
-                   onChange={(e)=> handleButtonClick("minPrice",e.target.value)}
+            <input
+              type="number"
+              placeholder="Min"
+              step="1000"
+              value={filters.minPrice}
+              onChange={(e) => handleButtonClick("minPrice", e.target.value)}
             />
             <span className={styles.rangeSeparator}>-</span>
-            <input type="number"
-                  placeholder="Max"
-                  step="1000"
-                  value={filters.maxPrice}
-                  onChange={(e)=> handleButtonClick("maxPrice",e.target.value)}
+            <input
+              type="number"
+              placeholder="Max"
+              step="1000"
+              value={filters.maxPrice}
+              onChange={(e) => handleButtonClick("maxPrice", e.target.value)}
             />
           </div>
         </div>
 
-        {/* Availability */}    
+        {/* Availability */}
         <div className={styles.filterGroup}>
           <h4>Availability</h4>
-          <input type="date"
-           value={filters.availability}
-           onChange={(e) => handleButtonClick("availability", e.target.value)} 
+          <input
+            type="date"
+            value={filters.availability}
+            onChange={(e) => handleButtonClick("availability", e.target.value)}
           />
         </div>
 
-        {/* Experience Level */}    
-        <div className={styles.filterGroup}>
+        {/* Experience Level */}
+        {/* <div className={styles.filterGroup}>
           <h4>Experience Level</h4>
           <div className={styles.filterButtonsLong}>
             {["Beginner", "Intermediate", "Expert"].map((level) => (
@@ -111,7 +120,7 @@ export default function CategorySection() {
               </button>
             ))}
           </div>
-        </div>
+        </div> */}
 
         <div className={styles.buttonGroup}>
           <button onClick={applyFilters} className={styles.applyBtn}>
@@ -121,9 +130,7 @@ export default function CategorySection() {
             Clear Filters
           </button>
         </div>
-        
       </aside>
     </div>
-  );    
+  );
 }
-  

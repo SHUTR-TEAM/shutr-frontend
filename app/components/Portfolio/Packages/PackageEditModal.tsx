@@ -1,22 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Packages } from "../../../redux/types/portfolio.types";
+import { Package } from "../../../redux/types/portfolio.types";
 import styles from "./PackageEditModal.module.css";
 
-// interface PackageEditModalProps {
-//   isOpen: boolean;
-//   onClose: () => void;
-//   onSave: (pkg: Packages) => void;
-//   package: Packages | null;
-// }
-
 interface PackageEditModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    onSave: (pkg: Packages) => void;  // Change to Package type
-    package: Packages | null;         // Change to Package type
-  }
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: (pkg: Package) => void;
+  package: Package | null;
+}
 
 export default function PackageEditModal({
   isOpen,
@@ -35,7 +28,7 @@ export default function PackageEditModal({
       setTitle(editingPackage.title);
       setDescription(editingPackage.description);
       setPrice(editingPackage.price.toString());
-      setDetails(editingPackage.details || []); // Ensure it's always an array
+      setDetails(editingPackage.details || []);
     } else {
       setTitle("");
       setDescription("");
@@ -57,12 +50,12 @@ export default function PackageEditModal({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const packageData: Packages = {
+    const packageData: Package = {
       id: editingPackage?.id || Date.now().toString(),
       title,
       description,
       price: String(price),
-      details, // This is now correctly an array of strings
+      details,
     };
     onSave(packageData);
   };

@@ -3,6 +3,7 @@ export interface BookingState {
   activeBooking: ActiveBooking;
   createBooking: CreateBooking;
   acceptBooking: AcceptBooking;
+  activeDisabledBookings: ActiveDisabledBookings;
 }
 
 export interface AllBookings {
@@ -30,6 +31,13 @@ export interface AcceptBooking {
   isLoading: boolean;
   isSuccessful: boolean;
   serverMessage: string;
+}
+
+export interface ActiveDisabledBookings {
+  isLoading: boolean;
+  isSuccessful: boolean;
+  serverMessage: string;
+  data: string[] | null;
 }
 
 export interface Booking {

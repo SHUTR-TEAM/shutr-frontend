@@ -87,18 +87,26 @@ const DesktopNavbar = () => {
               isDropdownOpen ? "" : styles.hidden
             }`}
           >
-            <li>
-              <LuUser className={styles.icon} />
-              <Link href={`/portfolio/${user.portfolio.id}`}>Profile</Link>
-            </li>
-            <li>
-              <MdDashboard className={styles.icon} />
-              <Link href={"/dashboard"}>Dashboard</Link>
-            </li>
-            <li>
-              <LuCalendarRange className={styles.icon} />
-              <Link href="/calendar">Calendar</Link>
-            </li>
+            {user.role == "photographer" && (
+              <li>
+                <LuUser className={styles.icon} />
+                <Link href={`/portfolio/${user.portfolio.id}`}>Profile</Link>
+              </li>
+            )}
+
+            {user.role == "photographer" && (
+              <li>
+                <MdDashboard className={styles.icon} />
+                <Link href={"/dashboard"}>Dashboard</Link>
+              </li>
+            )}
+
+            {user.role == "photographer" && (
+              <li>
+                <LuCalendarRange className={styles.icon} />
+                <Link href="/calendar">Calendar</Link>
+              </li>
+            )}
             <li>
               <LuMessageSquareText className={styles.icon} />
               <Link href="/chat">Messages</Link>

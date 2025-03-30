@@ -10,9 +10,9 @@ import {
 } from "@/app/redux/features/portfolio";
 import PackageCard from "./PackageCard";
 import PackageEditModal from "./PackageEditModal";
-import router from "next/router";
 import { Edit2 } from "lucide-react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 interface Package {
   id: string;
@@ -106,9 +106,7 @@ const Packages = () => {
     }
   };
 
-  const handleBookNow = () => {
-    router.push(`/booking`);
-  };
+  const user = useSelector((state: RootState) => state.auth.user);
 
   return (
     <div className={styles.container}>
@@ -127,6 +125,10 @@ const Packages = () => {
             package={pkg}
             onEdit={() => handleEdit(pkg)}
             onDelete={() => handleDelete(pkg.id)}
+            editable={
+              user?.role === "photographer" &&
+              user.portfolio.id === participantId
+            }
           />
         ))}
       </div>
@@ -138,9 +140,12 @@ const Packages = () => {
       />
 
       {packagesState.length > 0 && (
-        <button className={styles.bookButton} onClick={handleBookNow}>
+        <Link
+          href={`/booking?photographerId=${user?.id}&portfolioId=${participantId}`}
+          className={styles.bookButton}
+        >
           Book Now
-        </button>
+        </Link>
       )}
     </div>
   );

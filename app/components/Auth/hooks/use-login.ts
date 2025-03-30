@@ -6,7 +6,7 @@ import {
   useRetrieveUserQuery,
 } from "@/app/redux/features/auth/authApiSlice";
 import { setAuth, setUser } from "@/app/redux/features/auth/authSlice";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 export default function useLogin() {
   const router = useRouter();
@@ -39,10 +39,11 @@ export default function useLogin() {
       // Update Redux store with user data
       dispatch(setUser({ user: result }));
 
-      toast.success("Logged in");
-      router.push("/dashboard");
+      // toast.success("Logged in");
+      router.push("/");
     } catch (error) {
-      toast.error("Failed to log in");
+      console.log(error);
+      // toast.error("Failed to log in");
     }
   };
 

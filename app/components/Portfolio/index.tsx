@@ -22,6 +22,7 @@ import { LoadingSpinner } from "./LoadingSpinner";
 import CustomerReviews from "./CustomerReviews";
 import { usePathname } from "next/navigation";
 import Calendar from "react-calendar";
+import { getDisabledBookings } from "@/app/redux/features/booking";
 
 const Portfolio = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -34,32 +35,6 @@ const Portfolio = () => {
       dispatch(getByIdportfolio({ participantId: portfolioId }));
     }
   }, [dispatch, portfolioId]);
-
-  // const [currentMonth, setCurrentMonth] = useState(0);
-  // const [currentYear, setCurrentYear] = useState(2025);
-
-  // const handlePrevMonth = () => {
-  //   if (currentMonth === 0) {
-  //     setCurrentMonth(11);
-  //     setCurrentYear(currentYear - 1);
-  //   } else {
-  //     setCurrentMonth(currentMonth - 1);
-  //   }
-  // };
-
-  // const handleNextMonth = () => {
-  //   if (currentMonth === 11) {
-  //     setCurrentMonth(0);
-  //     setCurrentYear(currentYear + 1);
-  //   } else {
-  //     setCurrentMonth(currentMonth + 1);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   // fetch by id portfolio
-  //   dispatch(getByIdportfolio({ participantId: "" }));
-  // }, [dispatch]);
 
   const activePortfolio = useSelector(
     (state: RootState) => state.portfolio.activePortfolio
@@ -97,6 +72,17 @@ const Portfolio = () => {
     }
   }, [Profile]);
 
+  useEffect(() => {
+    if (activePortfolio.data?.photographer?.id) {
+      dispatch(
+        getDisabledBookings({
+          photographerId: activePortfolio.data?.photographer?.id,
+          yearMonth: "",
+        })
+      );
+    }
+  });
+
   const handleSaveChanges = async () => {
     try {
       const formData = new FormData();
@@ -127,7 +113,12 @@ const Portfolio = () => {
     }
   };
 
-  const disabledDates = [new Date(2025, 2, 15), new Date(2025, 2, 20)];
+  // const disabledDates = [new Date(2025, 2, 15), new Date(2025, 2, 20)];
+
+  const user = useSelector((state: RootState) => state.auth.user);
+  const disabledDates = useSelector(
+    (state: RootState) => state.booking.activeDisabledBookings.data
+  );
 
   return (
     <>
@@ -197,12 +188,15 @@ const Portfolio = () => {
               <div className={styles.container}>
                 <h3>Description</h3>
                 <div>
-                  <button
-                    onClick={() => setShowEditModal(true)}
-                    className={styles.edit_button}
-                  >
-                    <Edit2 size={20} color="black" />
-                  </button>
+                  {user?.role == "photographer" &&
+                    user.portfolio.id == Profile?.id && (
+                      <button
+                        onClick={() => setShowEditModal(true)}
+                        className={styles.edit_button}
+                      >
+                        <Edit2 size={20} color="black" />
+                      </button>
+                    )}
                 </div>
               </div>
 
@@ -236,16 +230,22 @@ const Portfolio = () => {
               onNextMonth={handleNextMonth}
             /> */}
 
-            <Calendar
-              tileDisabled={({ date }) =>
-                disabledDates.some(
-                  (disabledDate) =>
-                    date.getFullYear() === disabledDate.getFullYear() &&
-                    date.getMonth() === disabledDate.getMonth() &&
-                    date.getDate() === disabledDate.getDate()
-                )
-              }
-            />
+            {Array.isArray(disabledDates) && disabledDates.length > 0 ? (
+              <Calendar
+                tileDisabled={({ date }) =>
+                  disabledDates.some((dt) => {
+                    const disabledDate = new Date(dt);
+                    return (
+                      date.getFullYear() === disabledDate.getFullYear() &&
+                      date.getMonth() === disabledDate.getMonth() &&
+                      date.getDate() === disabledDate.getDate()
+                    );
+                  })
+                }
+              />
+            ) : (
+              <Calendar />
+            )}
             <Packages />
           </div>
         </div>

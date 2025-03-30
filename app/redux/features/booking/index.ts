@@ -29,6 +29,12 @@ const initialState: BookingState = {
     isSuccessful: false,
     serverMessage: "",
   },
+  activeDisabledBookings: {
+    isLoading: false,
+    isSuccessful: false,
+    serverMessage: "",
+    data: null,
+  },
 };
 
 export const createBooking = createAsyncThunk(
@@ -71,6 +77,37 @@ export const acceptBooking = createAsyncThunk(
     try {
       return await axios
         .post(`${ROUTE_URL}/accept/${bookingId}`, config)
+        .then((res) => res.data);
+    } catch (error) {
+      const e = error as AxiosError;
+      return rejectWithValue(e.message);
+    }
+  }
+);
+
+export const getDisabledBookings = createAsyncThunk(
+  "booking/get-disabled-bookings",
+  async (
+    {
+      photographerId,
+      yearMonth,
+    }: { photographerId: string; yearMonth: string },
+    { rejectWithValue }
+  ) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: ``,
+      },
+      withCredentials: true,
+    };
+
+    try {
+      return await axios
+        .post(
+          `${ROUTE_URL}/photographers/${photographerId}/bookings/${yearMonth}`,
+          config
+        )
         .then((res) => res.data);
     } catch (error) {
       const e = error as AxiosError;
@@ -140,6 +177,37 @@ const bookingSlice = createSlice({
         isLoading: false,
         isSuccessful: false,
         serverMessage: action.payload as string,
+      };
+    });
+
+    // Get Disabled Bookings
+    // Pending
+    builder.addCase(getDisabledBookings.pending, (state) => {
+      state.activeDisabledBookings = {
+        isLoading: true,
+        isSuccessful: false,
+        serverMessage: "",
+        data: null,
+      };
+    });
+
+    // Fulfilled
+    builder.addCase(getDisabledBookings.fulfilled, (state, action) => {
+      state.activeDisabledBookings = {
+        isLoading: false,
+        isSuccessful: true,
+        serverMessage: "",
+        data: action.payload.booking_dates,
+      };
+    });
+
+    // Rejected
+    builder.addCase(getDisabledBookings.rejected, (state, action) => {
+      state.activeDisabledBookings = {
+        isLoading: false,
+        isSuccessful: false,
+        serverMessage: action.payload as string,
+        data: null,
       };
     });
   },

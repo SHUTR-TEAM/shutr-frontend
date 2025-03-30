@@ -1,5 +1,5 @@
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/app/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/app/redux/store";
 import {
   updateByIdportfolio,
   getByIdportfolio,
@@ -171,6 +171,8 @@ export default function ProfileHeader({
   const fullStars = /*Math.floor(rating) */ 3;
   const hasHalfStar = /*rating % 1 >= 0.5 */ true;
 
+  const user = useSelector((state: RootState) => state.auth.user);
+
   return (
     <div>
       {/* Cover Photo */}
@@ -181,12 +183,14 @@ export default function ProfileHeader({
           width={1540}
           height={350}
         />
-        <button
-          onClick={() => handleOpenModal("background")}
-          className={styles.background_pencil}
-        >
-          <Pencil size={20} color="black" />
-        </button>
+        {user?.role == "photographer" && user.portfolio.id == participantId && (
+          <button
+            onClick={() => handleOpenModal("background")}
+            className={styles.background_pencil}
+          >
+            <Pencil size={20} color="black" />
+          </button>
+        )}
       </div>
 
       {/* Profile Image */}
@@ -199,12 +203,14 @@ export default function ProfileHeader({
           className={styles.profileImage}
         />
 
-        <button
-          onClick={() => handleOpenModal("profile")}
-          className={styles.profile_editor}
-        >
-          <Plus size={20} color="white" />
-        </button>
+        {user?.role == "photographer" && user.portfolio.id == participantId && (
+          <button
+            onClick={() => handleOpenModal("profile")}
+            className={styles.profile_editor}
+          >
+            <Plus size={20} color="white" />
+          </button>
+        )}
       </div>
 
       {/* Modal for Image Cropping */}

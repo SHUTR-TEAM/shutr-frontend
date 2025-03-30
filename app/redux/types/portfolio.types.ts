@@ -49,7 +49,7 @@ export interface ActivePackages {
   isLoading: boolean;
   isSuccessful: boolean;
   serverPortfolio: string;
-  data: Package | null;
+  data: Package[] | null;
 }
 
 export interface CreatePortfolio {

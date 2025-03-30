@@ -99,16 +99,20 @@ const SocialLinks = () => {
     );
   };
 
+  const user = useSelector((state: RootState) => state.auth.user);
+
   return (
     <div className={styles.connect}>
       <div className={styles.TopicAndButton}>
         <h3 className={styles.title}>Connect with me</h3>
-        <button
-          onClick={() => setShowEditModal(true)}
-          className={styles.editButton}
-        >
-          <Edit2 size={20} />
-        </button>
+        {user?.role == "photographer" && user.portfolio.id == participantId && (
+          <button
+            onClick={() => setShowEditModal(true)}
+            className={styles.editButton}
+          >
+            <Edit2 size={20} />
+          </button>
+        )}
       </div>
 
       <div className={styles.socialIcons}>

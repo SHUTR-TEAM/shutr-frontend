@@ -3,82 +3,105 @@
 import { useFormContext } from "react-hook-form";
 import styles from "./index.module.css";
 import { Check } from "lucide-react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/app/redux/store";
+import { getPackagesByPortfolio } from "@/app/redux/features/portfolio";
+import { useSearchParams } from "next/navigation";
 
 export default function PackageSelection() {
   const { register } = useFormContext();
 
-  const packageList = [
-    {
-      id: "1",
-      name: "Basic",
-      price: 499,
-      features: [
-        "4 Hours Coverage",
-        "1 Photographer",
-        "Digital Delivery",
-        "50 Edited Photos",
-      ],
-    },
-    {
-      id: "1",
-      name: "Premium",
-      price: 899,
-      features: [
-        "6 Hours Coverage",
-        "2 Photographers",
-        "Digital + USB Delivery",
-        "100 Edited Photos",
-        "Photo Album",
-      ],
-    },
-    {
-      id: "1",
-      name: "Luxury",
-      price: 1499,
-      features: [
-        "8 Hours Coverage",
-        "2 Photographers",
-        "Digital + USB Delivery",
-        "Unlimited Edited Photos",
-        "Premium Photo Album",
-        "Drone Shots",
-      ],
-    },
-  ];
+  const params = useSearchParams();
+  // const photographerId = params.get("photographerId");
+  const portfolioId = params.get("portfolioId");
+
+  // const packageList = [
+  //   {
+  //     id: "1",
+  //     name: "Basic",
+  //     price: 499,
+  //     features: [
+  //       "4 Hours Coverage",
+  //       "1 Photographer",
+  //       "Digital Delivery",
+  //       "50 Edited Photos",
+  //     ],
+  //   },
+  //   {
+  //     id: "1",
+  //     name: "Premium",
+  //     price: 899,
+  //     features: [
+  //       "6 Hours Coverage",
+  //       "2 Photographers",
+  //       "Digital + USB Delivery",
+  //       "100 Edited Photos",
+  //       "Photo Album",
+  //     ],
+  //   },
+  //   {
+  //     id: "1",
+  //     name: "Luxury",
+  //     price: 1499,
+  //     features: [
+  //       "8 Hours Coverage",
+  //       "2 Photographers",
+  //       "Digital + USB Delivery",
+  //       "Unlimited Edited Photos",
+  //       "Premium Photo Album",
+  //       "Drone Shots",
+  //     ],
+  //   },
+  // ];
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (portfolioId) {
+      dispatch(getPackagesByPortfolio({ portfolioId: portfolioId }));
+    }
+  }, [dispatch, portfolioId]);
+
+  // Get Redux state
+  const activePackages = useSelector(
+    (state: RootState) => state.portfolio.activePackages
+  );
 
   return (
     <div className={styles.container}>
       <h3 className={styles.sectionTitle}>Package & Payment</h3>
 
       <div className={styles.packageGrid}>
-        {packageList.map((packageItem, i) => (
-          <div className={styles.package} key={i}>
-            <input
-              type="radio"
-              value={packageItem.id}
-              id={packageItem.name.toLowerCase()}
-              className={styles.radioInput}
-              defaultChecked={i === 0}
-              {...register("package_id", { required: true })}
-            />
-            <label
-              htmlFor={packageItem.name.toLowerCase()}
-              className={styles.packagelabel}
-            >
-              <div className={styles.packageHeader}>
-                <h4>{packageItem.name}</h4>
-                <p className={styles.price}>$ {packageItem.price}</p>
-              </div>
-              <ul className={styles.features}>
-                {packageItem.features.map((feature, i) => (
-                  <li key={i}>
-                    <Check size={16} /> {feature}
-                  </li>
-                ))}
-              </ul>
-            </label>
-          </div>
-        ))}
+        {Array.isArray(activePackages.data) &&
+          activePackages.data.map((packageItem, i) => (
+            <div className={styles.package} key={i}>
+              <input
+                type="radio"
+                value={packageItem.id}
+                id={packageItem.title.toLowerCase()}
+                className={styles.radioInput}
+                defaultChecked={i === 0}
+                {...register("package_id", { required: true })}
+              />
+              <label
+                htmlFor={packageItem.title.toLowerCase()}
+                className={styles.packagelabel}
+              >
+                <div className={styles.packageHeader}>
+                  <h4>{packageItem.title}</h4>
+                  <p className={styles.price}>$ {packageItem.price}</p>
+                </div>
+                <ul className={styles.features}>
+                  {packageItem.details.map((feature, i) => (
+                    <li key={i}>
+                      <Check size={16} /> {feature}
+                    </li>
+                  ))}
+                </ul>
+              </label>
+            </div>
+          ))}
 
         <div className={styles.package}>
           <input
